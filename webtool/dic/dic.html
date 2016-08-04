@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+<title>dic!</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" href="../../common/bootstrap.min.css" />
+<link rel="stylesheet" href="../../common/bootstrap-theme.min.css" />
+<script src="../../common/jquery-3.1.0.min.js"></script>
+<script src="../../common/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="dic.css" />
+<script src="dic.js"></script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-fixed-top" role="navigation">
+<div class="container jumbotron">
+	<h2>dic ver-0.0.0</h2>
+	<p>
+		<div><input type="text" placeholder="keyword" id="input_keyword" class="form-control"></div>
+		<div><input type="text" placeholder="description" id="input_description" class="form-control"></div>
+		<div><input type="button" value="append/update" id="button_appenditem" class="btn btn-default">
+		     <input type="button" value="remove" id="button_removeitem" class="btn btn-default" disabled="disabled"></div>
+	</p>
+	<p>
+		<!--<div><a href="#modal_viewJson" class="btn btn-default" data-toggle="modal" role="button">view json</a></div>-->
+	</p>
+</div>
+</nav>
+
+<div class="container">
+	<dl id="div_wordlist" class="dl-horizontal">
+	</dl>
+</div>
+
+
+<div id="modal_viewJson" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="label_modal_viewJson" aria-hidden="true">
+	<div class="modal-header">
+	</div>
+	<div class="modal-body">
+		<textarea></textarea>
+	</div>
+	<div class="modal-footer">
+		<input type="button" class="btn" data-dismiss="modal" area-hidden="true">
+	</div>
+</div>
+
+</div>
+
+
+</body>
+
+</html>
+
+
+
+
