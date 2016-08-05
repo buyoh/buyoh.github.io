@@ -22,7 +22,7 @@
 
 <nav class="navbar navbar-fixed-top" role="navigation">
 <div class="container jumbotron">
-	<h2>dic ver-0.0.0</h2>
+	<h2>dic ver-0.1.0</h2>
 	<p>
 		<div><input type="text" placeholder="keyword" id="input_keyword" class="form-control"></div>
 		<div><input type="text" placeholder="description" id="input_description" class="form-control"></div>
@@ -30,7 +30,7 @@
 		     <input type="button" value="remove" id="button_removeitem" class="btn btn-default" disabled="disabled"></div>
 	</p>
 	<p>
-		<!--<div><a href="#modal_viewJson" class="btn btn-default" data-toggle="modal" role="button">view json</a></div>-->
+		<div><input type="button" value="json" class="btn btn-default" data-toggle="modal" data-target="#modal_viewJson" id="button_modaljson"></div>
 	</p>
 </div>
 </nav>
@@ -38,21 +38,26 @@
 <div class="container">
 	<dl id="div_wordlist" class="dl-horizontal">
 	</dl>
+
+	<div id="modal_viewJson" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="label_modal_viewJson">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title" id="label_modal_viewJson">Json</h3>
+				</div>
+				<div class="modal-body">
+					<div><textarea style="width:300px;height:200px;" id="textarea_json"></textarea></div>
+				</div>
+				<div class="modal-footer">
+					<input type="button" value="apply" id="button_jsonapply" class="btn btn-primary" aria-hidden="true">
+					<input type="button" value="close" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
 
-
-<div id="modal_viewJson" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="label_modal_viewJson" aria-hidden="true">
-	<div class="modal-header">
-	</div>
-	<div class="modal-body">
-		<textarea></textarea>
-	</div>
-	<div class="modal-footer">
-		<input type="button" class="btn" data-dismiss="modal" area-hidden="true">
-	</div>
-</div>
-
-</div>
 
 
 </body>

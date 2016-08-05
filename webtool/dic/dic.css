@@ -1,7 +1,9 @@
 body{
-	padding-top: 300px;
-	padding-bottom:500px;
 	background-color: #FFF;
+	padding-top: 350px;
+	padding-bottom:500px;
+}
+.bodywrap{
 }
 
 #div_wordlist{

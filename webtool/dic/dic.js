@@ -34,6 +34,8 @@ domTemplate={
 	"word_dd":$("<dd></dd>")
 };
 
+bodyoffset=null;
+
 // initialize
 $(document).ready(function(){
 	$("#input_keyword").on("keyup",function(){updateList();});
@@ -41,9 +43,14 @@ $(document).ready(function(){
 	$("#button_appenditem").on("click",function(){appendNewWordToList();});
 	$("#button_removeitem").on("click",function(){removeSelectedWordFromList();});
 
+	$("#button_modaljson").on("click",function(){$("#textarea_json").val(JSON.stringify(userconfig,null,'  '));});
+	$("#button_jsonapply").on("click",function(){readConfig($("#textarea_json").val());});
+
 	loadConfigFromStorage();
 	userconfig.words.sort(function(l,r){return l.t>r.t;});
 	makeListFromConfig();
+
+	bodyoffset=parseInt($("body").css("padding-top"));
 
 	setInterval(function(){saveBackup();},1000*600);
 });
@@ -78,6 +85,20 @@ function storeConfigToStorage(){
 
 function clearConfigAll(){
 	localStorage.clear();
+}
+
+function readConfig(str){
+	try{
+		var r=JSON.parse(str);
+		$("#input_keyword").val("");
+		$("#input_description").val("");
+		updateList();
+		userconfig=r;
+		makeListFromConfig();
+		alert("Success loading local settings");
+	}catch(e){
+		alert("!!Failed loading local settings ->"+e);
+	}
 }
 
 function makeListFromConfig(){
@@ -192,7 +213,7 @@ function call_selectWord(){
 }
 
 function scrollTo(dom){
-	var p=dom.offset().top-300;
+	var p=dom.offset().top-parseInt($("body").css("padding-top"));
 	$('html,body').animate({ scrollTop:p },'fast');
 }
 
