@@ -153,7 +153,6 @@ function updateList(){
 		wordlistdom=null;
 	}
 
-	// console.log($("#div_wordlist > dt").eq(h).html());
 	scrollTo($("#div_wordlist > dt").eq(h));
 }
 
@@ -213,7 +212,7 @@ function call_selectWord(){
 }
 
 function scrollTo(dom){
-	var p=dom.offset().top-parseInt($("body").css("padding-top"));
+	var p=dom.offset().top-bodyoffset;
 	$('html,body').animate({ scrollTop:p },'fast');
 }
 
