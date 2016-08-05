@@ -192,8 +192,7 @@ function removeSelectedWordFromList(){
 	if (!confirm("<< alert (remove) >>")) return;
 	
 	userconfig.words.splice(wordlistindex,1);
-	wordlistdom.next().remove();
-	wordlistdom.remove();
+	makeListFromConfig();
 
 	$("#button_removeitem").attr("disabled","disabled");
 }
