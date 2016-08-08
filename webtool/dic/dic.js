@@ -47,7 +47,7 @@ $(document).ready(function(){
 	$("#button_jsonapply").on("click",function(){readConfig($("#textarea_json").val());});
 
 	loadConfigFromStorage();
-	userconfig.words.sort(function(l,r){return l.t>r.t;});
+	userconfig.words.sort(function(l,r){return (l.t)>(r.t) ? 1 : -1;});
 	makeListFromConfig();
 
 	bodyoffset=parseInt($("body").css("padding-top"));
