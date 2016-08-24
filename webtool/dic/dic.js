@@ -223,8 +223,8 @@ function shuffleQuizList(){
 		return;
 	}
 
-	var a = [null,null,null];
-	for (var i=0;i<3;i++){
+	var a = [null,null,null,null];
+	for (var i=0;i<4;i++){
 		a[i]=random(0,n-1);
 		for (var j=0;j<i;j++)
 			if (a[i]==a[j]){
@@ -234,7 +234,7 @@ function shuffleQuizList(){
 	var s = random(0,2);
 	$("#modal_quiz_word").text(userconfig.words[a[s]].t);
 	var domlist = $("#modal_quiz_selector > input");
-	for (var i=0;i<3;i++){
+	for (var i=0;i<4;i++){
 		var dom = domlist.eq(i);
 		dom.val(userconfig.words[a[i]].d);
 		if (i==s){
