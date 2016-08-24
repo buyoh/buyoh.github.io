@@ -1,6 +1,7 @@
 
 userconfig={
 	"date":(new Date()).getTime(),
+	"ver":"0.2.0",
 	"words":[
 		{
 			"t":"approximately",
@@ -46,6 +47,8 @@ $(document).ready(function(){
 	$("#button_modaljson").on("click",function(){$("#textarea_json").val(JSON.stringify(userconfig,null,'  '));});
 	$("#button_jsonapply").on("click",function(){readConfig($("#textarea_json").val());});
 
+	$("#button_hiddendetail").on("click",function(){toggleHiddenDetail();});
+
 	loadConfigFromStorage();
 	userconfig.words.sort(function(l,r){return (l.t)>(r.t) ? 1 : -1;});
 	makeListFromConfig();
@@ -67,6 +70,7 @@ function loadConfigFromStorage(){
 	try{
 		var r=JSON.parse(localStorage.myDictionary);
 		userconfig=r;
+		convertVersion(userconfig);
 		console.info("Success loading local settings");
 	}catch(e){
 		console.error("!!Failed loading local settings ->"+e);
@@ -197,6 +201,20 @@ function removeSelectedWordFromList(){
 	$("#button_removeitem").attr("disabled","disabled");
 }
 
+function toggleHiddenDetail(){
+	var dom = $("#button_hiddendetail");
+	if (dom.hasClass("btn-default")){
+		dom.removeClass("btn-default");
+		dom.addClass("btn-success");
+		var bgcolor = $("body").css("background-color");
+		$("#div_wordlist > dd").css("color",bgcolor);
+	}else{
+		dom.removeClass("btn-success");
+		dom.addClass("btn-default");
+		$("#div_wordlist > dd").css("color","inherit");
+	}
+}
+
 
 function call_selectWord(){
 	var dom=$(this);
@@ -215,3 +233,8 @@ function scrollTo(dom){
 	$('html,body').animate({ scrollTop:p },'fast');
 }
 
+function convertVersion(config){
+	if (!useconfig.ver){
+		userconfig.ver="0.2.0";
+	}
+}
