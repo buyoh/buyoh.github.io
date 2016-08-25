@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<!--
+ver 0.0.0	試作、軽く使える状態
+
+
+-->
+
+<html>
+
+<head>
+<title>canvas!</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" href="../../common/bootstrap.min.css" />
+<link rel="stylesheet" href="../../common/bootstrap-theme.min.css" />
+<script src="../../common/jquery-3.1.0.min.js"></script>
+<script src="../../common/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="canvas.css" />
+<script src="canvas.js"></script>
+
+</head>
+
+<body>
+
+<div class="container jumbotron">
+	<h2>canvas! ver 0.0.0</h2>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="panel panel-default col-xs-6">
+			<canvas id="canvas_main" class="panel panel-default margin_TB" width="480" height="360" class="margin_TB">(´・ω・｀)</canvas>
+			<p><output id="div_notice"></output></p>
+		</div>
+		<div class="panel panel-default col-xs-6">
+			<div>
+				<!--div class="form-control margin_TB my-textarea" style="height:360px;" wrap="on" id="input_code" contenteditable="true"></div-->
+				<textarea class="form-control margin_TB my-textarea" rows="12" wrap="on" id="input_code">color ff0000
+pos 100,100
+line 100,200
+line 200,200
+line 200,100
+line 100,100
+
+color 0,255,0 : circle 300,100,80
+
+color 0,0,255 , 0.5
+polygon 4,120,150,200,250,300,150,150,50
+
+color 0,0,0
+pset 10,10 : pset 60,10 : pset 10,60
+</textarea>
+			</div>
+			<p>
+				<input type="button" value="help(てぬき)" class="btn btn-info" data-toggle="modal" data-target="#modal_help" id="button_modalhelp">
+			</p>
+		</div>
+	</div>
+</div>
+
+<div id="modal_help" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="label_modal_help">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="label_modal_help">手抜きなヘルプ</h3>
+			</div>
+			<div class="modal-body">
+				<div class="form-group has-error">実装メモです。</div>
+				<h4>目的・きっかけ</h4>
+				<p>
+					mspaintで図を描いて座標取るのがたいへん！！
+				</p>
+				<h4>書式</h4>
+				<p>
+					<ul>
+						<li><code>command prm1,prm2,prm3,...,prmN</code></li>
+						<li>各コマンドは改行区切りまたは<var>:</var>で区切る。</li>
+						<li>コマンドとパラメータの間は必ずスペースを入れる。他は任意。</li>
+						<li>basicとかhspっぽい</li>
+					</ul>
+				</p><p>
+					<ul>
+						<li>パラメータに与えることができる値の制約などは今後の課題（パラメータの中にスペースが入ったりすると問題)</li>
+						<li>変数、式は未実装。'24 + 37'と書いても解釈されない。</li>
+					</ul>
+				</p>
+				<h4>命令一覧</h4>
+				<p>
+					<ul>
+						<li>pos x,y</li>
+						<li>color code</li>
+						<li>color r,g,b</li>
+						<li>color r,g,b,a</li>
+						<li>line x,y</li>
+						<li>line x1,y1,x2,y2</li>
+						<li>pset x,y</li>
+						<li>circle x,y,r</li>
+						<li>polygon n,x1,y1,x2,y2,...,xn,yn</li>
+					</ul>
+				</p>
+				<h4>未実装</h4>
+				<p>
+					<ul>
+						<li>box x,y,w,h</li>
+						<li>scale left,top,right,bottom</li>
+						<li>width w</li>
+					</ul>
+				</p>
+			</div>
+			<div class="modal-footer">
+				<input type="button" value="close" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--
+
+
+-->
+
+
+</body>
+
+</html>
