@@ -184,11 +184,13 @@ function appendNewWordToList(){
 
 	if (word===w[l].t){
 		w[l].d=description;
-		$("#div_wordlist > dd").eq(wordlistindex).text(description);
+		$("#div_wordlist > dd").eq(l).text(description);
 	}else{
 		w.splice(l+(word<w[l].t ? 0 : 1),0,json);
 		makeListFromConfig();
 	}
+		//wordlistindex=l;
+		//wordlistdom=$("#div_wordlist > dt").eq(wordlistindex);
 	
 }
 
