@@ -7,6 +7,11 @@ var internalCode=new Array(30); // memo:jsは勝手に拡張される
 
 var timerid_code=null;
 
+var scr_offsetX = 0;
+var scr_offsetY = 0;
+var scr_zoomX = 1;
+var scr_zoomY = 1;
+
 $(document).ready(function(){
 	var canvasDom = $("#canvas_main")[0];
 	mainContext = canvasDom.getContext('2d');
@@ -21,8 +26,8 @@ $(document).ready(function(){
 	});
 	$("#canvas_main").on("click",function(e){
 		var x,y;
-		x = e.offsetX;
-		y = e.offsetY;
+		x = (e.offsetX - scr_offsetX) / scr_zoomX;
+		y = (e.offsetY - scr_offsetY) / scr_zoomY;
 		$("#div_notice").text("click ("+x+","+y+")");
 	})
 	updateCode();
@@ -64,12 +69,12 @@ function updateContext(){
 	mainContext.fillStyle="#ffffff";
 	mainContext.fillRect(0,0,scrWidth,scrHeight);
 
-	var offsetX = 0;
-	var offsetY = 0;
-	var zoomX = 1;
-	var zoomY = 1;
-	function transX(x){ return offsetX + zoomX * x; }
-	function transY(y){ return offsetY + zoomY * y; }
+	scr_offsetX = 0;
+	scr_offsetY = 0;
+	scr_zoomX = 1;
+	scr_zoomY = 1;
+	function transX(x){ return scr_offsetX + scr_zoomX * x; }
+	function transY(y){ return scr_offsetY + scr_zoomY * y; }
 
 	var px,py;
 	px=py=0;
@@ -161,10 +166,10 @@ function updateContext(){
 					right  = j.p[2]-0;
 					bottom = j.p[3]-0;
 					if (left < right && top < bottom){
-						zoomX = scrWidth / (right - left);
-						zoomY = scrHeight / (bottom - top);
-						offsetX = left;
-						offsetY = top;
+						scr_zoomX = scrWidth / (right - left);
+						scr_zoomY = scrHeight / (bottom - top);
+						scr_offsetX = left;
+						scr_offsetY = top;
 					}
 				}
 				break;
