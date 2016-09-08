@@ -64,6 +64,13 @@ function updateContext(){
 	mainContext.fillStyle="#ffffff";
 	mainContext.fillRect(0,0,scrWidth,scrHeight);
 
+	var offsetX = 0;
+	var offsetY = 0;
+	var zoomX = 1;
+	var zoomY = 1;
+	function transX(x){ return offsetX + zoomX * x; }
+	function transY(y){ return offsetY + zoomY * y; }
+
 	var px,py;
 	px=py=0;
 
@@ -84,16 +91,16 @@ function updateContext(){
 					x = j.p[0]-0;
 					y = j.p[1]-0;
 					mainContext.beginPath();
-					mainContext.moveTo(px,py);
-					mainContext.lineTo(x,y);
+					mainContext.moveTo(transX(px),transY(py));
+					mainContext.lineTo(transX(x),transY(y));
 					mainContext.stroke();
 					px=x;py=y;
 				}else if (j.p.length==4){
 					x = j.p[0]-0;
 					y = j.p[1]-0;
 					mainContext.beginPath();
-					mainContext.moveTo(x,y);
-					mainContext.lineTo(j.p[2]-0,j.p[3]-0);
+					mainContext.moveTo(transX(x),transY(y));
+					mainContext.lineTo(transX(j.p[2]-0),transY(j.p[3]-0));
 					mainContext.stroke();
 					px=x;py=y;
 				}
@@ -120,7 +127,7 @@ function updateContext(){
 				if (j.p.length==3){
 					// x,y,r,startarg,endarg,clockwise
 					mainContext.beginPath();
-					mainContext.arc(j.p[0]-0, j.p[1]-0, j.p[2]-0, 0, Math.PI * 2, false);
+					mainContext.arc(transX(j.p[0]-0), transY(j.p[1]-0), j.p[2]-0, 0, Math.PI * 2, false);
 					mainContext.stroke();
 				}
 				break;
@@ -129,9 +136,9 @@ function updateContext(){
 					mainContext.beginPath();
 					for (var k=1;k<j.p.length;k+=2){
 						if (k==0)
-							mainContext.moveTo(j.p[k]-0, j.p[k+1]-0);
+							mainContext.moveTo(transX(j.p[k]-0), transY(j.p[k+1]-0));
 						else
-							mainContext.lineTo(j.p[k]-0, j.p[k+1]-0);
+							mainContext.lineTo(transX(j.p[k]-0), transY(j.p[k+1]-0));
 					}
 					mainContext.closePath();
 					mainContext.stroke();
@@ -139,16 +146,27 @@ function updateContext(){
 				break;
 			case "pset":
 				if (j.p.length==2){
-					// x,y,r,startarg,endarg,clockwise
 					mainContext.beginPath();
-					mainContext.arc(j.p[0]-0, j.p[1]-0, 3, 0, Math.PI * 2, false);
+					mainContext.arc(transX(j.p[0]-0), transY(j.p[1]-0), 3, 0, Math.PI * 2, false);
 					mainContext.fill();
 				}
 				break;
 			case "box":
 				break;
 			case "scale":
-				console.log("scale:no support.");
+				if (j.p.length==4){
+					var left,right,top,bottom;
+					left   = j.p[0]-0;
+					top    = j.p[1]-0;
+					right  = j.p[2]-0;
+					bottom = j.p[3]-0;
+					if (left < right && top < bottom){
+						zoomX = scrWidth / (right - left);
+						zoomY = scrHeight / (bottom - top);
+						offsetX = left;
+						offsetY = top;
+					}
+				}
 				break;
 			default:
 				break;

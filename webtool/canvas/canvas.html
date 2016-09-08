@@ -1,11 +1,5 @@
 <!DOCTYPE html>
 
-<!--
-ver 0.0.0	試作、軽く使える状態
-
-
--->
-
 <html>
 
 <head>
@@ -27,19 +21,20 @@ ver 0.0.0	試作、軽く使える状態
 <body>
 
 <div class="container jumbotron">
-	<h2>canvas! ver 0.0.0</h2>
+	<h2>canvas! ver 0.1.0</h2>
 </div>
 
 <div class="container">
 	<div class="row">
 		<div class="panel panel-default col-xs-6">
-			<canvas id="canvas_main" class="panel panel-default margin_TB" width="480" height="360" class="margin_TB">(´・ω・｀)</canvas>
+			<canvas id="canvas_main" class="panel panel-default margin_TB" width="400" height="400" class="margin_TB">(´・ω・｀)</canvas>
 			<p><output id="div_notice"></output></p>
 		</div>
 		<div class="panel panel-default col-xs-6">
 			<div>
 				<!--div class="form-control margin_TB my-textarea" style="height:360px;" wrap="on" id="input_code" contenteditable="true"></div-->
-				<textarea class="form-control margin_TB my-textarea" rows="12" wrap="on" id="input_code">color ff0000
+				<textarea class="form-control margin_TB my-textarea" rows="12" wrap="on" id="input_code">scale 0,0,400,400
+color ff0000
 pos 100,100
 line 100,200
 line 200,200
@@ -56,7 +51,9 @@ pset 10,10 : pset 60,10 : pset 10,60
 </textarea>
 			</div>
 			<p>
-				<input type="button" value="help(てぬき)" class="btn btn-info" data-toggle="modal" data-target="#modal_help" id="button_modalhelp">
+				<button class="btn btn-info" data-toggle="modal" data-target="#modal_help" id="button_modalhelp">
+					help(てぬき)
+				</button>
 			</p>
 		</div>
 	</div>
@@ -100,16 +97,26 @@ pset 10,10 : pset 60,10 : pset 10,60
 						<li>pset x,y</li>
 						<li>circle x,y,r</li>
 						<li>polygon n,x1,y1,x2,y2,...,xn,yn</li>
-					</ul>
-				</p>
-				<h4>未実装</h4>
-				<p>
-					<ul>
-						<li>box x,y,w,h</li>
 						<li>scale left,top,right,bottom</li>
-						<li>width w</li>
 					</ul>
 				</p>
+				<button type="button" class="btn btn-default" onclick="$(this).next().slideToggle();">more</button>
+				<div style="display: none;">
+					<h4>未実装</h4>
+					<p>
+						<ul>
+							<li>box x,y,w,h</li>
+							<li>width w</li>
+						</ul>
+					</p>
+					<h4>更新</h4>
+					<dl>
+						<dt>ver 0.0.0</dt>
+						<dd>試作、軽く使える状態</dd>
+						<dt>ver 0.1.0</dt>
+						<dd>scale実装。描画領域を正方形に。</dd>
+					</dl>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<input type="button" value="close" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
