@@ -1,5 +1,5 @@
 
-userconfig={
+userconfig_default={
 	"date":(new Date()).getTime(),
 	"ver":"0.2.0",
 	"words":[
@@ -25,6 +25,7 @@ userconfig={
 		}
 	]
 };
+userconfig = $.extend({}, userconfig_default);
 userconfig.words.sort(function(l,r){return l.t>r.t;});
 
 wordlistindex=null;
@@ -93,16 +94,25 @@ function clearConfigAll(){
 }
 
 function readConfig(str){
-	try{
-		var r=JSON.parse(str);
+	if (str===""){
+		clearConfigAll();
 		$("#input_keyword").val("");
 		$("#input_description").val("");
 		updateList();
-		userconfig=r;
+		userconfig=$.extend({},userconfig_default);
 		makeListFromConfig();
-		alert("Success loading local settings");
-	}catch(e){
-		alert("!!Failed loading local settings ->"+e);
+	}else{
+		try{
+			var r=JSON.parse(str);
+			$("#input_keyword").val("");
+			$("#input_description").val("");
+			updateList();
+			userconfig=r;
+			makeListFromConfig();
+			alert("Success loading local settings");
+		}catch(e){
+			alert("!!Failed loading local settings ->"+e);
+		}
 	}
 }
 
@@ -247,6 +257,24 @@ function shuffleQuizList(){
 	}
 }
 
+
+
+function isAbleToListQuiz(json){
+	if (!json.t || !json.d) return false;
+	if (json.t[0]=="#") return false;
+	return true;
+}
+
+function splitQuizElem(jsond){
+	// jsond.split(";")
+}
+
+function createDOMDescription(description){
+	var dom = $("<span></span>");
+	
+	dom.text(description);
+	return description;
+}
 
 function call_selectWord(){
 	var dom=$(this);

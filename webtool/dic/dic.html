@@ -1,17 +1,5 @@
 <!DOCTYPE html>
-<!--
-0.0.0	試作
-0.1.1	jsonボタン追加。
-0.1.2	要素削除時にクリック操作がずれるbugの雑対処
-0.1.3	致命的なソートのbug
-0.2.0   Hidden追加 jsonにバージョンの付与
-0.3.0   クイズ機能[json->2.0]
-0.3.1   選択肢を4つに
-0.3.2   1番目の項目が見かけ上、書き変わってしまうbug
 
-json切り替え、
-
--->
 <html>
 <head>
 
@@ -34,7 +22,7 @@ json切り替え、
 
 <nav class="navbar navbar-fixed-top" role="navigation">
 <div class="container jumbotron">
-	<h2>dic ver-0.3.2</h2>
+	<h2>dic ver-1.0.0</h2>
 	<p>
 		<div><input type="text" placeholder="keyword" id="input_keyword" class="form-control"></div>
 		<div><input type="text" placeholder="description" id="input_description" class="form-control"></div>
@@ -52,47 +40,106 @@ json切り替え、
 <div class="container">
 	<dl id="div_wordlist" class="dl-horizontal">
 	</dl>
+</div>
 
-	<div id="modal_viewJson" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="label_modal_viewJson">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h3 class="modal-title" id="label_modal_viewJson">Json</h3>
-				</div>
-				<div class="modal-body">
-					<div><textarea style="width:300px;height:200px;" id="textarea_json"></textarea></div>
-				</div>
-				<div class="modal-footer">
-					<input type="button" value="apply" id="button_jsonapply" class="btn btn-primary" aria-hidden="true">
-					<input type="button" value="close" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
-				</div>
+<div id="modal_viewJson" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="label_modal_viewJson">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="label_modal_viewJson">Json</h3>
 			</div>
-		</div>
-	</div>
-
-	<div id="modal_quiz" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="label_modal_quiz">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h3 class="modal-title" id="label_modal_quiz">Quiz</h3>
-				</div>
-				<div class="modal-body">
-					<h4 id="modal_quiz_word"></h4>
-					<div id="modal_quiz_selector">
-						<input type="button" class="btn btn-primary btn-block" value="A">
-						<input type="button" class="btn btn-primary btn-block" value="B">
-						<input type="button" class="btn btn-primary btn-block" value="C">
-						<input type="button" class="btn btn-primary btn-block" value="D">
-					</div>
-				</div>
-				<div class="modal-footer">
-					<input type="button" value="close" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
-				</div>
+			<div class="modal-body">
+				<div><textarea style="width:300px;height:200px;" id="textarea_json"></textarea></div>
+			</div>
+			<div class="modal-footer">
+				<input type="button" value="apply" id="button_jsonapply" class="btn btn-primary" aria-hidden="true">
+				<input type="button" value="close" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
 			</div>
 		</div>
 	</div>
 </div>
 
+<div id="modal_quiz" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="label_modal_quiz">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="label_modal_quiz">Quiz</h3>
+			</div>
+			<div class="modal-body">
+				<h4 id="modal_quiz_word"></h4>
+				<div id="modal_quiz_selector">
+					<input type="button" class="btn btn-primary btn-block" value="A">
+					<input type="button" class="btn btn-primary btn-block" value="B">
+					<input type="button" class="btn btn-primary btn-block" value="C">
+					<input type="button" class="btn btn-primary btn-block" value="D">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="button" value="close" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modal_help" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="label_modal_help">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="label_modal_help">使い方・実装メモ</h3>
+			</div>
+			<div class="modal-body">
+				<h4>基本</h4>
+				<ul>
+					<li>keywordに単語を入力すると、項目の該当位置までカーソルが移動する</li>
+					<li>keywordに単語、descriptionに詳細を入力し、appendを押すと項目が追加される。既に一致する単語が含まれる場合、詳細が上書きされる。</li>
+					<li>項目は自動的にソートされる。</li>
+				</ul>
+				<h4>設定情報</h4>
+				<ul>
+					<li>項目等の情報は一定時間ごと・ページが閉じた時に保存される。</li>
+					<li>jsonボタンを押すとjson形式の設定情報が書かれたモーダルウィンドウが表示される。このjsonは自由に書き換え可能で、
+						Applyボタンを押すと編集されたjsonが適応される。これを使って、設定をローカルの外に持ち出すことができる。<br />
+						テキストエリアを空にしてApplyボタンを押すと、全ての設定を初期値に戻す。</li>
+				</ul>
+				<h4>細かい機能</h4>
+				<ul>
+					<li>hiddenはdescriptionを背景色と同色にするボタン。</li>
+					<li>quizは適当な4択問題を出題する機能。</li>
+				</ul>
+				
+				<h4>気が向いたら作る予定</h4>
+				<ul>
+					<li>複数のjson切り替え</li>
+					<li>descriptionの;区切り</li>
+					<li>urlハイライト</li>
+					<li>search</li>
+					<!-- 空っぽにしてapplyすればstorageを削除できるように -->
+				</ul>
+				<pre>
+0.0.0	試作
+0.1.1	jsonボタン追加。
+0.1.2	要素削除時にクリック操作がずれるbugの雑対処
+0.1.3	致命的なソートのbug
+0.2.0   Hidden追加;jsonにバージョンの付与
+0.3.0   クイズ機能
+0.3.1   選択肢を4つに
+0.3.2   1番目の項目が見かけ上、書き変わってしまうbug
+0.4.0   ヘルプ追加;jsonを空にしてApplyを押すと初期化モード。
+1.0.0   html構造修正。十分に使えるので、ver1に格上げ。</pre>
+			</div>
+			<div class="modal-footer">
+				<input type="button" value="close" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- TODO:help 実装メモ -->
+
+<!-- ;区切り、URL実装 -->
+
+<!-- search ALC(options kc) -->
+<!-- multi tab -->
 
 
 </body>
