@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>tabnotepad</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="../../common/bootstrap.min.css">
+<link rel="stylesheet" href="../../common/bootstrap-theme.min.css">
+<script src="../../common/jquery-3.1.0.min.js"></script>
+<script src="../../common/bootstrap.min.js"></script>
+<script src="../../common/ace/ace.js"></script>
+<script src="../../common/ace/ext-language_tools.js"></script>
+<!--
+<link rel="stylesheet" href="../../common/jquery-ui.min.css">
+<link rel="stylesheet" href="../../common/jquery-ui.theme.min.css">
+<script src="../../common/jquery-ui.min.js"></script>
+-->
+
+<link rel="stylesheet" href="tabnotepad.css" />
+<script src="tabnotepad.js"></script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse_topnavbar">
+                <span class="sr-only">NAV.</span>
+            </button>
+            <span class="navbar-brand">tabnotepad ver -</span>
+        </div>
+        <div class="collapse navbar-collapse" id="collapse_topnavbar">
+            <ul class="nav navbar-nav">
+                <li class="disable"><a>monokai</a></li>
+                <!-- <li class="active"><a>help</a></li> -->
+                <li><a href="#" data-toggle="modal" data-target="#modal_viewHelp" id="button_modalhelp">help</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#modal_viewJson" id="button_modaljson">Json</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- <div id="div_divider_wrap"> -->
+<div id="div_divider">
+    <div id="div_divider_left" class="panel panel-default">
+        <div id="div_leftside">
+            <nav class="navbar navbar-default" id="div_leftopnav">
+                <div class="container-fluid">
+                    <div class="navbar-left">
+                        <button class="btn btn-default navbar-btn" id="button_itemup" disabled="disabled">
+                            <span class="glyphicon glyphicon-arrow-up"></span>
+                        </button>
+                        <button class="btn btn-default navbar-btn" id="button_itemdown" disabled="disabled">
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                        </button>
+                        <button class="btn btn-default navbar-btn" id="button_itemnew">
+                            <span class="glyphicon glyphicon-file"></span>
+                        </button>
+                        <!--
+                        <button class="btn btn-default navbar-btn" id="">
+                            <span class="glyphicon glyphicon-arrow-left"></span>
+                        </button>
+                        <button class="btn btn-default navbar-btn" id="">
+                            <span class="glyphicon glyphicon-arrow-right"></span>
+                        </button>
+                        -->
+                    </div>
+                    <div class="navbar-right">
+                        <button class="btn btn-default navbar-btn" id="button_menutoggle" disabled="disabled">
+                            <span class="glyphicon glyphicon-th-list"></span>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+            <div class="container-fluid">
+                <ul class="nav nav-pills nav-stacked" id="div_itemlist">
+                    <li class="active"><a>itemListHere</a></li>
+                    <li><a>itemListHere</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="div_divider_space"></div>
+    <div id="div_divider_right" class="clearfix">
+        <nav class="navbar navbar-default" id="div_rightopnav" style="margin-bottom:0px;">
+            <div class="container-fluid">
+                <div class="navbar-left">
+                    <button class="btn btn-default navbar-btn" id="button_editorsave" title="save" disabled="disabled">
+                        <span class="glyphicon glyphicon-save"></span>
+                    </button>
+                    <button class="btn btn-default navbar-btn" id="button_editoropen" title="reopen" disabled="disabled">
+                        <span class="glyphicon glyphicon-open"></span>
+                    </button>
+                    <button class="btn btn-default navbar-btn" id="button_editordelete" title="delete">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    <select id="select_contentype" class="" disabled="disabled">
+                        <option>plain</option>
+                        <option>C++</option>
+                        <option>Ruby</option>
+                        <option>javascript</option>
+                    </select>
+                </div>
+                <div class="navbar-right">
+                    <button class="btn btn-default navbar-btn" id="button_divideeditor" disabled="disabled">
+                        <span class="glyphicon glyphicon-th-large"></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div class="panel panel-default" id="div_editor">
+            <div id="aceditor"></div>
+        </div>
+    </div>
+</div>
+<!-- </div> -->
+
+<div id="modal_viewJson" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="label_modal_viewJson">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="label_modal_viewJson">Json</h3>
+			</div>
+			<div class="modal-body">
+				<div><textarea style="width:300px;height:200px;" id="textarea_json"></textarea></div>
+                <div id="div_modaljsonalert"></div>
+			</div>
+			<div class="modal-footer">
+				<input type="button" value="apply" id="button_jsonapply" class="btn btn-primary" aria-hidden="true">
+				<input type="button" value="close" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modal_viewHelp" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="label_modal_viewHelp">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="label_modal_viewHelp">Help</h3>
+			</div>
+			<div class="modal-body">
+                <p>todo</p>
+                <button class="btn btn-default" onclick="$(this).next().eq(0).slideToggle()">開発</button>
+                <div style="display:none;">
+                    <h4>version</h4>
+                    <dl>
+                        <dt>0.0.0</dt>
+                        <dd>使えないこともない</dd>
+                    </dl>
+                    <h4>実装予定メモ</h4>
+                    <ul>
+                        <li>itemlistをD&Dで操作できるようにする</li>
+                        <li>->スマートフォン等のタップ操作でもできるようなUI</li>
+                        <li>子要素</li>
+                        <li>itemListを隠せるようにするボタン</li>
+                        <li>複画面</li>
+                        <li>monokaiモード</li>
+                        <li>内部的なtodo</li>
+                    </ul>
+                    <h4>検討事項</h4>
+                    <ul>
+                        <li>保存タイミングの調整</li>
+                    </ul>
+                </div>
+			</div>
+			<div class="modal-footer">
+				<input type="button" value="close" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>
