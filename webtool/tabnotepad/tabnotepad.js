@@ -268,7 +268,7 @@ function createFormItemNew(){
 
 
 function createFormItemRename(){
-	var namedom = $("<input type='text' id='input_itemrename'>");
+	var namedom = $("<input type='text' id='input_itemrename'>").val(itemlistselected.name);
 	namedom.on("focusout",function(e){
 		var dom = $("#input_itemrename");
 		var name = dom.val();
