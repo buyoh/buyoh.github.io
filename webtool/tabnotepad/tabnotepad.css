@@ -11,7 +11,8 @@ body {
 #div_divider_left{
     width:20%;
     display:table-cell;
-    overflow:scroll;
+    overflow-y:scroll;
+    overflow-x:hidden;
 }
 
 #div_divider_right{

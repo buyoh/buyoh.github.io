@@ -211,9 +211,10 @@ function applyUserConfig(){
 	(function(arr,nest,from){
 		for (var i=0;i<arr.length;i++){
 			var elem_inner = $("<a></a>").text(arr[i].name);
+
 			var elem = $("<li></li>").css("margin-left",20*nest).data("path",from+i);
 			elem.on("click",{"path":from+i},event_itemListClicked);
-				//.draggable({drag:event_itemListDragged,stop:event_itemListStoppedDragging})
+				//.draggable({drag:event_itemListDragged,stop:event_itemListStoppedDragging}) 
 			elem.append(elem_inner);
 			dom.append(elem);
 			arguments.callee(arr[i].children,nest+1,from+i+"/");
@@ -226,13 +227,6 @@ function getJsonFromDirectory(directory){
 	// TODO:
 }
 
-
-// TODO:
-function cancelSelectedItemList(){
-	var selectedDom = $("#div_itemlist li.active");
-	selectedDom.removeClass("active");
-	itemlistselected = null;
-}
 
 
 function appendItemList(parent,data){
@@ -266,8 +260,34 @@ function createFormItemNew(){
 			"set":{"type":"plain"},
 			"children":[]});
 		applyUserConfig(); // TODO:追加したものだけ操作 ただしdirectoryの再構成をしていることに注意
+		remarkSelectedItemList();
 	});
 	$("#div_itemlist").append($("<li></li>").append(namedom));
+	namedom.focus();
+}
+
+
+function createFormItemRename(){
+	var namedom = $("<input type='text' id='input_itemrename'>");
+	namedom.on("focusout",function(e){
+		var dom = $("#input_itemrename");
+		var name = dom.val();
+		dom.remove();
+
+		dom = $("#div_itemlist li.active").removeClass("hidden");
+		if (name==="") return;
+
+		itemlistselected.name = name;
+
+		var a = dom.children().filter("a");
+		var t = a.children();
+		a.text(name).append(t);
+		// applyUserConfig(); // TODO:追加したものだけ操作 ただしdirectoryの再構成をしていることに注意
+		// remarkSelectedItemList();
+	});
+	var dom = $("#div_itemlist li.active");
+	dom.addClass("hidden");
+	dom.after($("<li></li>").append(namedom));
 	namedom.focus();
 }
 
@@ -289,17 +309,26 @@ function saveEditing(){
 }
 
 
-function remarkSelectedItemList(){
+function remarkSelectedItemList(targetdom){
 	var selectedDom = $("#div_itemlist li.active");
 	selectedDom.removeClass("active");
+	$("#div_itemlist li .itemListBadge").remove();
 
-	$("#div_itemlist li").each(function(i,e){
-		if ($(this).data("path")==itemlistselected.directory){
-			$(this).addClass("active");
-			return false;
-		}
-		return true;
-	});
+	if (!targetdom){
+		$("#div_itemlist li").each(function(i,e){
+			var dom = $(this);
+			if (dom.data("path")==itemlistselected.directory){
+				targetdom = dom;
+				return false; // loop break
+			}
+			return true;
+		});
+	}
+
+	var elem_side = $("#prefab_itemlistedit").clone().removeAttr("id").addClass("itemListBadge").removeClass("hidden");
+	elem_side.on("click",event_itemListBadgeClicked);
+	targetdom.filter("li").addClass("active");
+	targetdom.children().filter("a").append(elem_side);
 
 }
 
@@ -317,13 +346,18 @@ function event_itemListClicked(e){
 
 	saveEditing();
 
-	cancelSelectedItemList();
-	$(this).addClass("active");
-
+	itemlistselected = null;
 	target.directory = e.data.path;
 	itemlistselected = target;
 
+	remarkSelectedItemList($(this));
+
 	setValueToEditor(itemlistselected.data);
+}
+
+
+function event_itemListBadgeClicked(e){
+	console.log("badgeclick");
 }
 
 
@@ -342,6 +376,11 @@ function event_itemnew(e){
 }
 
 
+function event_itemrename(e){
+	createFormItemRename();
+}
+
+
 function event_itemdelete(e){
 	if (userconfig.children.length<=1 && userconfig.children[0].children.length==0){
 		alert("すべてのアイテムを削除することは出来ません。");
@@ -352,6 +391,7 @@ function event_itemdelete(e){
 	removeItemList(itemlistselected.directory);
 
 	itemlistselected = userconfig.children[0];
+	itemlistselected.directory = e.data.path;
 	remarkSelectedItemList();	
 	setValueToEditor(itemlistselected.data);
 }

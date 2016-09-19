@@ -33,7 +33,7 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse_topnavbar">
                 <span class="sr-only">NAV.</span>
             </button>
-            <span class="navbar-brand">tabnotepad ver -</span>
+            <span class="navbar-brand">tabnotepad ver 0.1.0</span>
         </div>
         <div class="collapse navbar-collapse" id="collapse_topnavbar">
             <ul class="nav navbar-nav">
@@ -139,6 +139,23 @@
 	</div>
 </div>
 
+<div class="btn-group pull-right hidden" id="prefab_itemlistedit">
+    <button type="button" class="btn btn-primary badge dropdown-toggle" data-toggle="dropdown">
+        <span class='glyphicon glyphicon-cog'></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li class="dropdown-header">move</li>
+        <li class="disabled"><a href="#">Up</a></li>
+        <li class="disabled"><a href="#">Down</a></li>
+        <li class="disabled"><a href="#">Left</a></li>
+        <li class="disabled"><a href="#">Right</a></li>
+        <li class="divider"></li>
+        <li class="dropdown-header">edit</li>
+        <li><a href="#" onclick="event_itemrename();">Rename</a></li>
+        <li><a href="#" id="menuitem_editordelete" onclick="event_itemdelete();">Delete</a></li>
+    </ul>
+</div>
+
 <div id="modal_viewHelp" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="label_modal_viewHelp">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -146,19 +163,28 @@
 				<h3 class="modal-title" id="label_modal_viewHelp">Help</h3>
 			</div>
 			<div class="modal-body">
+                <h4>使い方</h4>
                 <p>todo</p>
+                <h4>致命的なバグ</h4>
+                <ul>
+                    <li>アイテムを選択できなくなる不具合が存在した(修正済み)。jsonを開き、<code>last</code>の<kbd>{</kbd>の直後に<code>"directory":"/0",</code>を加え、適応すると復帰する。</li>
+                </ul>
                 <button class="btn btn-default" onclick="$(this).next().eq(0).slideToggle()">開発</button>
                 <div style="display:none;">
                     <h4>version</h4>
                     <dl>
                         <dt>0.0.0</dt>
                         <dd>使えないこともない</dd>
+                        <dt>0.1.0</dt>
+                        <dd>アイテムを選択できなくなる不具合の修正。<br>itemの右に編集ボタン追加。<br>rename機能。</dd>
                     </dl>
                     <h4>実装予定メモ</h4>
                     <ul>
+                        <li>Enterで新規ファイル名を確定できるようにする</li>
+                        <li><span class="label label-warning">優先</span>再読み込みの機能</li>
+                        <li>子要素</li>
                         <li>itemlistをD&Dで操作できるようにする</li>
                         <li>->スマートフォン等のタップ操作でもできるようなUI</li>
-                        <li>子要素</li>
                         <li>itemListを隠せるようにするボタン</li>
                         <li>複画面</li>
                         <li>monokaiモード</li>
@@ -167,6 +193,7 @@
                     <h4>検討事項</h4>
                     <ul>
                         <li>保存タイミングの調整</li>
+                        <li>長いファイル名与えると左divが潰せない</li>
                     </ul>
                 </div>
 			</div>
@@ -176,7 +203,6 @@
 		</div>
 	</div>
 </div>
-
 
 </body>
 </html>
