@@ -391,7 +391,7 @@ function event_itemdelete(e){
 	removeItemList(itemlistselected.directory);
 
 	itemlistselected = userconfig.children[0];
-	itemlistselected.directory = e.data.path;
+	itemlistselected.directory = "/0";
 	remarkSelectedItemList();	
 	setValueToEditor(itemlistselected.data);
 }
