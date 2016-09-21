@@ -6,12 +6,14 @@
 <title>tabnotepad</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="../../common/bootstrap.min.css">
 <link rel="stylesheet" href="../../common/bootstrap-theme.min.css">
 <script src="../../common/jquery-3.1.0.min.js"></script>
 <script src="../../common/bootstrap.min.js"></script>
+
 <script src="../../common/ace/ace.js"></script>
 <script src="../../common/ace/ext-language_tools.js"></script>
 <!--
@@ -33,14 +35,16 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse_topnavbar">
                 <span class="sr-only">NAV.</span>
             </button>
-            <span class="navbar-brand">tabnotepad ver 0.1.2</span>
+            <span class="navbar-brand">tabnotepad ver 0.2.0</span>
         </div>
         <div class="collapse navbar-collapse" id="collapse_topnavbar">
             <ul class="nav navbar-nav">
-                <li class="disable"><a>monokai</a></li>
-                <!-- <li class="active"><a>help</a></li> -->
+                <li class="disabled active"><a>interval-save</a></li>
+                <li><a href="#" id="button_forcesave">force-save</a></li>
+                <li><a href="#" id="button_forceload">force-load</a></li>
                 <li><a href="#" data-toggle="modal" data-target="#modal_viewHelp" id="button_modalhelp">help</a></li>
                 <li><a href="#" data-toggle="modal" data-target="#modal_viewJson" id="button_modaljson">Json</a></li>
+                <li class="disabled"><a>monokai</a></li>
             </ul>
         </div>
     </div>
@@ -53,6 +57,7 @@
             <nav class="navbar navbar-default" id="div_leftopnav">
                 <div class="container-fluid">
                     <div class="navbar-left">
+                        <!--
                         <button class="btn btn-default navbar-btn" id="button_itemup" disabled="disabled">
                             <span class="glyphicon glyphicon-arrow-up"></span>
                         </button>
@@ -62,7 +67,6 @@
                         <button class="btn btn-default navbar-btn" id="button_itemnew">
                             <span class="glyphicon glyphicon-file"></span>
                         </button>
-                        <!--
                         <button class="btn btn-default navbar-btn" id="">
                             <span class="glyphicon glyphicon-arrow-left"></span>
                         </button>
@@ -94,13 +98,13 @@
                     <button class="btn btn-default navbar-btn" id="button_editorsave" title="save" disabled="disabled">
                         <span class="glyphicon glyphicon-save"></span>
                     </button>
-                    <button class="btn btn-default navbar-btn" id="button_editoropen" title="reopen" disabled="disabled">
+                    <button class="btn btn-default navbar-btn" id="button_editoropen" title="reopen">
                         <span class="glyphicon glyphicon-open"></span>
                     </button>
                     <button class="btn btn-default navbar-btn" id="button_editordelete" title="delete">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
-                    <select id="select_contentype" class="" disabled="disabled">
+                    <select id="select_contentype" class="disabled" disabled="disabled">
                         <option>plain</option>
                         <option>C++</option>
                         <option>Ruby</option>
@@ -120,6 +124,8 @@
     </div>
 </div>
 <!-- </div> -->
+
+
 
 <div id="modal_viewJson" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="label_modal_viewJson">
 	<div class="modal-dialog">
@@ -146,14 +152,14 @@
     </button>
     <ul class="dropdown-menu" role="menu">
         <li class="dropdown-header">move</li>
-        <li class="disabled"><a href="#">Up</a></li>
-        <li class="disabled"><a href="#">Down</a></li>
+        <li><a href="#" onclick="event_itemup()">Up</a></li>
+        <li><a href="#" onclick="event_itemdown()">Down</a></li>
         <li class="disabled"><a href="#">Left</a></li>
         <li class="disabled"><a href="#">Right</a></li>
         <li class="divider"></li>
         <li class="dropdown-header">edit</li>
-        <li><a href="#" onclick="event_itemrename();">Rename</a></li>
-        <li><a href="#" id="menuitem_editordelete" onclick="event_itemdelete();">Delete</a></li>
+        <li><a href="#" onclick="event_itemrename()">Rename</a></li>
+        <li><a href="#" onclick="event_itemdelete()">Delete</a></li>
     </ul>
 </div>
 
@@ -166,6 +172,10 @@
 			<div class="modal-body">
                 <h4>使い方</h4>
                 <p>todo</p>
+                <p>
+                    セーブは 一定時間ごと・画面を閉じる・Jsonモーダルを開く・force-saveを実行 のタイミングで行われます。<br>
+                    間違えて消してしまったら、force-loadを押せば助かるかもしれません。
+                </p>
                 <h4>致命的なバグ</h4>
                 <ul>
                     <li>アイテムを選択できなくなる不具合が存在した(修正済み)。jsonを開き、<code>last</code>の<kbd>{</kbd>の直後に<code>"directory":"/0",</code>を加え、適応すると復帰する。</li>
@@ -174,19 +184,22 @@
                 <div style="display:none;">
                     <h4>version</h4>
                     <dl>
-                        <dt>0.0.0</dt>
-                        <dd>使えないこともない</dd>
-                        <dt>0.1.0</dt>
-                        <dd>アイテムを選択できなくなる不具合の修正。<br>itemの右に編集ボタン追加。<br>rename機能。</dd>
-                        <dt>0.1.1</dt>
-                        <dd>rename時に元の名前が出るようにした。</dd>
+                        <dt>0.2.0</dt>
+                        <dd>アイテムを上下に移動できるよう仮実装。force-load/save機能。reopen機能。ナビゲーションの配置変更。
+                            jsonチェック強化(まだ緩い)。meta:viewportの変更。versionを降順ソート。</dd>
                         <dt>0.1.2</dt>
                         <dd>削除時にアイテムを選択できなくなる不具合の修正の修正。</dd>
+                        <dt>0.1.1</dt>
+                        <dd>rename時に元の名前が出るようにした。</dd>
+                        <dt>0.1.0</dt>
+                        <dd>アイテムを選択できなくなる不具合の修正。<br>itemの右に編集ボタン追加。<br>rename機能。</dd>
+                        <dt>0.0.0</dt>
+                        <dd>使えないこともない</dd>
                     </dl>
                     <h4>実装予定メモ</h4>
                     <ul>
                         <li>Enterで新規ファイル名を確定できるようにする</li>
-                        <li><span class="label label-warning">優先</span>再読み込みの機能</li>
+                        <li>再読み込みの機能</li>
                         <li>子要素</li>
                         <li>itemlistをD&Dで操作できるようにする</li>
                         <li>->スマートフォン等のタップ操作でもできるようなUI</li>

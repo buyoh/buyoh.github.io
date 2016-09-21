@@ -60,6 +60,11 @@ $(document).ready(function(){
 	$("#button_editordelete").on("click",event_itemdelete);
 	$("#button_itemnew").on("click",event_itemnew);
 
+	$("#button_forcesave").on("click",event_forcesave);
+	$("#button_forceload").on("click",event_forceload);
+
+	$("#button_editoropen").on("click",event_editoropen);
+
 	loadConfigFromLocal();
 
 });
@@ -105,7 +110,17 @@ function initializeBorder(){
 function checkJsonConfig(json){
 	// 妥当性のチェック
 	// TODO: 全部
-	if (userconfig.children.length==0){return "json : Abort. no item";}
+	if (!json.last){return "json : Abort. not found 'last'"}
+	if (!json.children){return "json : Abort. not found 'children'"}
+	if (json.children.length==0){return "json : Abort. no item";}
+	if (t = (function(arr,trace){
+			for (var i=0;i<arr.length;i++){
+				if (!arr[i].name && jsarr[i].name!=="") return trace+" not found name";
+				if (!arr[i].data && jsarr[i].data!=="") return trace+" not found data";
+				if (arguments.callee(arr[i].children,trace+arr[i].name+"/")) return trace;
+			}
+			return null;
+		})(json.children,"/") ) return "json : Abort. children -> "+trace;
 	return null;
 }
 
@@ -164,7 +179,6 @@ function recoverEnvironment(){
 
 	var t = userconfig;
 	try{
-		console.log(userconfig.last.directory);
 		(userconfig.last.directory).split("/").forEach(function(item,index,array){
 			if (!item) return;
 			t = t.children[item - 0];
@@ -247,6 +261,38 @@ function removeItemList(directory){
 }
 
 
+function moveUpItem(directory){
+	
+	var t = userconfig ,l,i;
+	(directory).split("/").forEach(function(item,index,array){
+		if (!item) {return;}
+		l = t;
+		i = item - 0;
+		t = l.children[i];
+	});
+	if (i==0) return false;
+	l.children[i] = l.children[i-1];
+	l.children[i-1] = t;
+	return true;
+}
+
+
+function moveDownItem(directory){
+	
+	var t = userconfig ,l,i;
+	(directory).split("/").forEach(function(item,index,array){
+		if (!item) {return;}
+		l = t;
+		i = item - 0;
+		t = t.children[i];
+	});
+	if (i==l.children.length-1) return false;
+	l.children[i] = l.children[i+1];
+	l.children[i+1] = t;
+	return true;
+}
+
+
 function createFormItemNew(){
 	var namedom = $("<input type='text' id='input_itemnew'>");
 	namedom.on("focusout",function(e){
@@ -326,7 +372,7 @@ function remarkSelectedItemList(targetdom){
 	}
 
 	var elem_side = $("#prefab_itemlistedit").clone().removeAttr("id").addClass("itemListBadge").removeClass("hidden");
-	elem_side.on("click",event_itemListBadgeClicked);
+	//elem_side.on("click",event_itemListBadgeClicked);
 	targetdom.filter("li").addClass("active");
 	targetdom.children().filter("a").append(elem_side);
 
@@ -356,9 +402,9 @@ function event_itemListClicked(e){
 }
 
 
-function event_itemListBadgeClicked(e){
-	console.log("badgeclick");
-}
+// function event_itemListBadgeClicked(e){
+// 	
+// }
 
 
 function event_itemListDragged(e,ui){
@@ -397,7 +443,32 @@ function event_itemdelete(e){
 }
 
 
+function event_itemup(e){
+	// TODO:activeなitemが唯一であり、そのitem == itemlistselectedであり、そのitemから呼び出されている
+	if (moveUpItem(itemlistselected.directory)){
+		m = itemlistselected.directory.match(/(^(?:\/[0-9]+)*)\/([0-9]+$)/);
+		itemlistselected.directory = m[1] + "/" + (m[2] - 1);
+
+		applyUserConfig();
+		remarkSelectedItemList();
+	}
+}
+
+
+function event_itemdown(e){
+	// memo:eventItemUp同様
+	if (moveDownItem(itemlistselected.directory)){
+		m = itemlistselected.directory.match(/(^(?:\/[0-9]+)*)\/([0-9]+$)/);
+		itemlistselected.directory = m[1] + "/" + (m[2] - 0 + 1);
+
+		applyUserConfig();
+		remarkSelectedItemList();
+	}
+}
+
+
 function event_openmodaljson(e){
+	console.info(userconfig);
 	saveBackup();
 	$("#textarea_json").val(JSON.stringify(userconfig,null,'  '));
 	$("#div_modaljsonalert").text("").removeClass("bg-danger").removeClass("bg-success");
@@ -424,6 +495,32 @@ function event_applymodaljson(e){
 		}else{
 			alertdom.removeClass("bg-success").addClass("bg-danger");
 		}
+	}
+}
+
+
+function event_editoropen(e){
+	var target = userconfig;
+	(itemlistselected.directory).split("/").forEach(function(item,index,array){
+		if (!item) return;
+		target = target.children[item - 0];
+	});
+	if (target == userconfig) return;
+
+	setValueToEditor(target.data);
+}
+
+
+function event_forceload(e){
+	if (confirm("localstorageからjsonを読み込みなおしますか？")){
+		loadConfigFromLocal();
+	}
+}
+
+
+function event_forcesave(e){
+	if (confirm("localstorageにjsonを保存しますか？\n(このボタンを押さなくても自動的に保存されます)")){
+		saveBackup();
 	}
 }
 
