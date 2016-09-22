@@ -177,6 +177,10 @@ function saveBackup(){
 
 function recoverEnvironment(){
 
+	if (!userconfig.last.directory){
+		userconfig.last.directory = "/0";
+		userconfig.last.data = userconfig.children[0].data;
+	}
 	var t = userconfig;
 	try{
 		(userconfig.last.directory).split("/").forEach(function(item,index,array){

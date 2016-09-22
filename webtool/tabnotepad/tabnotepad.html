@@ -178,12 +178,14 @@
                 </p>
                 <h4>致命的なバグ</h4>
                 <ul>
-                    <li>アイテムを選択できなくなる不具合が存在した(修正済み)。jsonを開き、<code>last</code>の<kbd>{</kbd>の直後に<code>"directory":"/0",</code>を加え、適応すると復帰する。</li>
+                    <li></li>
                 </ul>
                 <button class="btn btn-default" onclick="$(this).next().eq(0).slideToggle()">開発</button>
                 <div style="display:none;">
                     <h4>version</h4>
                     <dl>
+                        <dt>0.2.1</dt>
+                        <dd>userconfig.last.directoryが存在しないjsonでも読み込めるようにした。</dd>
                         <dt>0.2.0</dt>
                         <dd>アイテムを上下に移動できるよう仮実装。force-load/save機能。reopen機能。ナビゲーションの配置変更。
                             jsonチェック強化(まだ緩い)。meta:viewportの変更。versionを降順ソート。</dd>
