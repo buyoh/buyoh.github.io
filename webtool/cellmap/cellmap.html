@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<!--
+ver 0.0.0	試作、軽く使える状態
+
+
+-->
+
+<html>
+
+<head>
+<title>canvas!</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" href="../../common/bootstrap.min.css" />
+<link rel="stylesheet" href="../../common/bootstrap-theme.min.css" />
+<script src="../../common/jquery-3.1.0.min.js"></script>
+<script src="../../common/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="canvas.css" />
+<script src="canvas.js"></script>
+
+</head>
+
+<body>
+
+<div class="container jumbotron">
+	<h2>js-cellmap ver 0.0.0</h2>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="panel panel-default col-xs-2">
+			<canvas id="canvas_main" class="panel panel-default margin_TB" width="480" height="360" class="margin_TB">(´・ω・｀)</canvas>
+			<p><output id="div_notice"></output></p>
+		</div>
+		<div class="panel panel-default col-xs-10">
+			<div>
+				<!--div class="form-control margin_TB my-textarea" style="height:360px;" wrap="on" id="input_code" contenteditable="true"></div-->
+				<textarea class="form-control margin_TB my-textarea" rows="12" wrap="on" id="input_code"></textarea>
+			</div>
+			<p>
+				<input type="button" value="help(てぬき)" class="btn btn-info" data-toggle="modal" data-target="#modal_help" id="button_modalhelp">
+			</p>
+		</div>
+	</div>
+</div>
+
+<div id="modal_help" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="label_modal_help">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="label_modal_help">手抜きなヘルプ</h3>
+			</div>
+			<div class="modal-body">
+				<div class="form-group has-error">実装メモです。</div>
+				<h4>目的・きっかけ</h4>
+				<p>
+					
+				</p>
+			</div>
+			<div class="modal-footer">
+				<input type="button" value="close" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--
+
+
+-->
+
+
+</body>
+
+</html>
