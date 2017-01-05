@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+<title>pitaSW game</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" href="../../common/bootstrap.min.css">
+<script src="../../common/jquery-3.1.0.min.js"></script>
+<script src="../../common/bootstrap.min.js"></script>
+
+
+<script type="text/javascript">
+
+var gameState        = 0;
+var gameField        = null;
+var gameField_left   = null;
+var gameField_right  = null;
+var gameScore_info   = 0;
+var gameScore_danger = 0;
+
+var numberOfCoins = 8;
+var firstTurn = true;
+var aiAlgorithm = 0;
+
+var domField = null;
+var itemFieldButton;
+
+$(document).ready(function(){
+    domField = $("#div_GameButtons");
+
+    itemFieldButton = $("<button class='btn btn-default'></button>");
+    
+    $("#btn_Init").on('click',function(){initialize()});
+    $("#div_options button").on('click',function(){clickOptions($(this));});
+
+    initialize();
+});
+
+function initialize(){
+    gameState = 10;
+    gameField = new Array(numberOfCoins);
+    gameScore_info = 0;
+    gameScore_danger = 0;
+
+    for (var i=0; i < numberOfCoins; i++){
+        gameField[i] = generateCoin();
+    }
+
+    domField.empty();
+    for (var i=0; i < numberOfCoins; i++){
+        var d = itemFieldButton.clone();
+
+        d.on('click',clickedBlock).text(gameField[i]);
+        if (i != 0 && i != numberOfCoins-1) d.addClass('disabled');
+        d.appendTo(domField);
+    }
+    gameField_left = 0;
+    gameField_right = numberOfCoins -1;
+
+    if (firstTurn){
+        chooseByAI();
+    }
+    putInfo("");
+    updateStatus();
+    //$("#div_ScoreCenter").text("");
+}
+
+function clickOptions(dom){
+    var key = dom.val();
+
+    switch(key[0]){
+        case 'n':
+            $("#div_options_NumBtn > .active").removeClass('active');
+            dom.addClass('active');
+            numberOfCoins = 0+key[1];
+            break;
+
+        case 't':
+            $("#div_optons_Turn > .active").removeClass('active');
+            dom.addClass('active');
+            switch(key[1]){
+                case 'f':
+                    firstTurn = false;
+                    break;
+                case 's':
+                    firstTurn = true;
+                    break;
+            }
+            break;
+
+        case 'a':
+            $("#div_options_Algorithm > .active").removeClass('active');
+            dom.addClass('active');
+            aiAlgorithm = key[1]=='g' ? 1 : (key[1]=='r' ? 2 : 0);
+            break;
+    }
+    initialize();
+}
+
+function finish(){
+    gameState = 100;
+
+    if (gameScore_info < gameScore_danger){
+        putInfo("赤色の勝ち！");
+    }else if (gameScore_info > gameScore_danger){
+        putInfo("青色の勝ち！");
+    }else{
+        putInfo("同点！");
+    }
+}
+
+function clickedBlock(){
+    var dom = $(this);
+    var index = dom.index();
+
+    if (gameState != 10) return false;
+
+    if (!choose(index,0)){
+        putInfo("端の要素のみを選ぶことができます");
+        return false;
+    }
+
+    putInfo("");
+
+    if (gameField_left > gameField_right){
+        finish();
+        return true;
+    }
+
+    chooseByAI();
+
+    return true;
+}
+
+function chooseByAI(){
+    var suggest;
+
+    switch(aiAlgorithm){
+        case 0: suggest = suggestByAI_optimize(); break;
+        case 1: suggest = suggestByAI_greedy();   break;
+        case 2: suggest = suggestByAI_random();   break;
+    } 
+
+    choose(suggest,1);
+
+    if (gameField_left > gameField_right){
+        finish();
+    }
+}
+
+function choose(index,player){
+    if (index == gameField_left){
+        gameField_left++;
+    }else if (index == gameField_right){
+        gameField_right--;
+    }else{
+        return false;
+    }
+
+    var doms = domField.children();
+    var dom = doms.eq(index);
+    if (player == 0){
+        dom.removeClass('btn-default');
+        dom.addClass('btn-info');
+        dom.addClass('disabled');
+        gameScore_info += gameField[index];
+    }else if (player == 1){
+        dom.removeClass('btn-default');
+        dom.addClass('btn-danger');
+        dom.addClass('disabled');
+        gameScore_danger += gameField[index];
+    }
+
+    if (gameField_left <= gameField_right){
+        doms.eq(gameField_left).removeClass('disabled');
+        doms.eq(gameField_right).removeClass('disabled');
+    }
+
+    updateStatus();
+
+    return true;
+}
+
+
+function suggestByAI_optimize(){
+    var n = gameField_right - gameField_left + 1;
+    if (n%2==1) return suggestByAI_greedy();
+
+    var a = 0, b = 0;
+    for (var i=0; i < numberOfCoins; i++){
+        if (i%2==0) a+=gameField[i];
+        else        b+=gameField[i];
+    }
+    if (a < b){
+        return gameField_left%2==1 ? gameField_left : gameField_right;
+    }else{
+        return gameField_left%2==0 ? gameField_left : gameField_right;
+    }
+    
+}
+
+function suggestByAI_greedy(){
+    if (gameField[gameField_left] < gameField[gameField_right]){
+        return gameField_right;
+    }else{
+        return gameField_left;
+    }
+}
+function suggestByAI_random(){
+    return Math.random() < 0.5 ? gameField_right : gameField_left;
+}
+
+
+function updateStatus(){
+    $('#div_ScoreInfo').text("" + gameScore_info);
+    $('#div_ScoreDanger').text("" + gameScore_danger);
+}
+
+function putInfo(str){
+    $('#div_GameInfo').text(str);
+}
+
+function generateCoin(){
+    return Math.floor(Math.random() * 98.99)+1;
+}
+
+</script>
+
+<style type="text/css">
+#div_GameButtons{
+    text-align: center;
+}
+#div_GameButtons > div{
+    margin-bottom: 20px;
+}
+</style>
+
+</head>
+
+<body>
+<div class="container">
+
+    <h2>pitaSW game</h2>
+    <div class="panel panel-default">
+		<div class="panel-body">
+            <div id="div_GameStatus" class="row">
+                <div id="div_ScoreInfo" class="col-xs-offset-2 col-xs-3 alert alert-info"></div>
+                <div id="div_ScoreCenter" class="col-xs-2 text-center">Score</div>
+                <div id="div_ScoreDanger" class="col-xs-3 alert alert-danger"></div>
+            </div>
+            <div id="div_GameButtons">
+                <button class="btn btn-default">e</button>
+            </div>
+            <div id="div_GameInfo" class="alert alert-info">aaaaa</div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+		<div class="panel-body">
+            <div id="div_actions">
+                <button class="btn btn-default" id="btn_Init">restart</button>
+            </div>
+            <div id="div_options">
+                <label for="div_options_NumBtn">要素数</label>
+                <div class="btn-group" id="div_options_NumBtn">
+                    <button class="btn btn-default" value="n5">5</button>
+                    <button class="btn btn-default" value="n6">6</button>
+                    <button class="btn btn-default" value="n7">7</button>
+                    <button class="btn btn-default active" value="n8">8</button>
+                    <button class="btn btn-default" value="n9">9</button>
+                </div>
+                <label for="div_optons_Turn">ターン</label>
+                <div class="btn-group" id="div_optons_Turn">
+                    <button class="btn btn-default" value="tf">先攻</button>
+                    <button class="btn btn-default active" value="ts">後攻</button>
+                    <button class="btn btn-default disabled" value="tb" disabled>両方</button>
+                </div>
+                <label for="div_options_Algorithm">アルゴリズム</label>
+                <div class="btn-group" id="div_options_Algorithm">
+                    <button class="btn btn-default active" value="ao">最適</button>
+                    <button class="btn btn-default" value="ag">貪欲</button>
+                    <button class="btn btn-default" value="ar">乱択</button>
+                </div>
+            </div>
+		</div>
+    </div>
+
+    <div class="panel panel-default">
+		<div class="panel-body">
+            <h4>ルール</h4>
+            <ul>
+                <li>端の数字を交互に取り，取ったコインの合計が大きい方が勝ち．</li>
+            </ul>
+            <h4>元ネタ</h4>
+            <ul>
+                <li><a href="http://www6.nhk.or.jp/nhkpr/post/original.html?i=08631&f=prtw" target="_break">大人のピタゴラスイッチ「ピーマンとハトと数学」(2017/01/02)</a></li>
+                <li><a href="http://nlab.itmedia.co.jp/nl/articles/1612/29/news033.html" target="_break">ねとらぼ紹介記事(2016/12/29)</a></li>
+            </ul>
+            <h4>ヒント</h4>
+            <ul>
+                <li>要素数が偶数の時，先攻に必勝法が存在する．</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<p style="margin-top: 300px; text-align: center;"><a href="../">go back index</a></p>
+
+</body>
+</html>
