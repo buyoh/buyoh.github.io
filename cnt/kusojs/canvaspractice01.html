@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>canvas practice 01 -cellimages-</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="stylesheet" href="../../common/bootstrap.min.css">
+        <script src="../../common/jquery-3.1.0.min.js"></script>
+        <script src="../../common/bootstrap.min.js"></script>
+
+        <script type="text/javascript">
+
+var field = ['###############',
+             '#.#.....#...#.#',
+             '#.#.###.#.#.#.#',
+             '#.....#.#.#...#',
+             '###.#.#.#.#####',
+             '#...#.....#.#.#',
+             '#.#.#####.#.#.#',
+             '#.#...###...#.#',
+             '#...#.....#...#',
+             '###############'];
+var fieldWidth = 15;
+var fieldHeight = 10;
+
+var cvContext = null;
+var cvWidth, cvHeight;
+
+var imgpat = null;
+var buffContext = null;
+var buffCanvas = null;
+
+var loading = 0;
+var state = 0;
+
+var timer = null;
+
+var masao = {'x':1,'y':1,'move':0,'animtime':0};
+
+var destinationMap = null;
+
+// 初めに呼び出される
+$(document).ready(function(){
+	var canvasDom = $('#canvas_main')[0];
+	cvContext = canvasDom.getContext('2d');
+	cvWidth  = canvasDom.width;
+	cvHeight = canvasDom.height;
+
+    buffCanvas = $('<canvas></canvas>')[0];
+    buffCanvas.width = cvWidth; buffCanvas.height = cvHeight;
+    buffContext = buffCanvas.getContext('2d');
+    
+    imgpat = new Image();imgpat.src = 'media/pattern_tiny1.gif';
+
+    loading += 1;
+    imgpat.onload = call_loading;
+});
+
+function call_loading(){if (--loading === 0) setup(); }
+
+
+// ファイル読み込みがすべて終わった後，呼び出される．
+function setup(){
+    paint();
+
+    $('#canvas_main').on('click',function(e){
+        clicker(e.offsetX / 32, e.offsetY / 32);
+    });
+    state = 1;
+}
+
+// クリックされた時に呼び出される
+function clicker(x, y){
+    switch (state){
+        case 1: // Idle
+            var goalx = Math.floor(x);
+            var goaly = Math.floor(y);
+            destinationMap = bfs(goalx, goaly, masao.x, masao.y);
+            masao.move = teach();
+            if (masao.move != 0){
+                state = 2;
+                timer = setInterval(function(){interval();}, 50);
+            }
+            break;
+    }
+}
+
+// 定期的に呼び出されたり呼び出されないかもしれない
+function interval(){
+    switch (state){
+        case 0: // NowLoading
+            break;
+        case 1: // Idle
+            break;
+        case 2: // Move Masao
+            masao.animtime += 1;
+            if (masao.animtime >= 8){
+                masao.animtime = 0;
+                if (masao.move == 1)
+                    --masao.x;
+                else if (masao.move == 2)
+                    --masao.y;
+                else if (masao.move == 3)
+                    ++masao.x;
+                else if (masao.move == 4)
+                    ++masao.y;
+
+                masao.move = teach();
+                if (masao.move == 0){
+                    state = 1;
+                    clearInterval(timer);
+                    timer = null;
+                }
+            }
+            break;
+    }
+    paint();
+}
+
+// 正男君に方向を教えてあげる
+function teach(){
+    if (destinationMap === null) return 0;
+    var s = destinationMap[masao.y][masao.x];
+    if (s == 0) return 0;
+    if (destinationMap[masao.y][masao.x-1] == s-1 && field[masao.y][masao.x-1] == '.')
+        return 1;
+    if (destinationMap[masao.y-1][masao.x] == s-1 && field[masao.y-1][masao.x] == '.')
+        return 2;
+    if (destinationMap[masao.y][masao.x+1] == s-1 && field[masao.y][masao.x+1] == '.')
+        return 3;
+    if (destinationMap[masao.y+1][masao.x] == s-1 && field[masao.y+1][masao.x] == '.')
+        return 4;
+    return 0;
+}
+
+// 描画
+function paint(){
+    if (cvContext === null || buffContext === null) return;
+
+    drawBackground();
+
+    var mx = masao.x*32;
+    var my = masao.y*32;
+
+    if (masao.move == 1)
+        mx -= masao.animtime*4;
+    else if (masao.move == 2)
+        my -= masao.animtime*4;
+    else if (masao.move == 3)
+        mx += masao.animtime*4;
+    else if (masao.move == 4)
+        my += masao.animtime*4;
+
+    drawPattern(buffContext, mx, my, 1);
+
+    cvContext.drawImage(buffCanvas, 0, 0);
+}
+
+// ===================
+
+function bfs(startx ,starty, goalx, goaly){
+    var result = new Array(fieldHeight);
+    for (var y = 0; y < fieldHeight; ++y){
+        result[y] = new Array(fieldWidth);
+        for (var x = 0; x < fieldWidth; ++x){
+            result[y][x] = 8901016;
+        }
+    }
+    var q = new Array();
+
+    q.push([starty, startx, 0]);
+    result[starty][startx] = 0;
+
+    while (0 < q.length){
+        var e = q.shift();
+        var y = e[0]; var x = e[1]; var s = e[2];
+        if (y == goaly && x == goalx){
+            break;
+        }
+        ++s;
+        if (field[y][x-1] == '.' && (s < result[y][x-1])){
+            result[y][x-1] = s;
+            q.push([y, x-1, s]);
+        }
+        if (field[y][x+1] == '.' && (s < result[y][x+1])){
+            result[y][x+1] = s;
+            q.push([y, x+1, s]);
+        }
+        if (field[y-1][x] == '.' && (s < result[y-1][x])){
+            result[y-1][x] = s;
+            q.push([y-1, x, s]);
+        }
+        if (field[y+1][x] == '.' && (s < result[y+1][x])){
+            result[y+1][x] = s;
+            q.push([y+1, x, s]);
+        }
+    }
+    return result;
+}
+
+// ===================
+
+// ctx:Contextに座標(x,y)を左上としたno番目のpatternを貼る
+function drawPattern(ctx, x, y ,no){
+    ctx.drawImage(imgpat, (no%8)*32, Math.floor(no/8)*32, 32, 32, x, y, 32, 32);
+}
+
+
+function drawBackground(){
+
+	buffContext.fillStyle="#ffffff";
+	buffContext.fillRect(0, 0, cvWidth, cvHeight);
+
+    for (var y = 0; y < fieldHeight; ++y){
+        for (var x = 0; x < fieldWidth; ++x){
+            var pat = 0;
+            if (field[y][x] == '#') pat = 14;
+            
+            if (pat)
+                drawPattern(buffContext, 32*x, 32*y, pat);
+        }
+    }
+}
+        </script>
+
+    </head>
+    <body>
+        <div class="container">
+            <h3>canvas</h3>
+            <div>
+                <canvas id="canvas_main" class="panel panel-default" width="480" height="320">(´・ω・｀)</canvas>
+            </div>
+        </div>
+    </body>
+</html>
