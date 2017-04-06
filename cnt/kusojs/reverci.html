@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>canvas practice 03 -reverci-</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="stylesheet" href="../../common/bootstrap.min.css">
+        <script src="../../common/jquery-3.1.0.min.js"></script>
+        <script src="../../common/bootstrap.min.js"></script>
+
+        <script type="text/javascript">
+
+var cvContext = null;
+var cvWidth, cvHeight;
+
+var buffContext = null;
+var buffCanvas = null;
+
+var gamerule = {'width' : 8,
+                'height' : 8};
+var display = {'board' : {
+                   'width' : 320,
+                   'height' : 320,
+                   'offsetX' : 20,
+                   'offsetY' : 20,
+                   'padding' : 0.25
+               },
+               'color' : {
+                   'background' : '#051',
+                   'border' : '#FFF',
+                   'stoneWhiteFill' : '#FFF',
+                   'stoneWhiteStroke' : '#888',
+                   'stoneBlackFill' : '#000',
+                   'stoneBlackStroke' : '#888',
+                   'cellHintsStroke' : '#8F3'
+               }};
+var game = {'field' : [[ 0, 0, 0, 0, 0, 0, 0, 0],
+                       [ 0, 0, 0, 0, 0, 0, 0, 0],
+                       [ 0, 0, 0, 0, 0, 0, 0, 0],
+                       [ 0, 0, 0,-1, 1, 0, 0, 0],
+                       [ 0, 0, 0, 1,-1, 0, 0, 0],
+                       [ 0, 0, 0, 0, 0, 0, 0, 0],
+                       [ 0, 0, 0, 0, 0, 0, 0, 0],
+                       [ 0, 0, 0, 0, 0, 0, 0, 0]],
+            'turn' : 1};
+
+var work = {'hints' : null};
+
+// 初めに呼び出される
+$(document).ready(function(){
+	var canvasDom = $('#canvas_main')[0];
+	cvContext = canvasDom.getContext('2d');
+	cvWidth  = canvasDom.width;
+	cvHeight = canvasDom.height;
+
+    buffCanvas = $('<canvas></canvas>')[0];
+    buffCanvas.width = cvWidth; buffCanvas.height = cvHeight;
+    buffContext = buffCanvas.getContext('2d');
+
+    $('#canvas_main').on('contextmenu',function(e){clickready(e);return false;});
+    $('#canvas_main').on('click',clickready);
+    $('#canvas_main').on('mousemove',function(e){});
+
+    updateHints();
+    paint();
+});
+
+function clickready(e){ // e.button : 0=left, 1=right
+    var x = e.offsetX;
+    var y = e.offsetY;
+    if (display.board.offsetX <= x && x < display.board.offsetX + display.board.width
+        && display.board.offsetY <= y && y < display.board.offsetY + display.board.height){
+        click_board((x-display.board.offsetX)*gamerule.width/display.board.width,
+                    (y-display.board.offsetY)*gamerule.height/display.board.height,e.button);
+    }
+}
+
+function click_board(x,y,btn){
+    var lx = Math.floor(x);
+    var ly = Math.floor(y);
+    game.field[ly][lx] = (game.field[ly][lx] + 2) % 3 - 1;
+    updateHints();
+    paint();
+}
+
+function updateInfomation(){
+    var str = "";
+    $('#infomation').val(str);
+}
+
+function updateHints(){
+    work.hints = createHintsField(game.field, game.turn);
+}
+
+// 描画呼び出し
+function paint(){
+	buffContext.fillStyle = '#FFF';
+	buffContext.fillRect(0, 0, cvWidth, cvHeight);
+    drawGame();
+    cvContext.drawImage(buffCanvas, 0, 0);
+}
+
+function drawGame(){
+    var x,y;
+    var nw,nh,w,h,ox,oy,srad;
+    nw = gamerule.width;
+    nh = gamerule.height;
+    w = display.board.width;
+    h = display.board.height;
+    ox = display.board.offsetX;
+    oy = display.board.offsetY;
+    srad = Math.min(w/nw,h/nh) * (1 - display.board.padding) / 2;
+
+	buffContext.fillStyle = display.color.background;
+	buffContext.fillRect(0, 0, cvWidth, cvHeight);
+
+    buffContext.strokeStyle = display.color.border;
+    for (y = 0; y < nh; ++y){
+        for (x = 0; x < nw; ++x){
+            buffContext.strokeRect(ox+w*x/nw, oy+h*y/nh, (w)/nw, (h)/nh);
+        }
+    }
+
+    for (y = 0; y < nh; ++y){
+        for (x = 0; x < nw; ++x){
+            if (game.field[y][x] !== 0){
+                if (game.field[y][x] == 1){
+                    buffContext.fillStyle = display.color.stoneBlackFill;
+                    buffContext.strokeStyle = display.color.stoneBlackStroke;
+                }else if (game.field[y][x] == -1){
+                    buffContext.fillStyle = display.color.stoneWhiteFill;
+                    buffContext.strokeStyle = display.color.stoneWhiteStroke;
+                }
+                buffContext.beginPath();
+                buffContext.arc(ox+w*(2*x+1)/nw/2, oy+h*(2*y+1)/nh/2, srad,0,2*Math.PI);
+                buffContext.fill();
+                buffContext.beginPath();
+                buffContext.arc(ox+w*(2*x+1)/nw/2, oy+h*(2*y+1)/nh/2, srad,0,2*Math.PI);
+                buffContext.stroke();
+
+            }else{
+                if (work.hints[y][x] == true){
+                    buffContext.strokeStyle = display.color.cellHintsStroke;
+                    buffContext.strokeRect(ox+w*x/nw+((w)/nw/2-srad), oy+h*y/nh+((h)/nh/2-srad), srad*2, srad*2);
+                }
+            }
+        }
+    }
+}
+
+function createHintsField(field,turn){
+    var result_hints = new Array(gamerule.height);
+    var i,x,y,l,r;
+    for (y = 0; y < gamerule.height; ++y){
+        result_hints[y] = new Array(gamerule.width);
+        for (x = 0; x < gamerule.width; ++x){
+            result_hints[y][x] = false;
+        }
+    }
+    // yoko
+    for (y = 0; y < gamerule.height; ++y){
+        l = 0;
+        for (r = 0; r < gamerule.width; ++r){
+            if (field[y][r] === 0){ // empty
+                if (r-l > 1 & field[y][l] === turn){
+                    result_hints[y][r] = true;
+                }
+                l = r;
+            }else if (field[y][r] === turn){ // own
+                if (r-l > 1 & field[y][l] === 0){
+                    result_hints[y][l] = true;
+                }
+                l = r;
+            }
+        }
+    }
+    //tate
+    for (x = 0; x < gamerule.width; ++x){
+        l = 0;
+        for (r = 0; r < gamerule.height; ++r){
+            if (field[r][x] === 0){ // empty
+                if (r-l > 1 & field[l][x] === turn){
+                    result_hints[r][x] = true;
+                }
+                l = r;
+            }else if (field[r][x] === turn){ // own
+                if (r-l > 1 & field[l][x] === 0){
+                    result_hints[l][x] = true;
+                }
+                l = r;
+            }
+        }
+    }
+    // migishita
+    for (i = 3-gamerule.width; i < gamerule.height - 2; ++i){
+        l = Math.max(0,-i);
+        for (r = l; r < gamerule.width && r+i < gamerule.height; ++r){
+            if (field[i+r][r] === 0){ // empty
+                if (r-l > 1 & field[i+l][l] === turn){
+                    result_hints[i+r][r] = true;
+                }
+                l = r;
+            }else if (field[i+r][r] === turn){ // own
+                if (r-l > 1 & field[i+l][l] === 0){
+                    result_hints[i+l][l] = true;
+                }
+                l = r;
+            }
+        }
+    }
+    // migiue
+    for (i = 2; i < gamerule.height + gamerule.width - 3; ++i){
+        l = Math.max(0,i-gamerule.height+1);
+        for (r = l; r < gamerule.width && 0 <= i-r; ++r){
+            if (field[i-r][r] === 0){ // empty
+                if (r-l > 1 & field[i-l][l] === turn){
+                    result_hints[i-r][r] = true;
+                }
+                l = r;
+            }else if (field[i-r][r] === turn){ // own
+                if (r-l > 1 & field[i-l][l] === 0){
+                    result_hints[i-l][l] = true;
+                }
+                l = r;
+            }
+        }
+    }
+    return result_hints;
+}
+
+
+        </script>
+
+    </head>
+    <body>
+        <div class="container">
+            <h3>canvas</h3>
+            <div class="row">
+                <div class="col-md-8">
+                    <canvas id="canvas_main" class="panel panel-default" width="480" height="360">🍣</canvas>
+                </div>
+                <div class="col-md-4">
+                    <textarea id="infomation" class="form-control" style="width:400px;height:300px;"></textarea>
+                </div>
+            </div>
+            <div>
+                <button class="btn">restart</button>
+            </div>
+        </div>
+    </body>
+</html>
