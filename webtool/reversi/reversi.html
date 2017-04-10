@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>canvas practice 03 -Reversi-</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="stylesheet" href="../../common/bootstrap.min.css">
+        <script src="../../common/jquery-3.1.0.min.js"></script>
+        <script src="../../common/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="reversi.css">
+        <script src="reversi.js"></script>
+        
+        <script src="ai/randomAI.js"></script>
+
+    </head>
+    <body>
+        <div class="container">
+            <h2 class="text-center">Reversi</h2>
+            <div class="row">
+                <div class="col-md-3 panel panel-default">
+                    <h4>Game Settings</h4>
+                    <dl class="">
+                        <dt>
+                            <label for="sel_type_black">先手(黒)</label>
+                        </dt>
+                        <dd>
+                            <select id="sel_type_black" class="form-control">
+                                <option value="" selected>ユーザ</option>
+                            </select>
+                        </dd>
+                        <dt>
+                            <label for="sel_type_white">後手(白)</label>
+                        </dt>
+                        <dd>
+                            <select id="sel_type_white" class="form-control">
+                                <option value="">ユーザ</option>
+                            </select>
+                        </dd>
+                        <dt>
+                            <label for="sel_board">ボード</label>
+                        </dt>
+                        <dd>
+                            <select id="sel_board" class="form-control">
+                                <option value="d">default(8x8)</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <p class="form-inline">
+                        <button class="btn" onclick="button_restart()">restart</button>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <canvas id="canvas_main" class="panel panel-default" width="480" height="360">🍣</canvas>
+                </div>
+                <div class="col-md-3 panel panel-default">
+                    <textarea id="infomation" class="form-control" style="width:200px;height:300px;"></textarea>
+                </div>
+            </div>
+            <div>
+                ぬるぽ
+            </div>
+        </div>
+    </body>
+</html>
