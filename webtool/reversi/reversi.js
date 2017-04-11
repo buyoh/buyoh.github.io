@@ -37,8 +37,8 @@ var display = {'board' : {
                }};
 var gamerule = {'width' : 8,
                 'height' : 8,
-                'black' : 'u',
-                'white' : 'a0'};
+                'black' : null,
+                'white' : null};
 
 var game = {'field' : null,
             'turn' : 1};
@@ -59,7 +59,7 @@ var ailist = [];
 
 // 初めに呼び出される
 $(document).ready(function(){
-	var canvasDom = $('#canvas_main')[0];
+	let canvasDom = $('#canvas_main')[0];
 	cvContext = canvasDom.getContext('2d');
 	cvWidth  = canvasDom.width;
 	cvHeight = canvasDom.height;
@@ -72,13 +72,15 @@ $(document).ready(function(){
     $('#canvas_main').on('click',clickready);
     $('#canvas_main').on('mousemove',function(e){});
 
+
+    let flg_selectedAi = false;
     for (name in ailist){
         $('#sel_type_black').append('<option value="'+name+'">AI ['+name+']</option>');
         $('#sel_type_white').append('<option value="'+name+'">AI ['+name+']</option>');
-    }
-    if (1 <= ailist.length){
-        console.log($('#sel_type_black > option[value!=""]').eq(0));
-        $('#sel_type_black > option[value!=""]').eq(0).attr('selected','selected');
+        if (!flg_selectedAi){
+            flg_selectedAi = true;
+            $('#sel_type_white > option[value!=\'\']').eq(0).attr('selected','selected');
+        }
     }
 
     initialize_game();
@@ -100,9 +102,9 @@ function initialize_game(){
 
     // initialize game
     game.field = new Array(gamerule.height);
-    for (var y = 0; y < gamerule.height; ++y){
+    for (let y = 0; y < gamerule.height; ++y){
         game.field[y] = new Array(gamerule.width);
-        for (var x = 0; x < gamerule.width; ++x){
+        for (let x = 0; x < gamerule.width; ++x){
             if ((x==gamerule.width/2-1||x==gamerule.width/2)&&(y==gamerule.height/2-1||y==gamerule.height/2)){
                 game.field[y][x] = x == y ? -1 : 1;
             }else{
@@ -122,7 +124,7 @@ function continueGame(twice = false){
     game.turn = -game.turn;
     work.hints = createHintsField(game.field, game.turn);
 
-    var puttable = work.hints.reduce(function(s,e){return s+e.reduce(function(s,e){return s+e;});},0);
+    let puttable = work.hints.reduce(function(s,e){return s+e.reduce(function(s,e){return s+e;});},0);
 
     if (puttable == 0){
         if (twice){
@@ -146,7 +148,7 @@ function continueGame(twice = false){
 function callNextPlayer(){
     work.state = 20; // thinking
 
-    var ctrl = 'u';
+    let ctrl = null;
     if (game.turn === 1){
         ctrl = gamerule.black;
     }else if (game.turn === -1){
@@ -159,7 +161,7 @@ function callNextPlayer(){
     }else{
         // AI
         setTimeout(function(){
-            var pos = ctrl.action(game.field, game.turn, work.hints);
+            let pos = ctrl.action(game.field, game.turn, work.hints);
             // todo: check
             setupEffect(20,{'oldField':copyMatrix(game.field)},function(){
                 continueGame();
@@ -174,8 +176,7 @@ function callNextPlayer(){
 
 function quitGame(){
     removeAllEffect();
-    console.log('おしまい！');
-    alert('おしまい！');
+    pushAlert('おしまい！');
 }
 
 
@@ -192,8 +193,8 @@ function button_restart(){
 
 
 function clickready(e){ // e.button : 0=left, 1=right
-    var x = e.offsetX;
-    var y = e.offsetY;
+    let x = e.offsetX;
+    let y = e.offsetY;
     if (display.board.offsetX <= x && x < display.board.offsetX + display.board.width
         && display.board.offsetY <= y && y < display.board.offsetY + display.board.height){
         click_board((x-display.board.offsetX)*gamerule.width/display.board.width,
@@ -203,8 +204,8 @@ function clickready(e){ // e.button : 0=left, 1=right
 
 
 function click_board(x,y,button){
-    var lx = Math.floor(x);
-    var ly = Math.floor(y);
+    let lx = Math.floor(x);
+    let ly = Math.floor(y);
     if (button === 2){
         game.field[ly][lx] = (game.field[ly][lx] + 2) % 3 - 1;
         work.hints = createHintsField(game.field, game.turn);
@@ -224,17 +225,18 @@ function click_board(x,y,button){
 
 
 function updateInfomation(){
-    var str = "";
-    var score = 0;
-    var x,y;
+    let str = "";
+    let score = 0;
+    let x,y;
     for (y = 0; y < gamerule.height; ++y){
         for (x = 0; x < gamerule.width; ++x){
             score += game.field[y][x];
         }
     }
-    str+=game.turn == 1 ? "先手:黒\n" : "後手:白\n";
-    str+=`スコア差(黒-白) : ${score}\n`;
-    $('#infomation').val(str);
+    $('#div_dispturn').text(game.turn == 1 ? "先手:黒\n" : "後手:白\n");
+    $('#div_dispscore').text(`スコア差(黒-白) : ${score}\n`);
+    
+    $('#infomation').val('');
 }
 
 
@@ -247,12 +249,27 @@ function removeAllEffect(){
 }
 
 
+function pushAlert(text, classes=['alert-success'], isHtmlText=false){
+    let dom = $('<div class="alert"></div>');
+
+    if (isHtmlText)
+        dom.html(text);
+    else
+        dom.text(text);
+    classes.forEach(function(val,idx,arr){dom.addClass(val);});
+
+    dom.on('click',function(){ $(this).slideUp('slow', function(){$(this).remove();}) });
+
+    $('#div_alertspace').append(dom);
+}
+
+
 function setupEffect(type, data, proc){ // {'type','timeLeft','onpaint','onfinish':proc}
     switch (type){
         case 20: // flipping stone anim
         effect.push({'type':type,'timeLeft':1000,'data':data,'onpaint':function(context,eff){
-            var x,y;
-            var nw,nh,w,h,ox,oy,srad,arc;
+            let x,y;
+            let nw,nh,w,h,ox,oy,srad,arc;
             nw = gamerule.width;
             nh = gamerule.height;
             w = display.board.width;
@@ -292,8 +309,8 @@ function setupEffect(type, data, proc){ // {'type','timeLeft','onpaint','onfinis
 function effectInterval(){
     // TODO: 時間計測? nowtime-begintime
     paint();
-    for (var i = 0; i < effect.length; ++i){
-        var elem = effect[i];
+    for (let i = 0; i < effect.length; ++i){
+        let elem = effect[i];
         elem.timeLeft -= effect_animInterval;
         if (elem.timeLeft <= 0){
             setTimeout(elem.onfinish(),0);
@@ -324,8 +341,8 @@ function paint(){
 
 
 function drawGame(){
-    var x,y;
-    var nw,nh,w,h,ox,oy,srad;
+    let x,y;
+    let nw,nh,w,h,ox,oy,srad;
     nw = gamerule.width;
     nh = gamerule.height;
     w = display.board.width;
@@ -379,7 +396,7 @@ function putStone(field,turn,x,y){
         if (x < 0 || y < 0 || gamerule.width <= x || gamerule.height <= y) return false;
         if (field[y][x] === 0) return false;
         if (field[y][x] === turn) return 0;
-        var r = dfs(x+vx,y+vy,turn,vx,vy);
+        let r = dfs(x+vx,y+vy,turn,vx,vy);
         if (r !== false){
             field[y][x] = turn;
             return r + 1;
@@ -394,9 +411,10 @@ function putStone(field,turn,x,y){
 }
 
 
+// 置くことができるセルは1以上の値
 function createHintsField(field,turn){
-    var result_hints = new Array(gamerule.height);
-    var i,x,y,l,r;
+    let result_hints = new Array(gamerule.height);
+    let i,x,y,l,r;
     for (y = 0; y < gamerule.height; ++y){
         result_hints[y] = new Array(gamerule.width);
         for (x = 0; x < gamerule.width; ++x){
@@ -476,8 +494,8 @@ function createHintsField(field,turn){
 
 
 function copyMatrix(mat){
-    var result = new Array(mat.length);
-    for (var i = 0; i < mat.length; ++i){
+    let result = new Array(mat.length);
+    for (let i = 0; i < mat.length; ++i){
         result[i] = mat[i].slice();
     }
     return result;

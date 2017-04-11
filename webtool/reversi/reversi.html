@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>canvas practice 03 -Reversi-</title>
+        <title>-Reveeersi-</title>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,6 +15,7 @@
         <script src="reversi.js"></script>
         
         <script src="ai/randomAI.js"></script>
+        <script src="ai/greedy_d1AI.js"></script>
 
     </head>
     <body>
@@ -54,15 +55,45 @@
                     </p>
                 </div>
                 <div class="col-md-6">
-                    <canvas id="canvas_main" class="panel panel-default" width="480" height="360">🍣</canvas>
+                    <div class="text-center">
+                        <canvas id="canvas_main" class="panel panel-default" width="480" height="360">🍣</canvas>
+                    </div>
+                    <div id="div_alertspace">
+                    </div>
                 </div>
                 <div class="col-md-3 panel panel-default">
+                    <p>
+                        <div id="div_dispturn" class="well well-sm">先手/後手</div>
+                        <div id="div_dispscore" class="well well-sm">score here</div>
+                    </p>
                     <textarea id="infomation" class="form-control" style="width:200px;height:300px;"></textarea>
                 </div>
             </div>
-            <div>
-                ぬるぽ
+
+            <div class="row">
+                <div class="col-md-6">
+                    <textarea id="textarea_leftlog" class="form-control container-fluid" wrap="off" rows="6"></textarea>
+                </div>
+                <div class="col-md-6">
+                    <textarea id="textarea_rightlog" class="form-control container-fluid" wrap="off" rows="6"></textarea>
+                </div>
+            </div>
+
+            
+            <div class="row">
+                <div class="col-md-offset-6 col-md-6">
+                    <p class="text-right"><a onclick="$('#div_versionhistory').slideToggle();">version 0.2.0</a></p>
+                    <div id="div_versionhistory" class="well well-sm" style="display:none;">
+                        <dl class="dl-horizontal">
+                            <dt>version</dt>
+                            <dd>detail</dd>
+                            <dt>0.2.0</dt>
+                            <dd>アニメーションなどpractice用からそれなりの改良を加えた</dd>
+                        </dl>
+                    </div>
+                </div>
             </div>
         </div>
+        <div style="height:200px;"></div>
     </body>
 </html>

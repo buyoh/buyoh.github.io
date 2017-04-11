@@ -1,6 +1,6 @@
 
 // ===============================
-// reversi RANDOM AI
+// reversi Greedy AI (max-score , depth 1)
 // ===============================
 appendAI(function(){
 
@@ -19,13 +19,19 @@ appendAI(function(){
 
         // x,yを石を置きたい座標としたハッシュ{'x':x, 'y':y}を出力する．
 
-        let arr=[];
+        let answer = [];
+        let answer_s = 0;
         for (let y = 0; y < gamerule.height; ++y){
             for (let x = 0;x < gamerule.width; ++x){
-                if (hints[y][x]) arr.push({'y':y,'x':x});
+                if (answer_s < hints[y][x]){
+                    answer_s = hints[y][x];
+                    answer = [{'x':x,'y':y}];
+                }else if (answer_s === hints[y][x]){
+                    answer.push({'x':x,'y':y});
+                }
             }
         }
-        return arr[Math.floor(Math.random()*arr.length)];
+        return answer[Math.floor(Math.random()*answer.length)];
     }
 
-},'random');
+},'greedy d1-s');
