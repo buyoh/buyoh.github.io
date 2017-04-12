@@ -1,7 +1,8 @@
 
 // ===============================
-// reversi Greedy AI (max-score , depth 1)
+// reversi Greedy AI (max-score , depth 0.5)
 // ===============================
+// 今置いたスコア を最大化
 appendAI(function(){
 
     this.setup = function(gamerule){

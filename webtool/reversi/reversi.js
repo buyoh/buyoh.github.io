@@ -11,7 +11,7 @@ TODO
 
 */
 
-var check_vertion = 'abc';
+const check_vertion = 'abc';
 
 var cvContext = null;
 var cvWidth, cvHeight;
@@ -19,7 +19,7 @@ var cvWidth, cvHeight;
 var buffContext = null;
 var buffCanvas = null;
 
-var display = {'board' : {
+const display = {'board' : {
                    'width' : 320,
                    'height' : 320,
                    'offsetX' : 20,
@@ -39,6 +39,7 @@ var gamerule = {'width' : 8,
                 'height' : 8,
                 'black' : null,
                 'white' : null};
+var gamestyle = {'skipAnim' : false};
 
 var game = {'field' : null,
             'turn' : 1};
@@ -51,7 +52,7 @@ var work = {'hints' : null,
 var effect = [];
 // effect.elem => {'type','timeLeft','onpaint':proc,'onfinish':proc}
 var effect_timerID = null;
-var effect_animInterval = 50;
+const effect_animInterval = 50;
 
 // work.state ... 0=>ready , 20=>thinking , 21=>userInput , 25=>animationTime , 50=>finish
 
@@ -185,6 +186,12 @@ function appendAI(ai, name){
 }
 
 
+function changedStyleSettings(){
+    gamestyle = {'skipAnim' : $('#chk_skipAnim').is(':checked')
+                };
+}
+
+
 function button_restart(){
     initialize_game();
     updateInfomation();
@@ -227,14 +234,16 @@ function click_board(x,y,button){
 function updateInfomation(){
     let str = "";
     let score = 0;
+    let sum = 0;
     let x,y;
     for (y = 0; y < gamerule.height; ++y){
         for (x = 0; x < gamerule.width; ++x){
             score += game.field[y][x];
+            sum += Math.abs(game.field[y][x]);
         }
     }
     $('#div_dispturn').text(game.turn == 1 ? "先手:黒\n" : "後手:白\n");
-    $('#div_dispscore').text(`スコア差(黒-白) : ${score}\n`);
+    $('#div_dispscore').text(`黒:${(sum+score)/2} 白:${(sum-score)/2} 差(黒-白):${score}\n`);
     
     $('#infomation').val('');
 }
@@ -259,6 +268,8 @@ function pushAlert(text, classes=['alert-success'], isHtmlText=false){
     classes.forEach(function(val,idx,arr){dom.addClass(val);});
 
     dom.on('click',function(){ $(this).slideUp('slow', function(){$(this).remove();}) });
+
+    dom.append($('<button type="button" class="close" data-dismiss="alert">&times;</button>'));
 
     $('#div_alertspace').append(dom);
 }
@@ -311,7 +322,7 @@ function effectInterval(){
     paint();
     for (let i = 0; i < effect.length; ++i){
         let elem = effect[i];
-        elem.timeLeft -= effect_animInterval;
+            elem.timeLeft -= (gamestyle.skipAnim) ? (effect_animInterval * 8) : effect_animInterval;
         if (elem.timeLeft <= 0){
             setTimeout(elem.onfinish(),0);
             effect.splice(i,1);

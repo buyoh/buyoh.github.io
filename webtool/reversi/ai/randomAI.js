@@ -2,6 +2,7 @@
 // ===============================
 // reversi RANDOM AI
 // ===============================
+// 完全ランダム
 appendAI(function(){
 
     this.setup = function(gamerule){

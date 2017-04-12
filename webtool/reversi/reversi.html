@@ -16,43 +16,68 @@
         
         <script src="ai/randomAI.js"></script>
         <script src="ai/greedy_d1AI.js"></script>
+        <script src="ai/greedy_d2AI.js"></script>
 
     </head>
     <body>
         <div class="container">
             <h2 class="text-center">Reversi</h2>
             <div class="row">
-                <div class="col-md-3 panel panel-default">
-                    <h4>Game Settings</h4>
-                    <dl class="">
-                        <dt>
-                            <label for="sel_type_black">先手(黒)</label>
-                        </dt>
-                        <dd>
-                            <select id="sel_type_black" class="form-control">
-                                <option value="" selected>ユーザ</option>
-                            </select>
-                        </dd>
-                        <dt>
-                            <label for="sel_type_white">後手(白)</label>
-                        </dt>
-                        <dd>
-                            <select id="sel_type_white" class="form-control">
-                                <option value="">ユーザ</option>
-                            </select>
-                        </dd>
-                        <dt>
-                            <label for="sel_board">ボード</label>
-                        </dt>
-                        <dd>
-                            <select id="sel_board" class="form-control">
-                                <option value="d">default(8x8)</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <p class="form-inline">
-                        <button class="btn" onclick="button_restart()">restart</button>
-                    </p>
+                <div class="col-md-3">
+                    <div class="container-fluid panel panel-default">
+                        <h4>Game Settings</h4>
+                        <dl class="">
+                            <dt>
+                                <label for="sel_type_black">先手(黒)</label>
+                            </dt>
+                            <dd>
+                                <select id="sel_type_black" class="form-control">
+                                    <option value="" selected>ユーザ</option>
+                                </select>
+                            </dd>
+                            <dt>
+                                <label for="sel_type_white">後手(白)</label>
+                            </dt>
+                            <dd>
+                                <select id="sel_type_white" class="form-control">
+                                    <option value="">ユーザ</option>
+                                </select>
+                            </dd>
+                            <dt>
+                                <label for="sel_board">ボード</label>
+                            </dt>
+                            <dd>
+                                <select id="sel_board" class="form-control">
+                                    <option value="d">default(8x8)</option>
+                                    <option value="epic" disabled>tiny(6x6)</option>
+                                    <option value="epic" disabled>large(10x10)</option>
+                                    <option value="epic" disabled>epic(12x12)</option>
+                                    <option value="epic" disabled>lunatic(4x16)</option>
+                                </select>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="container-fluid panel panel-default">
+                        <h4>Style Settings</h4>
+                        <dl>
+                            <dt>
+                                <label for="sel_anim">アニメーション</label>
+                            </dt>
+                            <dd>
+                                <select id="sel_anim" class="form-control">
+                                    <option value="arc1">arc(normal)</option>
+                                </select>
+                                <div class="checkbox">
+                                    <label for="chk_skipAnim"><input id="chk_skipAnim" type="checkbox" onchange="changedStyleSettings()">高速化</label>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="container-fluid panel panel-default">
+                        <p class="form-inline">
+                            <button class="btn btn-primary" onclick="button_restart()">restart</button>
+                        </p>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
@@ -82,13 +107,15 @@
             
             <div class="row">
                 <div class="col-md-offset-6 col-md-6">
-                    <p class="text-right"><a onclick="$('#div_versionhistory').slideToggle();">version 0.2.0</a></p>
+                    <p class="text-right"><a onclick="$('#div_versionhistory').slideToggle();">version 0.2.1</a></p>
                     <div id="div_versionhistory" class="well well-sm" style="display:none;">
                         <dl class="dl-horizontal">
                             <dt>version</dt>
                             <dd>detail</dd>
                             <dt>0.2.0</dt>
                             <dd>アニメーションなどpractice用からそれなりの改良を加えた</dd>
+                            <dt>0.2.1</dt>
+                            <dd>高速化スイッチ，AI追加</dd>
                         </dl>
                     </div>
                 </div>
