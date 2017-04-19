@@ -12,11 +12,12 @@ appendAI(function(){
 
     }
 
-    this.action = function(field, turn, hints){
+    this.action = function(field, turn, hints, callback){
         // 番が回ってきたときに実行するコードを書く．
         // field : 二次元配列(field[y][x] 1 -> 黒, 0 -> 空 , -1 -> 白)
         // turn : 自分の石の色(1 or -1)
         // hints : 二次元配列(hints[y][x] === 置くことができる?)
+        // callback : 処理が終わったら呼び出す
 
         // x,yを石を置きたい座標としたハッシュ{'x':x, 'y':y}を出力する．
 
@@ -26,7 +27,13 @@ appendAI(function(){
                 if (hints[y][x]) arr.push({'y':y,'x':x});
             }
         }
-        return arr[Math.floor(Math.random()*arr.length)];
+
+        callback( arr[Math.floor(Math.random()*arr.length)] );
+    }
+
+    this.getProgress = function(){
+        // AIの思考進捗を[0,1]の範囲で返す．
+        return 1.0;
     }
 
 },'random');

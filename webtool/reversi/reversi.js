@@ -161,8 +161,8 @@ function callNextPlayer(){
 
     }else{
         // AI
-        setTimeout(function(){
-            let pos = ctrl.action(game.field, game.turn, work.hints);
+        setAIWatchTimer();
+        ctrl.action(game.field, game.turn, work.hints, function(pos){
             // todo: check
             setupEffect(20,{'oldField':copyMatrix(game.field)},function(){
                 continueGame();
@@ -170,7 +170,8 @@ function callNextPlayer(){
             putStone(game.field, game.turn, pos.x, pos.y);
             updateInfomation();
             paint();
-        },0);
+            clearAIWatchTimer();
+        });
     }
 }
 
@@ -272,6 +273,30 @@ function pushAlert(text, classes=['alert-success'], isHtmlText=false){
     dom.append($('<button type="button" class="close" data-dismiss="alert">&times;</button>'));
 
     $('#div_alertspace').append(dom);
+}
+
+
+var aiThinking_timerID = null;
+
+function setAIWatchTimer(){
+    if (aiThinking_timerID !== null) clearAIWatchTimer();
+    aiThinking_timerID = setInterval(procAIWatchTimer, 280);
+    $('#progress_AIthinking').css('width','0').parent().addClass('progress-striped').addClass('active');
+}
+function procAIWatchTimer(){
+    if (work.state === 20){
+        let ctrl = game.turn === 1 ? gamerule.black : gamerule.white;
+        if (ctrl !== null){
+            let dom = $('#progress_AIthinking').css('width',''+(ctrl.getProgress()*100)+'%');
+        }
+    }
+}
+function clearAIWatchTimer(){
+    if (aiThinking_timerID !== null){
+        clearInterval(aiThinking_timerID);
+        $('#progress_AIthinking').css('width','100%').parent().removeClass('progress-striped').removeClass('active');
+    }
+    
 }
 
 

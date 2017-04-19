@@ -72,6 +72,18 @@
                                     <label for="chk_skipAnim"><input id="chk_skipAnim" type="checkbox" onchange="changedStyleSettings()">高速化</label>
                                 </div>
                             </dd>
+                            <dt>
+                                <label for="sel_color">色調</label>
+                            </dt>
+                            <dd>
+                                <select id="sel_color" class="form-control">
+                                    <option value="basic">basic</option>
+                                    <option value="white" disabled>white</option>
+                                    <option value="blue" disabled>blue</option>
+                                    <option value="monokai" disabled>monokai</option>
+                                    <option value="redwhite" disabled>omedetha</option>
+                                </select>
+                            </dd>
                         </dl>
                     </div>
                     <div class="container-fluid panel panel-default">
@@ -91,6 +103,10 @@
                     <p>
                         <div id="div_dispturn" class="well well-sm">先手/後手</div>
                         <div id="div_dispscore" class="well well-sm">score here</div>
+                        <div class="progress">
+                            <div id="progress_AIthinking" class="progress-bar" role="progressbar" style="width: 0%;" alt="AI思考時間">
+                            </div>
+                        </div>
                     </p>
                     <textarea id="infomation" class="form-control" style="width:200px;height:300px;"></textarea>
                 </div>
@@ -108,7 +124,7 @@
             
             <div class="row">
                 <div class="col-md-offset-6 col-md-6">
-                    <p class="text-right"><a onclick="$('#div_versionhistory').slideToggle();">version 0.2.1</a></p>
+                    <p class="text-right"><a onclick="$('#div_versionhistory').slideToggle();">version 0.2.3</a></p>
                     <div id="div_versionhistory" class="well well-sm" style="display:none;">
                         <dl class="dl-horizontal">
                             <dt>version</dt>
@@ -117,6 +133,10 @@
                             <dd>アニメーションなどpractice用からそれなりの改良を加えた</dd>
                             <dt>0.2.1</dt>
                             <dd>高速化スイッチ，AI追加</dd>
+                            <dt>0.2.2</dt>
+                            <dd>AI追加</dd>
+                            <dt>0.2.3</dt>
+                            <dd>AI進捗可視化，CPUスレッドを譲れるようにした(内部実装)</dd>
                         </dl>
                     </div>
                 </div>

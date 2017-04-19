@@ -5,22 +5,27 @@
 // 確率的に良いスコアの手を選択
 appendAI(function(){
 
-
-    const tryCount = 600; // 試行回数
+    this.tryCount = 1000; // 試行回数
+    this.perLoopCount = 50;
+    this.currentCount = this.tryCount;
 
     this.setup = function(gamerule){
         // 開始時に実行するコードを書く．
         // gamerule = {width : Number , height : Number}
         // グローバル変数のgameruleと同じものが与えられる．
+
     }
 
-    this.action = function(field, turn, hints){
+    this.action = function(field, turn, hints, callback){
         // 番が回ってきたときに実行するコードを書く．
         // field : 二次元配列(field[y][x] 1 -> 黒, 0 -> 空 , -1 -> 白)
         // turn : 自分の石の色(1 or -1)
         // hints : 二次元配列(hints[y][x] === 置くことができる?)
+        // callback : 処理が終わったら呼び出す
 
         // x,yを石を置きたい座標としたハッシュ{'x':x, 'y':y}を出力する．
+
+        this.currentCount = 0;
 
         function simulateMonteCarlo(f_field, f_turn, f_hints){
             let twice = false;
@@ -65,32 +70,46 @@ appendAI(function(){
                 }
             }
         }
-        for (let count = 0; count < tryCount; ++count){
-            let i = Math.floor(Math.random()*able.length);
 
-            let tmpf = copyMatrix(field);
-            putStone(tmpf,turn,able[i].x,able[i].y);
-            let sc = turn*simulateMonteCarlo(tmpf,-turn,createHintsField(tmpf,-turn));
+        setTimeout(function(ai){
+            if (ai.currentCount < ai.tryCount){
+                for (let cnt = 0; cnt < ai.perLoopCount; ++cnt){
+                    let i = Math.floor(Math.random()*able.length);
 
-            able[i].n += 1;
-            able[i].score += tmpf;
-        }
+                    let tmpf = copyMatrix(field);
+                    putStone(tmpf,turn,able[i].x,able[i].y);
+                    let sc = turn*simulateMonteCarlo(tmpf,-turn,createHintsField(tmpf,-turn));
 
-        let answer = null;
-        let answer_s = null;
+                    able[i].n += 1;
+                    able[i].score += tmpf;
+                }
+                ai.currentCount += ai.perLoopCount;
 
-        for(let i = 0; i < able.length; ++i){
-            if (able[i].n === 0) continue;
+                setTimeout(arguments.callee, 0, ai);
 
-            let h = able[i].score / able[i].n;
+            }else{
+                let answer = null;
+                let answer_s = null;
 
-            if (answer_s === null || answer_s < h){
-                answer_s = h;
-                answer = able[i];
+                for(let i = 0; i < able.length; ++i){
+                    if (able[i].n === 0) continue;
+
+                    let h = able[i].score / able[i].n;
+
+                    if (answer_s === null || answer_s < h){
+                        answer_s = h;
+                        answer = able[i];
+                    }
+                }
+                callback(answer);
             }
-        }
+        },0,this);
 
-        return answer;
+    }
+
+    this.getProgress = function(){
+        // AIの思考進捗を[0,1]の範囲で返す．
+        return this.currentCount / this.tryCount;
     }
 
 },'montecarlotree');
