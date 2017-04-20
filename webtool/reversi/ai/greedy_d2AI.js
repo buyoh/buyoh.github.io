@@ -12,7 +12,7 @@ appendAI(function(){
 
     }
 
-    this.action = function(field, turn, hints, calback){
+    this.action = function(field, turn, hints, callback){
         // 番が回ってきたときに実行するコードを書く．
         // field : 二次元配列(field[y][x] 1 -> 黒, 0 -> 空 , -1 -> 白)
         // turn : 自分の石の色(1 or -1)

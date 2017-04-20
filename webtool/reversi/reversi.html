@@ -18,6 +18,7 @@
         <script src="ai/greedy_d1AI.js"></script>
         <script src="ai/greedy_d2AI.js"></script>
         <script src="ai/montecarlotreeAI.js"></script>
+        <script src="ai/montecarlotreeAI_2.js"></script>
 
     </head>
     <body>
@@ -76,11 +77,11 @@
                                 <label for="sel_color">色調</label>
                             </dt>
                             <dd>
-                                <select id="sel_color" class="form-control">
+                                <select id="sel_color" class="form-control" onchange="changedStyleSettings()">
                                     <option value="basic">basic</option>
-                                    <option value="white" disabled>white</option>
+                                    <option value="white">white</option>
                                     <option value="blue" disabled>blue</option>
-                                    <option value="monokai" disabled>monokai</option>
+                                    <option value="monokai">monokai</option>
                                     <option value="redwhite" disabled>omedetha</option>
                                 </select>
                             </dd>
@@ -137,6 +138,8 @@
                             <dd>AI追加</dd>
                             <dt>0.2.3</dt>
                             <dd>AI進捗可視化，CPUスレッドを譲れるようにした(内部実装)</dd>
+                            <dt>0.2.4</dt>
+                            <dd>色テーマ変更機能追加，AI追加</dd>
                         </dl>
                     </div>
                 </div>

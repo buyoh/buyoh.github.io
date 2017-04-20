@@ -19,6 +19,38 @@ var cvWidth, cvHeight;
 var buffContext = null;
 var buffCanvas = null;
 
+const themes = {
+    'color' : {
+        'basic' : {
+            'background' : '#051',
+            'border' : '#FFF',
+            'stoneWhiteFill' : '#FFF',
+            'stoneWhiteStroke' : '#888',
+            'stoneBlackFill' : '#000',
+            'stoneBlackStroke' : '#888',
+            'cellHintsStroke' : '#8F3'
+        },
+        'white' : {
+            'background' : '#EEE',
+            'border' : '#777',
+            'stoneWhiteFill' : '#FFF',
+            'stoneWhiteStroke' : '#4FF',
+            'stoneBlackFill' : '#777',
+            'stoneBlackStroke' : '#4FF',
+            'cellHintsStroke' : '#4FF'
+        },
+        'monokai' : {
+            'background' : '#272822',
+            'border' : '#e6db74',
+            'stoneWhiteFill' : '#66d9ef',
+            'stoneWhiteStroke' : '#ae81ff',
+            'stoneBlackFill' : '#f92672',
+            'stoneBlackStroke' : '#fd971f',
+            'cellHintsStroke' : '#a6e22e'
+        }
+    }
+};
+
 const display = {'board' : {
                    'width' : 320,
                    'height' : 320,
@@ -190,6 +222,10 @@ function appendAI(ai, name){
 function changedStyleSettings(){
     gamestyle = {'skipAnim' : $('#chk_skipAnim').is(':checked')
                 };
+    let v;
+    if (v = $('#sel_color').val())
+        display.color = themes.color[v];
+    paint();
 }
 
 

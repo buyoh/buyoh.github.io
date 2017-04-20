@@ -1,13 +1,16 @@
 
 // ===============================
-// Monte carlo Tree AI
+// Monte carlo Tree AI (mark2)
 // ===============================
 // 確率的に良いスコアの手を選択
+// 探索木の再利用機能を追加
 appendAI(function(){
 
-    this.tryCount = 1000; // 試行回数
-    this.perLoopCount = 50;
+    this.tryCount = 100; // 試行回数
+    this.perLoopCount = 4;
     this.currentCount = this.tryCount;
+
+    this.tryWidth = 4;
 
     this.setup = function(gamerule){
         // 開始時に実行するコードを書く．
@@ -27,40 +30,7 @@ appendAI(function(){
 
         this.currentCount = 0;
 
-        function simulateMonteCarlo(f_field, f_turn, f_hints){
-            let twice = false;
-            while (true){
-                let able = [];
-                for (let y = 0; y < gamerule.height; ++y){
-                    for (let x = 0;x < gamerule.width; ++x){
-                        if (f_hints[y][x]){
-                            able.push([y,x]);
-                        }
-                    }
-                }
-                if (able.length === 0){
-                    if (twice) break;
-                    twice = true;
-                    continue;
-                }else{
-                    twice = false;
-                }
-                let move = able[Math.floor(Math.random()*able.length)];
-                putStone(f_field,f_turn,move[1],move[0]);
-                f_turn = -f_turn;
-                f_hints = createHintsField(f_field,f_turn);
-            }
-            let final = 0;
         
-            for (let y = 0; y < gamerule.height; ++y){
-                for (let x = 0;x < gamerule.width; ++x){
-                    final += f_field[y][x];
-                }
-            }
-
-            return final;
-        }
-
 
         let able = [];
         for (let y = 0; y < gamerule.height; ++y){
@@ -72,13 +42,58 @@ appendAI(function(){
         }
 
         setTimeout(function(ai){
+            function finalScore(f_field){
+                let score = 0;
+            
+                for (let y = 0; y < gamerule.height; ++y){
+                    for (let x = 0;x < gamerule.width; ++x){
+                        score += f_field[y][x];
+                    }
+                }
+                return score;
+            }
+
+            function simulateMonteCarlo(f_field, f_turn, tryWidth, twice=false){
+
+                let f_hints = createHintsField(f_field, f_turn);
+
+                let able = [];
+                for (let y = 0; y < gamerule.height; ++y){
+                    for (let x = 0;x < gamerule.width; ++x){
+                        if (f_hints[y][x]){
+                            able.push([y,x]);
+                        }
+                    }
+                }
+                if (able.length === 0){
+                    if (twice) {
+                        return finalScore(f_field);
+                    }
+                    else
+                        return simulateMonteCarlo(f_field, -f_turn, tryWidth, true);
+                }else{
+                    twice = false;
+                }
+
+                let result = 0;
+                for (let cnt = 0; cnt < tryWidth; ++cnt){
+                    let tmpf = copyMatrix(f_field);
+                    let move = able[Math.floor(Math.random()*able.length)];
+                    putStone(tmpf,f_turn,move[1],move[0]);
+                    result += simulateMonteCarlo(tmpf, -f_turn, Math.max(tryWidth - 1, 1));
+                }
+                
+                return result;
+            }
+
+
             if (ai.currentCount < ai.tryCount){
                 for (let cnt = 0; cnt < ai.perLoopCount; ++cnt){
                     let i = Math.floor(Math.random()*able.length);
 
                     let tmpf = copyMatrix(field);
-                    putStone(tmpf,turn,able[i].x,able[i].y);
-                    let sc = turn*simulateMonteCarlo(tmpf,-turn,createHintsField(tmpf,-turn));
+                    putStone(tmpf, turn, able[i].x, able[i].y);
+                    let sc = turn*simulateMonteCarlo(tmpf, -turn, ai.tryWidth);
 
                     able[i].n += 1;
                     able[i].score += sc;
@@ -112,4 +127,4 @@ appendAI(function(){
         return this.currentCount / this.tryCount;
     }
 
-},'montecarlotree');
+},'montecarlotree-2');
