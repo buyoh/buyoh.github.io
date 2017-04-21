@@ -19,15 +19,21 @@
         <script src="ai/greedy_d2AI.js"></script>
         <script src="ai/montecarlotreeAI.js"></script>
         <script src="ai/montecarlotreeAI_2.js"></script>
+        <script src="ai/greedy_d2spAI.js"></script>
 
     </head>
     <body>
         <div class="container">
-            <h2 class="text-center">Reversi</h2>
+            <h2 class="text-center">
+                <span id="div_debugsw">
+                    Reversi
+                </span>
+            </h2>
             <div class="row">
                 <div class="col-md-3">
                     <div class="container-fluid panel panel-default">
                         <h4>Game Settings</h4>
+                        <p><small>設定を反映するにはrestartする必要があります</small></p>
                         <dl class="">
                             <dt>
                                 <label for="sel_type_black">先手(黒)</label>
@@ -87,16 +93,16 @@
                             </dd>
                         </dl>
                     </div>
-                    <div class="container-fluid panel panel-default">
-                        <p class="form-inline">
-                            <button class="btn btn-primary" onclick="button_restart()">restart</button>
-                        </p>
-                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
                         <canvas id="canvas_main" class="panel panel-default" width="480" height="360">🍣</canvas>
                     </div>
+                    <ul class="nav nav-pills nav-justified">
+                        <li class="active"><a href="#" onclick="button_restart()" class="btn btn-default navbar-btn">restart</a></li>
+                        <li class=""><a href="#" class="btn btn-default navbar-btn disabled">suggest</a></li>
+                        <li class=""><a href="#" class="btn btn-default navbar-btn disabled">undo</a></li>
+                    </ul>
                     <div id="div_alertspace">
                     </div>
                 </div>
@@ -125,7 +131,7 @@
             
             <div class="row">
                 <div class="col-md-offset-6 col-md-6">
-                    <p class="text-right"><a onclick="$('#div_versionhistory').slideToggle();">version 0.2.3</a></p>
+                    <p class="text-right"><a onclick="$('#div_versionhistory').slideToggle();">version 0.2.5</a></p>
                     <div id="div_versionhistory" class="well well-sm" style="display:none;">
                         <dl class="dl-horizontal">
                             <dt>version</dt>
@@ -140,6 +146,8 @@
                             <dd>AI進捗可視化，CPUスレッドを譲れるようにした(内部実装)</dd>
                             <dt>0.2.4</dt>
                             <dd>色テーマ変更機能追加，AI追加</dd>
+                            <dt>0.2.5</dt>
+                            <dd>特殊操作機能を隠した．既存のAIの修正，文章など修正，AI追加</dd>
                         </dl>
                     </div>
                 </div>

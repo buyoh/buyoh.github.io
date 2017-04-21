@@ -11,6 +11,8 @@ TODO
 
 */
 
+var debugSwitch = false;
+
 const check_vertion = 'abc';
 
 var cvContext = null;
@@ -115,6 +117,11 @@ $(document).ready(function(){
             $('#sel_type_white > option[value!=\'\']').eq(0).attr('selected','selected');
         }
     }
+
+    $('#div_debugsw').on('click',function(){
+        debugSwitch = !debugSwitch;
+        $('#div_debugsw').css('color',debugSwitch ? '#F00' : '#000');
+    });
 
     initialize_game();
     updateInfomation();
@@ -251,8 +258,10 @@ function click_board(x,y,button){
     let lx = Math.floor(x);
     let ly = Math.floor(y);
     if (button === 2){
-        game.field[ly][lx] = (game.field[ly][lx] + 2) % 3 - 1;
-        work.hints = createHintsField(game.field, game.turn);
+        if (debugSwitch){
+            game.field[ly][lx] = (game.field[ly][lx] + 2) % 3 - 1;
+            work.hints = createHintsField(game.field, game.turn);
+        }
     }else{
         // is userControl state ?
         if (work.state == 21){

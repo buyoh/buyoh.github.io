@@ -2,7 +2,7 @@
 // ===============================
 // reversi Greedy AI (max-score , depth 1)
 // ===============================
-// 今置いたスコア-相手が取ることができるスコアの最大 を最大化
+// 相手が置くことができる石の数を最小化
 appendAI(function(){
 
     this.setup = function(gamerule){
@@ -21,6 +21,17 @@ appendAI(function(){
 
         // x,yを石を置きたい座標としたハッシュ{'x':x, 'y':y}を出力する．
 
+        function evaluate(_field){
+            let _hints = createHintsField(_field, -turn);
+            let score = 0;           
+            for (let i = 0; i < gamerule.height; ++i){
+                for (let j = 0;j < gamerule.width; ++j){
+                    score += _hints[i][j] ? 1 : 0;
+                }
+            }
+            return -score;
+        }
+
         let answer = [];
         let answerScore = -9999999;
         for (let y = 0; y < gamerule.height; ++y){
@@ -29,15 +40,8 @@ appendAI(function(){
 
                     let nextField = copyMatrix(field);
                     putStone(nextField, turn, x,y);
-                    let nextHints = createHintsField(nextField, -turn);
-                    let enemyScore = 0;                   
-                    for (let i = 0; i < gamerule.height; ++i){
-                        for (let j = 0;j < gamerule.width; ++j){
-                            enemyScore = Math.max(enemyScore, nextHints[i][j]);
-                        }
-                    }
 
-                    let score = hints[y][x]-enemyScore;
+                    let score = evaluate(nextField);
 
                     if (answerScore < score){
                         answerScore = score;
@@ -56,4 +60,4 @@ appendAI(function(){
         return 1.0;
     }
 
-},'greedy d2-sc');
+},'greedy d2-sp');
