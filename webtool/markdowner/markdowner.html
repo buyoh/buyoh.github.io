@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<title>markdowner</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+
+<link rel="stylesheet" href="../../common/bootstrap.min.css" />
+<link rel="stylesheet" href="../../common/bootstrap-theme.min.css" />
+<script src="../../common/jquery-3.1.0.min.js"></script>
+<script src="../../common/bootstrap.min.js"></script>
+
+<script src="../../common/ace/ace.js"></script>
+<script src="../../common/ace/ext-language_tools.js"></script>
+
+<script src="markdowner.js"></script>
+
+<style type="text/css">
+textarea.custom{
+    overflow-x:auto;
+    overflow-y:auto;
+}
+.closed{ display:none; }
+body{
+    font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "メイリオ", Meiryo, sans-serif;
+}
+</style>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>markdowner</h1>
+
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        put your nice markdown text
+                    </div>
+                    <div class="panel-body">
+                        <div id="aceditorEdge" style="border:solid 2px #888; margin:4px;">
+                            <div id="aceditor" style="height:500px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            
+            <div class="col-md-offset-1 col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        test view
+                        <button onclick="ebtn_testpanel_open()" class="btn btn-default btn-sm">open</button>
+                        <button onclick="ebtn_testpanel_close()" class="btn btn-default btn-sm">close</button>
+                    </div>
+                    <div class="panel-body closed" id="div_testpanel">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-offset-1 col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        output
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <button onclick="ebtn_convert()" class="btn btn-default">convert</button>
+                        </div>
+                        <div class="">
+                            <textarea id="txt_result" class="form-control custom" rows="6"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div>
+                            🎍
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h2>注意</h2>
+            <p>
+                オリジナルと異なります．
+            </p>
+            <h2>現時点での実装内容</h2>
+            <ul>
+                <li>
+                    空行を空けるとパラグラフとみなし，<code>&lt;p&gt;&lt;/p&gt;</code>で囲む．
+                    2行以上の空行を空けると<code>&lt;br&gt;</code>を挿入する．
+                </li>
+                <li>
+                    行頭に<code>#</code>を付けるとヘッドラインになる．
+                    具体的には，<code>&lt;h1&gt;</code>で囲む．
+                    複数重ねると，段が下がる．
+                </li>
+                <li>
+                    <code>- - -</code>と記述すると，水平線を引く．
+                    <code>- - - - -</code>，<code>---</code>，<code>*****</code>，<code>-*-*-</code>のどれでも線が引ける．<br>
+                </li>
+                <li>
+                </li>
+            </ul>
+            <h2>予定(方針)</h2>
+            <ul>
+                <li>
+                    <code>[html:...]</code>って書くとhtmlとして解釈する．
+                </li>
+                <li>
+                    <code>``` ... ```</code><code>` ... `</code>
+                </li>
+                <li>
+                    <code>&gt; quote</code>引用
+                </li>
+                <li>
+                    <code>http://localhost/</code><code>[text](http://localhost/)</code>リンク
+                </li>
+                <li>
+                    <code>![alt](kosuzu.jpg)</code>画像
+                </li>
+                <li>
+                    <code>- elements</code>順序無しリスト(4spacesでインデント)(*でも出来るようにする)
+                </li>
+                <li>
+                    <code>1. elements</code>順序ありリスト(4spacesでインデント)
+                </li>
+                <li>
+                    <code>======</code>の上の行はheadline(実装しない予定？)
+                </li>
+                <li>
+                    改行の仕様に問題があるかもしれない．
+                </li>
+            </ul>
+            <h2>更新履歴</h2>
+            <ul>
+                <li>2017/06/05 ほぼ外装だけ</li>
+            </ul>
+        </div>
+        <div style="margin-bottom:400px;"></div>
+    </div>
+</body>
+</html>
