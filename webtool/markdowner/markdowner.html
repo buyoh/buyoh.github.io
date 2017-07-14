@@ -31,6 +31,10 @@ body{
 
 </head>
 
+<!-- http://softwaremaniacs.org/playground/showdown-highlight/
+
+ -->
+
 <body>
     <div class="container">
         <h1>markdowner</h1>
@@ -92,6 +96,13 @@ body{
             </div>
         </div>
         <div>
+            <h2>目的</h2>
+            <p>
+                fc2 ブログを markdown で書きたい．
+            </p>
+            <p>
+                なので，編集機能は重視してません．VScodeでどうぞ．
+            </p>
             <h2>注意</h2>
             <p>
                 オリジナルと異なります．
@@ -112,36 +123,57 @@ body{
                     <code>- - - - -</code>，<code>---</code>，<code>*****</code>，<code>-*-*-</code>のどれでも線が引ける．<br>
                 </li>
                 <li>
+                    <code>`...`</code>とインライン記述すると，<code>&lt;code&gt;</code>で囲む．
+                    
+                </li>
+                <li>
+                    <code>```</code>と書くと，次に<code>```</code>の行が来るまで，<code>&lt;pre&gt;</code>で囲む．<br>
+                    <code>```ruby</code>と書くと，preタグに<code>language-ruby</code>クラスを付与する．      
                 </li>
             </ul>
             <h2>予定(方針)</h2>
             <ul>
                 <li>
+                    改行の仕様に問題があるかもしれない．
+                </li>
+                <li>
                     <code>[html:...]</code>って書くとhtmlとして解釈する．
                 </li>
                 <li>
-                    <code>``` ... ```</code><code>` ... `</code>
+                    クラス付与
+                </li>
+                <li>
+                    <code>$...$</code>で囲まれたインライン要素を評価しない．
+                </li>
+                <li>
+                    エスケープ処理
                 </li>
                 <li>
                     <code>&gt; quote</code>引用
                 </li>
                 <li>
-                    <code>http://localhost/</code><code>[text](http://localhost/)</code>リンク
-                </li>
-                <li>
                     <code>![alt](kosuzu.jpg)</code>画像
                 </li>
                 <li>
-                    <code>- elements</code>順序無しリスト(4spacesでインデント)(*でも出来るようにする)
+                    <code>- elements</code>順序無しリスト(4spacesでインデント)(*+でも出来るようにする)
                 </li>
                 <li>
                     <code>1. elements</code>順序ありリスト(4spacesでインデント)
                 </li>
                 <li>
-                    <code>======</code>の上の行はheadline(実装しない予定？)
+                    <code>_</code>か<code>*</code>で囲むとemタグ
                 </li>
                 <li>
-                    改行の仕様に問題があるかもしれない．
+                    <code>__</code>か<code>**</code>で囲むとstrongタグ
+                </li>
+                <li>
+                    テーブル
+                </li>
+                <li>
+                    <code>http://localhost/</code><code>[text](http://localhost/)</code>リンク
+                </li>
+                <li>
+                    <code>======</code>の上の行はheadline(実装しない予定？)
                 </li>
             </ul>
             <h2>更新履歴</h2>

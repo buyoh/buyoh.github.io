@@ -73,31 +73,31 @@ function ebtn_convert(){
 
 function markdownToHtml(md){
     var lines = (md+"\n").split(/\r\n|\r|\n/);
-    var dom = $('<div></div>');
+    var basedom = $('<div></div>');
     var stack = [];
 
     while(lines.length && lines[0] == ""){lines.shift();}
 
     function flush_paragraph(){
         if (stack.length == 0) return;
-        var t = "";
+        var t = $("<p></p>");
         while(stack.length){
-            t += stack.shift() + ' ';
+            t.append(stack.shift());
         }
-        dom.append($("<p></p>").text(t));
+        basedom.append(t);
     }
     function push_br(){
-        dom.append('<br>');
+        basedom.append('<br>');
     }
     function push_hr(){
-        dom.append('<hr>');
+        basedom.append('<hr>');
     }
     function push_headline(str, rank){
-        dom.append($(`<h${rank}></h${rank}>`).text(str));
+        basedom.append($(`<h${rank}></h${rank}>`).text(str));
     }
 
-    for (i in lines){
-        var line = lines[i];
+    while (lines.length){
+        var line = lines.shift();
         var mt;
         if (line == ""){
             if (stack.length){
@@ -113,11 +113,47 @@ function markdownToHtml(md){
             flush_paragraph();
             push_hr();
 
+        }else if (mt = line.match(/^```([a-zA-Z0-9]*).*$/)){
+            flush_paragraph();
+            var dom = $('<pre></pre>');
+            if (mt[1])
+                dom.addClass("language-" + mt[1]);
+            
+            while(lines.length){
+                var l = lines.shift();
+                if (/^```$/.test(l)){
+                    break;
+                }
+                dom.append(l);
+            }
+            basedom.append(dom);
+
+        // }else if (mt = line.match(/^( *)-\s*(.+)/)){
+
         }else{
-            stack.push(line);
+            function descript(str){
+                var mt;
+                var dom = $('<span></span>');
+
+                if (mt = (str).match(/([^`]*)`((?:[^`]|\\`)+[^\\])`(.*$)/)){
+                    dom.append(descript(mt[1]).html());
+                    console.log(mt[2].replace('\\`','`'));
+                    dom.append($('<code></code>').text(mt[2]));
+                    dom.append(descript(mt[3]).html());
+                }if (mt = (str).match(/([^\[]]*)\[html:((?:[^\]]|\\\])*[^\\])\](.*$)/)){
+                    dom.append(descript(mt[1]).html());
+                    dom.append($('<span></span>').html(mt[2]));
+                    dom.append(descript(mt[3]).html());
+                }else{
+                    dom.text(str);
+                }
+                return dom;
+            }
+
+            stack.push(descript(line).html());
         }
     }
-    return dom.html();
+    return basedom.html();
 }
 
 
