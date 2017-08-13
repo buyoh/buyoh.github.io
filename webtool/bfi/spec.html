@@ -45,6 +45,17 @@
                             </p>
                             <br>
 
+                            <h3>設定の説明</h3>
+                            <dl>
+                                <dt>MemorySize</dt>
+                                <dd>スタックを含まないメモリサイズ．実行時に確保する．範囲を超えてアクセスするとRuntimeError．</dd>
+                                <dt>StackLimit</dt>
+                                <dd>スタック数の上限．スタック数が範囲を超えたのを検知するとStop(LimitExceeded)．</dd>
+                                <dt>StdOutLimit</dt>
+                                <dd>出力の上限．出力文字数が範囲を超えたのを検知するとStop(LimitExceeded)．</dd>
+                            </dl>
+                            <br>
+
                             <h3>仕様</h3>
                             <p>todo</p>
                             <br>
@@ -52,7 +63,7 @@
                             <h3>C++バージョンと異なる点</h3>
                             <ul>
                                 <li>
-                                    <string>文字数の扱い．</string>無理矢理1byteに切ったりしないので注意．🍣．
+                                    <string>文字の扱い．</string>無理矢理1byteに切ったりしない．
                                 </li>
                                 <li>
                                     <code>s</code>の挙動が違う．jsバージョンは数字以外の文字で区切る．

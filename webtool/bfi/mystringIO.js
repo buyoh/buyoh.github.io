@@ -1,6 +1,6 @@
 
 var MyStringIO = function(_string_in, _out_proc){
-    this.byte_in = [];
+    this.byte_in = []; // byteではない
     this.byte_in_cursor = 0;
     this.byte_out = [];
     this.out_proc = _out_proc;

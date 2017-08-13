@@ -2,6 +2,10 @@
 var interpreter = null;
 var flg_halt = false;
 
+var le_mem = 102000;
+var le_stk = 102000;
+var le_out = 2000;
+
 $(document).ready(function(){
 
     initialize_ace();
@@ -41,6 +45,23 @@ function store_status(){
 }
 
 
+
+function check_le(vm){
+    if (le_out < vm.io.byte_out.length) return true;
+    if (le_stk < vm.stack.length) return true;
+    return false;
+}
+
+
+function put_status(str, type = null){
+    var dom = $("#div_state");
+    if (type !== null){
+        dom.addClass("text-"+type);
+    }
+    dom.text(str);
+}
+
+
 function halt_bfi(){
     if (interpreter !== null){
         flg_halt = true;
@@ -53,6 +74,10 @@ function execute_bfi(){
     if (code === null || code == "") return ;
     if (!stdin) stdin = "";
 
+    le_mem = $("#txt_limitmem").val()-0;
+    le_stk = $("#txt_limitstk").val()-0;
+    le_out = $("#txt_limitout").val()-0;
+
     $("#btn_run").prop("disabled",true);
     $("#btn_halt").prop("disabled",false);
 
@@ -63,10 +88,11 @@ function execute_bfi(){
 
     var execloop = function(){
         var running = true;
-        for (var cnt = 0; !flg_halt && running && cnt < 1000; ++cnt){
+        for (var cnt = 0; !flg_halt && running && cnt < 2000; ++cnt){
             running = interpreter.step();
         }
-        if (!flg_halt && running)
+
+        if (running && !flg_halt && !check_le(interpreter))
             setTimeout(function(){execloop()}, 0);
         else
             setTimeout(function(){finalize_bfi()}, 0);
@@ -74,9 +100,19 @@ function execute_bfi(){
     setTimeout(function(){execloop()}, 0);
 }
 function finalize_bfi(){
+    var exitcode = interpreter.step();
     interpreter.io.flush();
     interpreter = null;
     $("#btn_run").prop("disabled",false);
     $("#btn_halt").prop("disabled",true);
+
+    if (exitcode === null){
+        put_status("Runtime Error","warning");
+    }else if (exitcode === true) {
+        put_status("Stop","primary");
+    }else{
+        put_status("Success","success");
+    }
+
     flg_halt = false;
 }

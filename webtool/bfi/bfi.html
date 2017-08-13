@@ -77,10 +77,18 @@
                 <div class="col-xs-offset-1 col-xs-10">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <div>
+                            <p>
                                 <button class="btn btn-primary" onclick="execute_bfi()" id="btn_run">run</button>
                                 <button class="btn btn-primary" onclick="halt_bfi()" id="btn_halt" disabled>halt</button>
-                            </div>
+                            </p>
+                            <p>
+                                <label for="txt_limitmem">MemorySize[cell]</label><input type="text" id="txt_limitmem" value="102000" size="9">
+                                <label for="txt_limitstk">StackLimit[cell]</label><input type="text" id="txt_limitstk" value="102000" size="9">
+                                <label for="txt_limitstd">StdOutLimit[cell]</label><input type="text" id="txt_limitout" value="2000" size="9">
+                            </p>
+                            <p class="well well-sm" id="div_state">
+                                state
+                            </p>
                             <p>
                                 sampleや言語仕様等は<a href="./spec.html">こちらを参照</a>
                             </p>
