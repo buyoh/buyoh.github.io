@@ -102,15 +102,15 @@ function execute_bfi(){
 function finalize_bfi(){
     var exitcode = interpreter.step();
     interpreter.io.flush();
-    interpreter = null;
     $("#btn_run").prop("disabled",false);
     $("#btn_halt").prop("disabled",true);
 
     if (exitcode === null){
-        put_status("Runtime Error","warning");
+        put_status(`RuntimeError: (memptr: ${interpreter.mem_ptr} , codeptr: ${interpreter.code_ptr} , stackptr: ${interpreter.stack.length} )`,"warning");
     }else if (exitcode === true) {
         put_status("Stop","primary");
     }else{
+        interpreter = null;
         put_status("Success","success");
     }
 
