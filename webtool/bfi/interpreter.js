@@ -53,7 +53,7 @@ Interpreter.prototype.step = function(){
             break;
         case '[':
             if (this.mem[this.mem_ptr] == 0)
-                while (this.code_ptr < this.code.size() - 1 && this.code[++this.code_ptr] != ']');
+                while (this.code_ptr < this.code.length - 1 && this.code[++this.code_ptr] != ']');
             break;
         case ']':
             if (this.mem[this.mem_ptr] != 0)

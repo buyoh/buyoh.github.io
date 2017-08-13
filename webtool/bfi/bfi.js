@@ -1,5 +1,6 @@
 
 var interpreter = null;
+var flg_halt = false;
 
 $(document).ready(function(){
 
@@ -40,13 +41,20 @@ function store_status(){
 }
 
 
+function halt_bfi(){
+    if (interpreter !== null){
+        flg_halt = true;
+    }
+}
 
 function execute_bfi(){
     var code = aceditor.getValue();
     var stdin = $("#txt_stdin").val();
     if (code === null || code == "") return ;
+    if (!stdin) stdin = "";
 
     $("#btn_run").prop("disabled",true);
+    $("#btn_halt").prop("disabled",false);
 
     var io = new MyStringIO(stdin, function(str){ $("#txt_stdout").val(str); });
 
@@ -55,10 +63,10 @@ function execute_bfi(){
 
     var execloop = function(){
         var running = true;
-        for (var cnt = 0; running && cnt < 1000; ++cnt){
+        for (var cnt = 0; !flg_halt && running && cnt < 1000; ++cnt){
             running = interpreter.step();
         }
-        if (running)
+        if (!flg_halt && running)
             setTimeout(function(){execloop()}, 0);
         else
             setTimeout(function(){finalize_bfi()}, 0);
@@ -69,4 +77,6 @@ function finalize_bfi(){
     interpreter.io.flush();
     interpreter = null;
     $("#btn_run").prop("disabled",false);
+    $("#btn_halt").prop("disabled",true);
+    flg_halt = false;
 }
