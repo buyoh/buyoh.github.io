@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+        <title>Help: Lunatic Brain (advanced brainfuck interpreter)</title>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+        <link rel="stylesheet" href="../../common/bootstrap.min.css">
+        <link rel="stylesheet" href="../../common/bootstrap-theme.min.css">
+        <script src="../../common/jquery-3.1.0.min.js"></script>
+        <script src="../../common/bootstrap.min.js"></script>
+
+        <!--
+        <link rel="stylesheet" href="../../common/jquery-ui.min.css">
+        <link rel="stylesheet" href="../../common/jquery-ui.theme.min.css">
+        <script src="../../common/jquery-ui.min.js"></script>
+        -->
+
+        <style type="text/css">
+        body{
+            font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "メイリオ", Meiryo, sans-serif;
+        }
+        .border_prim{
+            border-width: 1px 1px 1px 7px;
+            border-color:silver;
+            border-style: solid;
+            /*border-radius: 3px;*/
+            padding: 5px 2px 2px 10px;
+        }
+        .border{
+            border-width: 1px;
+            border-color:silver;
+            border-style: solid;
+            border-radius: 3px;
+            padding: 10px 5px;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="container">
+            <h1>Help:Lunatic Brain <small>(advanced brainfuck interpreter)</small></h1>
+
+            <div class="rows">
+                <div class="col-xs-offset-1 col-xs-10">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h3>Lunatic Brain とは (What's Lunatic Brain?)</h3>
+                            <p>
+                                有名な難解言語の1つである Brainfuck に命令・機能を追加したインタプリタです．<strong>未完成です．</strong>
+                            </p>
+                            <p>
+                                C++バージョン(<a href="https://github.com/buyoh/LunaticBrain" target="_blank">https://github.com/buyoh/LunaticBrain</a>)とjavascript(js)バージョンの2つがあります．<br>
+                            </p>
+                            <br>
+
+                            <h3>設定の説明</h3>
+                            <dl>
+                                <dt>MemorySize</dt>
+                                <dd>スタックを含まないメモリサイズ．実行時に確保する．範囲を超えてアクセスするとRuntimeError．</dd>
+                                <dt>StackLimit</dt>
+                                <dd>スタック数の上限．スタック数が範囲を超えたのを検知するとStop(LimitExceeded)．</dd>
+                                <dt>StdOutLimit</dt>
+                                <dd>出力の上限．出力文字数が範囲を超えたのを検知するとStop(LimitExceeded)．</dd>
+                            </dl>
+                            <br>
+
+                            <h3>コマンド表</h3>
+                            <table class="table table-bordered table-striped" style="">
+<thead>
+<tr>
+<th align="left">chr</th>
+<th align="left">C-like</th>
+<th align="left">detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>&gt;</code></td>
+<td align="left"><code>++ptr</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>&lt;</code></td>
+<td align="left"><code>--ptr</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>+</code></td>
+<td align="left"><code>++(*ptr)</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left"><code>--(*ptr)</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>[</code></td>
+<td align="left"><code>while(*ptr){</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>]</code></td>
+<td align="left"><code>}</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>.</code></td>
+<td align="left"><code>putchar(*ptr)</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>,</code></td>
+<td align="left"><code>getchar(*ptr)</code></td>
+<td align="left"><code>EOF=-1</code></td>
+</tr></tbody>
+<thead>
+<tr>
+<th align="left">chr</th>
+<th align="left">C-like</th>
+<th align="left">detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>^</code></td>
+<td align="left"><code>stack_push(*ptr)</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>v</code></td>
+<td align="left"><code>(*ptr) = stack_pop()</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>$</code></td>
+<td align="left"><code>stack_push(ptr)</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>*</code></td>
+<td align="left"><code>ptr = stack_pop()</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>i</code></td>
+<td align="left"><code>stack_push(code_ptr)</code></td>
+<td align="left">(?)</td>
+</tr>
+<tr>
+<td align="left"><code>!</code></td>
+<td align="left"><code>code_ptr = stack_pop()</code></td>
+<td align="left">(?)</td>
+</tr>
+<tr>
+<td align="left"><code>#</code></td>
+<td align="left"><code>(*ptr) &lt;&lt;= 1</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>=</code></td>
+<td align="left"><code>(*ptr) &gt;&gt;= 1</code></td>
+<td align="left"></td>
+</tr></tbody>
+<thead>
+<tr>
+<th align="left">chr</th>
+<th align="left">C-like</th>
+<th align="left">detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>~</code></td>
+<td align="left"><code>(*ptr) = ~(*ptr)</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>p</code></td>
+<td align="left"><code>printf("%d ",*ptr)</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>s</code></td>
+<td align="left"><code>scanf("%d",ptr)</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><kbd>E</kbd></td>
+<td align="left"><code>printf("[p:%d, c:%d, s:%d]\n", ptr, code_ptr, stack_size())</code></td>
+<td align="left">未実装デース</td>
+</tr></tbody></table>
+                            <br>
+                            <h3>挙動</h3>
+                            <ul>
+                                <li>メモリのセルはsigned 32bit integer (たぶんそう)</li>
+                                <li>STDIN が EOF に到達したとき，<code>,</code>は<code>-1</code>を返し，<code>s</code>は<code>0</code>を返す．</li>
+                                <li><code>]</code>に対応する<code>[</code>が存在しない場合，コード先頭にjumpする．</li>
+                                <li><code>[</code>に対応する<code>]</code>が存在しない場合，<code>(*ptr)!=0</code>ならばコード末尾にjumpして停止する．</li>
+                            </ul>
+                            <br>
+
+                            <h3>C++バージョンと異なる点</h3>
+                            <ul>
+                                <li>
+                                    <string>2バイト以上のサイズの文字の扱い．</string><br>
+                                    標準入力は<code>String.charCodeAt</code>で区切っている．<br>
+                                    標準出力は<code>String.fromCharCode</code>で結合．
+                                </li>
+                                <li>
+                                    <code>s</code>(scanf)の挙動が違う．jsバージョンは数字以外の文字で区切る．
+                                </li>
+                                <li>
+                                    最適化を実装する予定はありません．
+                                </li>
+                            </ul>
+                            <br>
+
+                            <h3>サンプルコード</h3>
+                            <p>
+                                <a href="https://github.com/buyoh/LunaticBrain" target="_blank">https://github.com/buyoh/LunaticBrain</a>
+                            </p>
+
+                            <h4>cat</h4>
+                            <dl class="border">
+                                <dt>code</dt>
+                                <dd>
+                                    <pre>,+[-.,+]</pre>
+                                </dd>
+                            </dl>
+
+                            <h4>標準入力の文字数を数える</h4>
+                            <dl class="border">
+                                <dt>code</dt>
+                                <dd>
+                                    <pre>&gt;,+[&lt;+&gt;,+]&lt;p</pre>
+                                </dd>
+                            </dl>
+
+                            <h4>総和を求める</h4>
+                            <dl class="border">
+                                <dt>code</dt>
+                                <dd>
+                                    <pre>s[&gt;s[-&gt;+&lt;]&lt;-]&gt;&gt;p</pre>
+                                </dd>
+                                <dt>format(stdin)</dt>
+                                <dd>
+                                    <pre>N a_1 a_2 ... a_N</pre>
+                                    0 &le; N,a_i
+                                </dd>
+                                <dt>stdin sample</dt>
+                                <dd>
+                                    <pre>7 8 9 0 1 0 1 6</pre>
+                                </dd>
+                                <dt>stdout sample</dt>
+                                <dd>
+                                    <pre>25 </pre>
+                                </dd>
+                            </dl>
+                            <h4>Bucket Sorting</h4>
+                            <dl class="border">
+                                <dt>code</dt>
+                                <dd>
+                                    <pre>s[-$&gt;+&gt;s#+++^*+*]&gt;[-$&gt;&gt;-[+&gt;-]+-$&gt;v---=p[-]*]</pre>
+                                </dd>
+                                <dt>format(stdin)</dt>
+                                <dd>
+                                    <pre>N a_1 a_2 ... a_N</pre>
+                                    1 &le; N,a_i<br>
+                                    aは<u>重複しない</u>こと
+                                </dd>
+                                <dt>stdin sample</dt>
+                                <dd>
+                                    <pre>7 6 1 3 2 4 7 9</pre>
+                                </dd>
+                                <dt>stdout sample</dt>
+                                <dd>
+                                    <pre>1 2 3 4 6 7 9 </pre>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div style="margin-bottom:200px;"></div>
+
+    </body>
+</html>
