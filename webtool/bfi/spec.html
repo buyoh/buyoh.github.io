@@ -203,6 +203,11 @@
                                 <li>STDIN が EOF に到達したとき，<code>,</code>は<code>-1</code>を返し，<code>s</code>は<code>0</code>を返す．</li>
                                 <li><code>]</code>に対応する<code>[</code>が存在しない場合，コード先頭にjumpする．</li>
                                 <li><code>[</code>に対応する<code>]</code>が存在しない場合，<code>(*ptr)!=0</code>ならばコード末尾にjumpして停止する．</li>
+                                <li>
+                                    中断・ランタイムエラーで停止したとき，<code>interpreter</code>という変数に情報が残る．<br>
+                                    つまり，<kbd>F12</kbd>を押してコンソールを開き，例えば<code>interpreter.mem.slice(0,20)</code>と書くと
+                                    メモリの中身を見ることができる．
+                                </li>
                             </ul>
                             <br>
 
