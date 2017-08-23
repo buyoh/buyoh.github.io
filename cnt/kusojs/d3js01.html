@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!-- 難しくは無さそうだけれども，メソッドを覚えるのが辛い．
+intellijやvisualstudioみたいにサジェストが出ればなー． -->
+<html>
+    <head>
+        <title>practice</title>
+        <meta charset="utf-8">
+        <style>
+        
+        .links line {
+          stroke: #999;
+          stroke-opacity: 0.6;
+        }
+        
+        .nodes circle {
+          stroke: #fff;
+          stroke-width: 1.5px;
+        }
+        
+        </style>
+        <script src="../../common/d3.min.js"></script>
+        <script src="../../common/jquery-3.1.0.min.js"></script>
+        <script>
+// https://bl.ocks.org/mbostock/4062045
+// http://qiita.com/junkoda/items/2d12ecdd3b4b5c99d994        // EDGE
+// http://qiita.com/shoki_kitajima/items/34ad6e2209fde5b4dedc // NODE TEXT
+
+var svg, width, height, color, simulation;
+
+$(document).ready(function(){
+            
+    svg = d3.select("svg");
+    width = +svg.attr("width");
+    height = +svg.attr("height");
+
+    color = d3.scaleOrdinal(d3.schemeCategory20);
+
+    simulation = d3.forceSimulation()
+        .force("link", d3.forceLink().id(function(d) { return d.id; }))
+        .force("charge", d3.forceManyBody()) // 引き合う力 d3.forceManyBody()
+        .force("center", d3.forceCenter(width / 2, height / 2));
+
+});
+
+function update_graph() {
+    svg.selectAll("*").remove();
+
+    var txt = $('#txt_in').val();
+    var args = txt.split(/\s/).map(function(v,i,a){return +v});
+
+    var n = args.shift();
+    var m = args.shift();
+
+    var graphjson = {'nodes':[], 'links':[]};
+
+    for (var i = 0; i < n; ++i){
+        graphjson.nodes.push({'id':i,'group':i});
+    }
+    for (var i = 0; i < m; ++i){
+        var u = args.shift();
+        var v = args.shift();
+        graphjson.links.push({'source':u,'target':v,'value':10});
+    }
+
+
+    var link = svg.append("g")
+        .attr("class", "links")
+        .selectAll("line")
+        .data(graphjson.links)
+        .enter().append("line")
+        .attr("stroke-width",3 );
+
+    var node = svg.append("g")
+        .attr("class", "nodes")
+        .selectAll("circle")
+        .data(graphjson.nodes)
+        .enter().append("circle")
+        .attr("r", 20)
+        .attr("fill", function(d) { return color(d.group); })
+        .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+    node.append("title")
+        .text(function(d) { return d.id; });
+
+    var label = svg.append("g").selectAll('text')
+        .data(graphjson.nodes)
+        .enter().append('text')
+        .attr("text-anchor","middle")
+        // .attr("text-anchor","middle")"fill":"white",
+        .attr("font-size","16px")
+        .text(function(d){return d.id;})
+        .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+    simulation
+        .nodes(graphjson.nodes)
+        .on("tick", ticked);
+
+    simulation.force("link")
+        .links(graphjson.links)
+        .distance(function(){ return 200;})   // うよーん
+        .strength(function(){ return 0.03; }); // うおおお
+
+
+    function ticked() {
+    link
+        .attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+    node
+        .attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
+
+    label
+        .attr("x", function(d) { return d.x;})
+        .attr("y", function(d) { return d.y;});
+    }
+
+    function dragstarted(d) {
+        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+    }
+
+    function dragged(d) {
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
+    }
+
+    function dragended(d) {
+        if (!d3.event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+    }
+}
+        </script>
+    </head>
+
+    <body>
+        <svg width="640" height="480" style="border:#999 solid 1px"></svg>
+        <textarea id="txt_in">10 15
+0 1
+0 2
+0 3
+1 4
+1 8
+2 5
+2 9
+3 6
+3 7
+4 5
+4 7
+5 6
+6 8
+7 9
+8 9</textarea>
+        <input type="button" value="go" onclick="update_graph()">
+    </body>
+</html>
