@@ -8,7 +8,14 @@
 
 <link href="common/bootstrap.min.css" rel="stylesheet">
 <script src="common/bootstrap.min.js"></script>
-<script src="common/jquery-3.1.0.js"></script>
+<script src="common/jquery-3.2.1.js"></script>
+
+<style>
+	body{
+		/*font-family: 'Yu Gothic', 'HiraKakuPro-W3', 'Hiragino Kaku Gothic Pro', 'Meiryo', 'Osaka';*/
+		font-family: "Helvetica Neue", "Segoe UI", "Hiragino Kaku Gothic ProN W3", "メイリオ", Meiryo, sans-serif;
+	}
+</style>
 
 </head>
 
@@ -24,9 +31,10 @@
 					<h3>Mai Buyoh <small>舞葉 舞</small></h3>
 					<p class="media">
 						<div class="media-body">
-							<h4 class="media-heading">icon</h4>
-							<div class="contaier"><img class="img-thumbnail" src="kosuzu.jpg" width="192" height="192"><br>小鈴ちゃん</div>
-							<p><a href="p/aboutme.html"><small>自己紹介</small></a></p>
+							<div class="contaier">
+								<img class="img-thumbnail" src="kosuzu.jpg" width="192" height="192">
+								小鈴ちゃん
+							</div>
 						</div>
 					</p>
 					<p class="container-fluid">
@@ -93,7 +101,7 @@
 						<dd>差分取るだけ．diff呼ぶだけ．</dd>
 					</dl>
 					<h4><a href="http://buyoh.bitbucket.org/">bitbucket.org</a></h4>
-					<p><span class="label label-success">AC</span></p>
+					<p><span class="label label-success" onclick="d=$(this);d.append($(d));">AC</span></p>
 				</div>
 			</div>
 		</div>
