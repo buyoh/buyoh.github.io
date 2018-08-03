@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="../../common/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <title>つよいたまねちゃんつくるよ - (ＨＳＰプログラムコンテスト2018投稿作品)</title>
+</head>
+    <body>
+        <div id="bodywrapper">
+            <h1>つよいたまねちゃんつくるよ - (ＨＳＰプログラムコンテスト2018 hsptv部門 投稿作品)</h1>
+            <hr>
+            <div>
+                URL:<a href="http://dev.onionsoft.net/seed/info.ax?id=1537">http://dev.onionsoft.net/seed/info.ax?id=1537</a><br>
+            </div>
+            <hr>
+            <section>
+                <h2>概要</h2>
+                <p>
+                    このゲームは，戦略パターンを作って戦う，自動戦闘型のゲームです．<br>
+                    hsptv部門で，ランキング機能を使用してます．
+                </p>
+                <div><img src="scr1.png" style="width:640px; height:480px;"></div>
+            </section>
+            <hr>
+            <section>
+                <h2>ゲームルール</h2>
+                <p>
+                    ゲーム開始前，プレイヤーは20個のアクションが並ぶ『キュー』を構成します．<br>
+                    各ターンでは，キューの先頭3つの中からアクションをランダムに取り出し，
+                    取り出されたアクションが自動的に実行されます．<br>
+                    相手のライフを0にするか，キューが空になった時に
+                    ライフが相手よりも多く残っていたら勝ちです．
+                </p>
+            </section>
+            <hr>
+            <section>
+                <h2>アクションの説明</h2>
+                <dl>
+                    <dt>攻撃</dt>
+                    <dd>攻撃して1ダメージを与えます．相手の貫通・回復を無効化します．</dd>
+                    <dt>貫通</dt>
+                    <dd>攻撃して1ダメージを与えます．相手の防御・回復を無効化します．</dd>
+                    <dt>防御</dt>
+                    <dd>防御します．相手が攻撃ならば，攻撃を跳ね返し，相手に1ダメージを与えます．</dd>
+                    <dt>回復</dt>
+                    <dd>自身のライフを2回復します．最大ライフ8を超えて回復できません．</dd>
+                </dl>
+            </section>
+            <hr>
+            <section>
+                <h2>ランキングの人と戦う</h2>
+                <p>
+                    他のユーザが作成したAIと戦う事ができます．ユーザはランダムにマッチングされます．<br>
+                    また，他のユーザに勝利した戦略をアップロードすることも出来ます．
+                </p>
+                <p>
+                    この機能を使うには，初期設定のプロ生ちゃんに勝利する必要があります．
+                </p>
+            </section>
+            <hr>
+            <section>
+                <h2>その他詳細な仕様など</h2>
+                <h3>便利な操作</h3>
+                <dl>
+                    <dt>スペース</dt>
+                    <dd>戦闘を早送りします</dd>
+                    <dt>エスケープ</dt>
+                    <dd>戦闘を終了します</dd>
+                </dl>
+                <h3>ランキングについて</h3>
+                <p>
+                    「アップロードしますか」のダイアログで「はい」を選択しても，アップロードされない場合があります．<br>
+                    既にランキングに同じ戦略が投稿されている場合，アップロードされない仕様になっています．
+                </p>
+                <p>
+                    また，ランキング対戦での連勝数の多い戦略は，ランキングに若干残りやすくなります．
+                </p>
+            </section>
+            <hr>
+            <section>
+                <h2>プロ生ちゃんに勝てない・・・</h2>
+                <p>
+                    初期設定はプロ生ちゃんに負けやすいです．
+                </p>
+                <p>
+                    プロ生ちゃんと全く同じ戦略に設定しましょう．勝率は50%になるので，3回連続で負ける確率は12.5%になります．
+                </p>
+            </section>
+            <hr>
+            <section>
+                <h2>ソースコード公開・バグ報告</h2>
+                <p>
+                    null
+                </p>
+            </section>
+            <hr>
+            <section>
+                <h2>更新履歴</h2>
+                <dl>
+                    <dt>v.2018.08.03.1</dt>
+                    <dd>初投稿</dd>
+                </dl>
+            </section>
+        </div>
+    </body>
+</html>
