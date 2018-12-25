@@ -78,15 +78,23 @@ function storeBackup(){
 
 
 function button_run(){
+    const isTailJs = $("#chk_tailjs").prop("checked");
     const js = editorJS.getValue();
     const css = editorCSS.getValue();
     const html = editorHTML.getValue();
 
     let gen = "";
-    gen += "<html><head><script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>";
-    gen += "<script>\n"+js+"\n</script>\n";
-    gen += "<style>\n"+css+"\n</style>";
-    gen += "</head><body>\n"+html+"</body></html>";
+    if (isTailJs){
+        gen += "<html><head><script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>";
+        gen += "<style>\n"+css+"\n</style>";
+        gen += "</head><body>\n"+html+"\n";
+        gen += "<script>\n"+js+"\n</script></body></html>";
+    }else{
+        gen += "<html><head><script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>";
+        gen += "<script>\n"+js+"\n</script>\n";
+        gen += "<style>\n"+css+"\n</style>";
+        gen += "</head><body>\n"+html+"</body></html>";
+    }
 
     $("#viewer").prop("srcdoc", gen);
 }
