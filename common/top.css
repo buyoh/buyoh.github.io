@@ -99,9 +99,9 @@ a:hover{
 }
 
 .imageframe{
-    border-color: #111;
+    border-color: #eee;
     border-width: 2px;
-    border-style: solid;
+    border-style: inset;
     border-radius: 1px;
 }
 
@@ -113,7 +113,7 @@ a:hover{
 .linklist .item{
     flex: 1 0 180px;
     height: 60px;
-    border-color: #111;
+    border-color: #666;
     border-width: 2px;
     border-style: solid;
     border-radius: 8px;
