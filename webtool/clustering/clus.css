@@ -1,0 +1,17 @@
+
+body{
+    font-family: "Helvetica Neue", "Segoe UI", "Hiragino Kaku Gothic ProN W3", "メイリオ", Meiryo, sans-serif;
+    background-color: #eee;
+}
+
+#bodywrapper{
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+    padding: 10px;
+}
+
+#display{
+    border: 1px solid #aaa;
+}
