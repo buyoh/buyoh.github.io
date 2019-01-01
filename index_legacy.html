@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>newpage</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link href="common/bootstrap.min.css" rel="stylesheet">
+<script src="common/jquery-3.2.1.min.js"></script>
+<script src="common/bootstrap.min.js"></script>
+
+<style>
+	body{
+		/*font-family: 'Yu Gothic', 'HiraKakuPro-W3', 'Hiragino Kaku Gothic Pro', 'Meiryo', 'Osaka';*/
+		font-family: "Helvetica Neue", "Segoe UI", "Hiragino Kaku Gothic ProN W3", "メイリオ", Meiryo, sans-serif;
+	}
+</style>
+
+<script>
+	function changetab(idx){
+		$("#toppanel ul li").removeClass("active");
+		$("#toppanel ul li").eq(idx).addClass("active");
+		$("#toppanel > div").addClass("hidden");
+		$("#toppanel > div").eq(idx).removeClass("hidden");
+	}
+</script>
+
+</head>
+
+<body>
+
+<h2 class="container">newpage</h2>
+
+<div class="container">
+
+	<div class="panel panel-default" id="toppanel">
+
+		<ul class="nav nav-tabs nav-justified">
+			<li class="active"><a href="#" onclick="changetab(0);">Top</a></li>
+			<li><a href="#" onclick="changetab(1);">about</a></li>
+			<li><a href="#" onclick="changetab(2);">Contests and Links</a></li>
+			<li><a href="#" onclick="changetab(3);">Hoge</a></li>
+		</ul>
+
+		<div class="panel-body">
+			<h3>Mai Buyoh <small>舞葉 舞</small></h3>
+		</div>
+
+		<div class="panel-body hidden">
+			<h3>Mai Buyoh <small>舞葉 舞</small></h3>
+			<h4>about</h4>
+			<p class="media">
+				<div class="media-body contaier">
+					<img class="img-thumbnail" src="kosuzu.jpg" width="192" height="192">
+					小鈴ちゃん
+				</div>
+			</p>
+		</div>
+
+		<div class="panel-body hidden">
+			<h3>Mai Buyoh <small>舞葉 舞</small></h3>
+			<h4>Contests and Links</h4>
+			<p class="container-fluid">
+				<h4>Contests</h4>
+				<a class="btn btn-default" target="_blank" href="http://atcoder.jp/user/m_buyoh">AtCoder</a>
+				<a class="btn btn-default" target="_blank" href="http://kenkoooo.com/atcoder/?user=m_buyoh&kind=user">AtCoder(unofficial)</a>
+				<a class="btn btn-default" target="_blank" href="http://yukicoder.me/users/1373">yukicoder</a>
+				<a class="btn btn-default" target="_blank" href="https://csacademy.com/user/mai">csacademy</a>
+				<a class="btn btn-default" target="_blank" href="http://codeforces.com/profile/mai">codeforces</a>
+				<a class="btn btn-default" target="_blank" href="http://aoj-icpc.ichyo.jp/?aoj_rivals=&sort2_order=desc&year_max=&source4=1&aoj_username=m_buyoh&point_max=1200&sort1_order=asc&source2=1&source3=1&source1=1&point_min=100&sort2_by=source&year_min=&sort1_by=point">aizu online judge(unofficial)</a>
+				<a class="btn btn-default" target="_blank" href="https://www.codingame.com/profile/d1677dbd472278ab2aebdab16acc4b037273331">codingame</a>
+				<a class="btn btn-primary" target="_blank" href="https://beet-aizu.github.io/rating/index.html?handle_topcoder=&handle_codeforces=mai&handle_atcoder=m_buyoh&handle_aoj=m_buyoh&handle_yukicoder=mai%28%E8%88%9E%E8%91%89%29">beet's Rating History Viewer</a>
+				<h4>Blog</h4>
+				<a class="btn btn-default" target="_blank" href="http://shonen.hateblo.jp/">hateblo</a>
+				<a class="btn btn-default" target="_blank" href="http://buyoh.hateblo.jp/">hateblo(Algo)</a>
+				<a class="btn btn-default" target="_blank" href="http://shonen9th.blog.fc2.com/" disabled>blog(閉鎖)</a>
+				<a class="btn btn-default" target="_blank" href="http://qiita.com/buyoh">Qiita</a>
+				<h4>tw</h4>
+				<a class="btn btn-default" target="_blank" href="https://twitter.com/m_buyoh">m_buyoh(競り)</a>
+				<a class="btn btn-default" target="_blank" href="https://twitter.com/shonen9th">shonen9th(猫画像をRTfavするだけのbot)</a>
+				<h4>share</h4>
+				<a class="btn btn-default" target="_blank" href="https://codepen.io/buyoh/">codepen</a>
+				<a class="btn btn-default" target="_blank" href="#">github</a>
+			</p>
+		</div>
+
+		<div class="panel-body hidden">
+			<h3>Mai Buyoh <small>舞葉 舞</small></h3>
+			<h4>その他</h4>
+			<dl class="dl-horizontal">
+				<dt><a href="p/gist.html">gists</a></dt>
+				<dd>gistのindex</dd>
+				<dt><a href="cnt/index.html">contents?</a></dt>
+				<dd>実験的なもの</dd>
+			</dl>
+			<hr>
+			<h4>buyoh.github.io</h4>
+			<dl class="dl-horizontal">
+				<dt><a href="webtool/dic/dic.html">dic!</a></dt>
+				<dd>自分用の辞書型メモツール</dd>
+				<!--<dt><a href="webtool/canvas/canvas.html">canvas!</a></dt>
+				<dd>図形描いて点を打つだけ</dd>-->
+				<!--<dt><a href="webtool/tabnotepad/tabnotepad.html">tabnotepad</a></dt>
+				<dd>メモ帳(開発放棄)</dd>-->
+				<dt><a href="webtool/reversi/reversi.html">reversi</a></dt>
+				<dd>リバーシゲーム</dd>
+				<dt><a href="webtool/escaper/escaper.html">escaper</a></dt>
+				<dd>&lt;を&amp;lt;みたいに特殊文字を変換するやつ</dd>
+				<!--<dt><a href="webtool/markdowner/markdowner.html">markdowner</a></dt>
+				<dd>俺mdを俺htmlに変換する(放置)</dd>-->
+				<dt><a href="webtool/bfi/bfi.html">lunatic brain</a></dt>
+				<dd>advanced brainf_ck interpreter</dd>
+				<dt><a href="webtool/codeeditor/codeeditor.html">penpen</a></dt>
+				<dd>codepenのような何か</dd>
+				<dt><a href="webtool/yukicodatag/main.html">yukicoder tags</a></dt>
+				<dd>解いたタグをBubble Chartで表示するだけ(d3jsを試しただけ)</dd>
+			</dl>
+			<h4><a href="http://buyoh.s137.xrea.com/w/">buyoh.s137.xrea.com</a></h4>
+			<dl class="dl-horizontal">
+				<dt><a href="http://buyoh.s137.xrea.com/w/app/getdiff/diff.html">diff</a></dt>
+				<dd>差分取るだけ．diff呼ぶだけ．</dd>
+			</dl>
+			<h4><a href="http://buyoh.bitbucket.org/">bitbucket.org</a></h4>
+			<h4>ukibune.blue</h4>
+			<dl class="dl-horizontal">
+				<dt><a href="http://codelib.ukibune.blue">codelib</a></dt>
+				<dd>codelib2</dd>
+			</dl>
+		</div>
+	</div>
+	
+</div>
+
+<div style="margin-bottom:300px;"></div>
+
+
+	
+
+</body>
+</html>

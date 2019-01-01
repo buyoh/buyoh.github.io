@@ -1,0 +1,130 @@
+
+/*
+#f80, #0ff, #04f
+*/
+
+body{
+    /*font-family: 'Yu Gothic', 'HiraKakuPro-W3', 'Hiragino Kaku Gothic Pro', 'Meiryo', 'Osaka';*/
+    font-family: "Helvetica Neue", "Segoe UI", "Hiragino Kaku Gothic ProN W3", "メイリオ", Meiryo, sans-serif;
+
+    background-color: #eee;
+    color: #111;
+    margin-bottom: 400px;
+}
+
+/* ------------------------------------------- */
+
+@media screen and (min-width: 640px) { 
+    #bodywrapper{
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media screen and (max-width: 639px) { 
+    #bodywrapper{
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* ------------------------------------------- */
+
+#header{
+    border-bottom: 4px solid #f80;
+    padding-bottom: 50px;
+    margin-bottom: 80px;
+}
+
+@media screen and (min-width: 640px) { 
+    #header h1{
+        font-size: 96px;
+    }
+}
+
+@media screen and (max-width: 639px) { 
+    #header h1{
+        font-size: 48px;
+    }
+}
+
+#header h2{
+    color: #666;
+}
+
+/* ------------------------------------------- */
+
+#body{
+    border-bottom: 4px solid #f80;
+    padding-bottom: 100px;
+}
+
+#body section .sectiontitle{
+    background-color: #04f;
+    color: #eee;
+    width: 50%;
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#body section .sectionbody{
+    margin-left: 18px;
+}
+
+/* ------------------------------------------- */
+
+@media screen and (min-width: 640px) {
+    .scr_small{
+        display: none;
+        visibility: hidden;
+    }
+}
+
+@media screen and (max-width: 639px) {
+    .scr_large{
+        display: none;
+        visibility: hidden;
+    }
+}
+
+a{
+    color: #04f;
+    text-decoration-line: none;
+}
+a:hover{
+    color: #04f;
+    text-decoration-line: underline;
+}
+
+.imageframe{
+    border-color: #eee;
+    border-width: 2px;
+    border-style: inset;
+    border-radius: 1px;
+}
+
+.linklist{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.linklist .item{
+    flex: 1 0 180px;
+    height: 60px;
+    border-color: #666;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #fff;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 6px;
+}
+
+.linklist .item > *{
+}
