@@ -85,12 +85,12 @@ function button_run(){
 
     let gen = "";
     if (isTailJs){
-        gen += "<html><head><script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>";
+        gen += "<html><head><script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>";
         gen += "<style>\n"+css+"\n</style>";
         gen += "</head><body>\n"+html+"\n";
         gen += "<script>\n"+js+"\n</script></body></html>";
     }else{
-        gen += "<html><head><script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>";
+        gen += "<html><head><script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>";
         gen += "<script>\n"+js+"\n</script>\n";
         gen += "<style>\n"+css+"\n</style>";
         gen += "</head><body>\n"+html+"</body></html>";
