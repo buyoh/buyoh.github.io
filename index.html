@@ -1,123 +1,132 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<title>newpage</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>newpage</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
 
-<!--<link href="common/bootstrap.min.css" rel="stylesheet">-->
-<link href="common/top.css" rel="stylesheet">
-<script src="common/jquery-3.4.1.min.js"></script>
-<script src="common/bootstrap.min.js"></script>
+  <!--<link href="common/bootstrap.min.css" rel="stylesheet">-->
+  <link href="common/top.css" rel="stylesheet">
+  <script src="common/jquery-3.4.1.min.js"></script>
+  <script src="common/bootstrap.min.js"></script>
 
-<style>
-</style>
+  <style>
+  </style>
 
-<script>
-	function changetab(idx){
-		$("#toppanel ul li").removeClass("active");
-		$("#toppanel ul li").eq(idx).addClass("active");
-		$("#toppanel > div").addClass("hidden");
-		$("#toppanel > div").eq(idx).removeClass("hidden");
-	}
-</script>
+  <script>
+    function changetab(idx) {
+      $("#toppanel ul li").removeClass("active");
+      $("#toppanel ul li").eq(idx).addClass("active");
+      $("#toppanel > div").addClass("hidden");
+      $("#toppanel > div").eq(idx).removeClass("hidden");
+    }
+  </script>
 
 </head>
 
 <body>
 
-	<div id="bodywrapper">
-		<header id="header">
-			<h1>newpage</h1>
-			<h2>Mai Buyoh <small>舞葉 舞</small></h2>
-		</header>
-		<div id="body">
-			<section>
-				<h2 class="sectiontitle">kawaii</h2>
-				<div class="sectionbody">
-					<img class="imageframe" src="kosuzu.jpg" width="192" height="192">
-					小鈴ちゃん
-				</div>
-			</section>
-			<section>
-				<h2 class="sectiontitle">Links</h2>
-				<div class="sectionbody">
-					<h3>competitive programming<small>(冷えてます)</small></h3>
-					<div class="linklist">
-						<a class="item" target="_blank" href="http://atcoder.jp/user/m_buyoh">AtCoder</a>
-						<a class="item" target="_blank" href="http://kenkoooo.com/atcoder/?user=m_buyoh&kind=user">AtCoder(unofficial)</a>
-						<a class="item" target="_blank" href="http://yukicoder.me/users/1373">yukicoder</a>
-						<a class="item" target="_blank" href="https://csacademy.com/user/mai">csacademy</a>
-						<a class="item" target="_blank" href="http://codeforces.com/profile/mai">codeforces</a>
-						<a class="item" target="_blank" href="https://leetcode.com/buyoh/">leetcode</a>
-						<a class="item" target="_blank" href="http://aoj-icpc.ichyo.jp/?aoj_rivals=&sort2_order=desc&year_max=&source4=1&aoj_username=m_buyoh&point_max=1200&sort1_order=asc&source2=1&source3=1&source1=1&point_min=100&sort2_by=source&year_min=&sort1_by=point">aizu online judge(unofficial)</a>
-						<a class="item" target="_blank" href="https://www.codingame.com/profile/d1677dbd472278ab2aebdab16acc4b037273331">codingame</a>
-						<a class="item" target="_blank" href="https://beet-aizu.github.io/rating/index.html?handle_topcoder=&handle_codeforces=mai&handle_atcoder=m_buyoh&handle_aoj=m_buyoh&handle_yukicoder=mai%28%E8%88%9E%E8%91%89%29">beet's Rating History Viewer</a>
-					</div>
-					<h3>blog</h3>
-					<div class="linklist">
-						<a class="item" target="_blank" href="http://shonen.hateblo.jp/">hateblo</a>
-						<a class="item" target="_blank" href="http://buyoh.hateblo.jp/">hateblo(Algo)</a>
-						<a class="item" target="_blank" href="http://shonen9th.blog.fc2.com/" disabled>blog(閉鎖)</a>
-						<a class="item" target="_blank" href="http://qiita.com/buyoh">Qiita</a>
-					</div>
-					<h3>tw</h3>
-					<div class="linklist">
-						<a class="item" target="_blank" href="https://twitter.com/m_buyoh">m_buyoh(競り)</a>
-						<a class="item" target="_blank" href="https://twitter.com/shonen9th">shonen9th(猫画像をRTfavするだけのbot)</a>
-					</div>
-					<h3>share</h3>
-					<div class="linklist">
-						<a class="item" target="_blank" href="https://codepen.io/buyoh/">codepen</a>
-						<a class="item" target="_blank" href="#">github</a>
-					</div>
-				</div>
-			</section>
-			<section>
-				<h2 class="sectiontitle">other</h2>
-				<div class="sectionbody">
-					<h3>buyoh.github.io</h3>
-					<dl class="dl-horizontal">
-						<dt><a href="webtool/dic/dic.html">dic!</a></dt>
-						<dd>自分用の辞書型メモツール</dd>
-						<!--<dt><a href="webtool/canvas/canvas.html">canvas!</a></dt>
-						<dd>図形描いて点を打つだけ</dd>-->
-						<!--<dt><a href="webtool/tabnotepad/tabnotepad.html">tabnotepad</a></dt>
-						<dd>メモ帳(開発放棄)</dd>-->
-						<dt><a href="webtool/reversi/reversi.html">reversi</a></dt>
-						<dd>リバーシゲーム</dd>
-						<dt><a href="webtool/escaper/escaper.html">escaper</a></dt>
-						<dd>&lt;を&amp;lt;みたいに特殊文字を変換するだけ</dd>
-						<!--<dt><a href="webtool/markdowner/markdowner.html">markdowner</a></dt>
-						<dd>俺mdを俺htmlに変換する(放置)</dd>-->
-						<dt><a href="webtool/bfi/bfi.html">lunatic brain</a></dt>
-						<dd>brainf_ck interpreter</dd>
-						<dt><a href="webtool/codeeditor/codeeditor.html">penpen</a></dt>
-						<dd>codepenのような何か</dd>
-						<dt><a href="webtool/clustering/clus.html">clustering</a></dt>
-						<dd>非線形のクラスタリングアルゴリズムがぱっと思い浮かばなくて，greedyがどんな感じになるのか気になって可視化したもの</dd>
-					</dl>
-					<h4><a href="http://buyoh.s137.xrea.com/w/">buyoh.s137.xrea.com</a></h4>
-					<dl class="dl-horizontal">
-						<dt><s><a href="http://buyoh.s137.xrea.com/w/app/getdiff/diff.html">diff</a></s></dt>
-						<dd>差分取るだけ．diff呼ぶだけ．</dd>
-					</dl>
-					<h3><a href="http://ukibune.net">ukibune.net</a></h3>
-					<dl class="dl-horizontal">
-						<dt><a href="http://codelib.ukibune.net">codelib</a></dt>
-						<dd>codelib2</dd>
-					</dl>
-					<h3>外部</h3>
-					<dl class="dl-horizontal">
-						<dt><a href="https://www.amazon.jp/hz/wishlist/ls/256IBHWK6TQ40?ref_=wl_share">amazon ほしいものリスト</a></dt>
-					</dl>
-				</div>
-			</section>
-		</div>
-	</div>
+  <div id="bodywrapper">
+    <header id="header">
+      <h1>newpage</h1>
+      <h2>Mai Buyoh <small>舞葉 舞</small></h2>
+    </header>
+    <div id="body">
+      <section>
+        <h2 class="sectiontitle">kawaii</h2>
+        <div class="sectionbody">
+          <img class="imageframe" src="kosuzu.jpg" height="192">
+          <img class="imageframe" src="f.jpg" height="192">
+        </div>
+      </section>
+      <section>
+        <h2 class="sectiontitle">Links</h2>
+        <div class="sectionbody">
+          <h3>competitive programming<small>(冷えてます)</small></h3>
+          <div class="linklist">
+            <a class="item" target="_blank" href="https://atcoder.jp/user/m_buyoh">AtCoder</a>
+            <a class="item" target="_blank" href="https://kenkoooo.com/atcoder/#/user/m_buyoh">AtCoder(unofficial)</a>
+            <a class="item" target="_blank" href="https://yukicoder.me/users/1373">yukicoder</a>
+            <a class="item" target="_blank" href="https://csacademy.com/user/mai">csacademy</a>
+            <a class="item" target="_blank" href="https://codeforces.com/profile/mai">codeforces</a>
+            <a class="item" target="_blank" href="https://leetcode.com/buyoh/">leetcode</a>
+            <a class="item" target="_blank"
+              href="http://aoj-icpc.ichyo.jp/?aoj_rivals=&sort2_order=desc&year_max=&source4=1&aoj_username=m_buyoh&point_max=1200&sort1_order=asc&source2=1&source3=1&source1=1&point_min=100&sort2_by=source&year_min=&sort1_by=point">aizu
+              online judge(unofficial)</a>
+            <a class="item" target="_blank"
+              href="https://www.codingame.com/profile/d1677dbd472278ab2aebdab16acc4b037273331">codingame</a>
+          </div>
+          <h3>blog</h3>
+          <div class="linklist">
+            <a class="item" target="_blank" href="http://qiita.com/buyoh">Qiita</a>
+            <a class="item" target="_blank" href="http://shonen.hateblo.jp/">hateblo</a>
+            <a class="item" target="_blank" href="http://buyoh.hateblo.jp/">hateblo(Algo)</a>
+            <a class="item" target="_blank" href="http://shonen9th.blog.fc2.com/" disabled>blog(閉鎖)</a>
+          </div>
+          <h3>code</h3>
+          <div class="linklist">
+            <a class="item" target="_blank" href="https://codepen.io/buyoh/">codepen</a>
+            <a class="item" target="_blank" href="#">github</a>
+          </div>
+          <h3>twitter</h3>
+          <div class="linklist">
+            <a class="item" target="_blank" href="https://twitter.com/m_buyoh">m_buyoh</a>
+            <a class="item" target="_blank" href="https://twitter.com/shonen9th">shonen9th</a>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2 class="sectiontitle">Other</h2>
+        <div class="sectionbody">
+          <h3><a href="http://ukibune.net">ukibune.net</a></h3>
+          <dl class="dl-horizontal">
+            <dt><a href="http://codelib.ukibune.net">codelib</a></dt>
+            <dd>codelib2</dd>
+          </dl>
+          <dl class="dl-horizontal">
+            <dt><a href="https://www.amazon.jp/hz/wishlist/ls/256IBHWK6TQ40?ref_=wl_share">amazon ほしいものリスト</a></dt>
+            <dd>ほしいもの</dd>
+          </dl>
+        </div>
+      </section>
+      <section>
+        <h2 class="sectiontitle">Legacy</h2>
+        <div class="sectionbody">
+          <h3>buyoh.github.io</h3>
+          <dl class="dl-horizontal">
+            <dt><a href="webtool/dic/dic.html">dic!</a></dt>
+            <dd>自分用の辞書型メモツール</dd>
+            <!--<dt><a href="webtool/canvas/canvas.html">canvas!</a></dt>
+            <dd>図形描いて点を打つだけ</dd>-->
+            <!--<dt><a href="webtool/tabnotepad/tabnotepad.html">tabnotepad</a></dt>
+            <dd>メモ帳(開発放棄)</dd>-->
+            <dt><a href="webtool/reversi/reversi.html">reversi</a></dt>
+            <dd>リバーシゲーム</dd>
+            <dt><a href="webtool/escaper/escaper.html">escaper</a></dt>
+            <dd>&lt;を&amp;lt;みたいに特殊文字を変換するだけ</dd>
+            <!--<dt><a href="webtool/markdowner/markdowner.html">markdowner</a></dt>
+            <dd>俺mdを俺htmlに変換する(放置)</dd>-->
+            <dt><a href="webtool/bfi/bfi.html">lunatic brain</a></dt>
+            <dd>brainf_ck interpreter</dd>
+            <dt><a href="webtool/codeeditor/codeeditor.html">penpen</a></dt>
+            <dd>codepenのような何か</dd>
+            <dt><a href="webtool/clustering/clus.html">clustering</a></dt>
+            <dd>非線形のクラスタリングアルゴリズムがぱっと思い浮かばなくて，greedyがどんな感じになるのか気になって可視化したもの</dd>
+          </dl>
+          <h4><a href="http://buyoh.s137.xrea.com/w/">buyoh.s137.xrea.com</a></h4>
+          <dl class="dl-horizontal">
+            <dt><s><a href="http://buyoh.s137.xrea.com/w/app/getdiff/diff.html">diff</a></s></dt>
+            <dd>差分取るだけ．diff呼ぶだけ．</dd>
+          </dl>
+        </div>
+      </section>
+    </div>
+  </div>
 
 
 </body>
+
 </html>
