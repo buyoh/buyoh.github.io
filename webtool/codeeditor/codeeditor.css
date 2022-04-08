@@ -1,0 +1,52 @@
+
+#mainbody{
+    background-color:#222;
+    color: #EEE;
+    font-family: "Helvetica Neue", "Segoe UI", "Hiragino Kaku Gothic ProN W3", "メイリオ", Meiryo, sans-serif;
+}
+
+#div_viewer{
+    text-align: center;
+}
+
+#viewer{
+    background-color: #FFF;
+    color: #000;
+    width: 400px;
+    height: 300px;
+    resize: both;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.editor_wrapper{
+    min-width: 200px;
+    min-height: 200px;
+    width: 400px;
+    height: 600px;
+    margin: 1px;
+    padding: 1px;
+    overflow: hidden;
+    resize: both;
+    border: 1px solid #777;
+}
+
+.editor_label{
+    height: 3ex;
+}
+
+.editor{
+    margin: 0px;
+    height: 500px;
+}
+
+.flexbox_row{
+    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+}
+.flexitem{
+    /*flex: 1 0 auto;*/
+    flex: 0 0 auto;
+}

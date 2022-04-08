@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>penpen</title>
+    <script src="../../common/jquery-3.4.1.min.js"></script>
+    <script src="../../common/ace/ace.js"></script>
+    <script src="../../common/ace/ext-language_tools.js"></script>
+
+    <link rel="stylesheet" href="codeeditor.css">
+    <script src="codeeditor.js"></script>
+</head>
+<body id="mainbody">
+    
+    <div class="toolbar">
+        <button onclick="button_run()">run code</button>
+        <button onclick="button_clearDisplay()">clear display</button>
+        <select id="select_resizer" onchange="select_resize()">
+            <option value="400,300">400x300</option>
+            <option value="640,480">640x480</option>
+            <option value="800,600">800x600</option>
+        </select>
+        <label><input type="checkbox" id="chk_tailjs">js as footer</label>
+    </div>
+    <div id="div_viewer">
+        <iframe id="viewer" srcdoc="result" sandbox="allow-scripts"></iframe>
+    </div>
+
+    <div class="flexbox_row">
+        <div id="div_js" class="editor_wrapper flexitem">
+            <div class="editor_label">js</div>
+            <div id="editor_js" class="editor"></div>
+        </div><div id="div_css" class="editor_wrapper flexitem">
+            <div class="editor_label">css</div>
+            <div id="editor_css" class="editor"></div>
+        </div><div id="div_html" class="editor_wrapper flexitem">
+            <div class="editor_label">html</div>
+            <div id="editor_html" class="editor"></div>
+        </div>
+    </div>
+</body>
+</html>

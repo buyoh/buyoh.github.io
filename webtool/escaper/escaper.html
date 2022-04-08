@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<title>escaper - 特殊文字変換ツール</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+
+<link rel="stylesheet" href="../../common/bootstrap.min.css" />
+<link rel="stylesheet" href="../../common/bootstrap-theme.min.css" />
+<script src="../../common/jquery-3.4.1.min.js"></script>
+<script src="../../common/bootstrap.min.js"></script>
+
+<script src="escaper.js"></script>
+
+<style type="text/css">
+textarea.custom{
+    overflow-x:auto;
+    overflow-y:auto;
+}
+</style>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>escaper <small>テキスト中の&lt;を&amp;lt;みたいに変換するやつ</small></h1>
+
+        <div class="row">
+            <div class="col-md-offset-1 col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Put your nice raw text.
+                    </div>
+                    <div class="panel-body">
+                        <div class="">
+                            <textarea id="txt_in" class="form-control custom" rows="6"></textarea>
+                        </div>
+                        <div>
+                            <button onclick="ebtn_convert()" class="btn btn-default">convert</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-offset-1 col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div>
+                            <select id="sel_type" class="form-control">
+                                <option value="html">HTML(escape)</option>
+                                <option value="htmlr">revert HTML+escape</option>
+                            </select>
+                        </div>
+                        <div id="div_msg">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        output
+                    </div>
+                    <div class="panel-body">
+                        <textarea id="txt_out" class="form-control custom" rows="8"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
