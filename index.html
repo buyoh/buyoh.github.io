@@ -81,71 +81,21 @@
       margin-inline-end: 0;
     }
 
-    #body section>h2.title {
+    #body section>.title-summary {
       background-color: #25f;
       color: #eee;
       /* width: 50%; */
       padding-left: 20px;
       padding-top: 5px;
       padding-bottom: 5px;
+      margin-bottom: 0.5em;
     }
 
-    #body section>.body {
-      margin-left: 18px;
-    }
-
-    #body section>details.section {
-      margin: 0;
-      padding: 0;
-    }
-
-    #body section>details.section>summary {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: flex;
-      background-color: #25f;
-      color: #eee;
-      /* width: 50%; */
-      padding-left: 20px;
-      padding-top: 5px;
-      padding-bottom: 5px;
+    #body section>.title-summary>.title {
       margin: 0;
     }
 
-    @media screen and (min-width: 640px) {
-      #body section>h2.title {
-        width: 400px;
-      }
-
-      #body section>details.section>summary {
-        width: 400px;
-      }
-    }
-
-    @media screen and (max-width: 639px) {
-      #body section>h2.title {
-        width: auto;
-      }
-
-      #body section>details.section>summary {
-        width: auto;
-      }
-    }
-
-    #body section>details.section>summary>div.wrap {
-      /* display: inline-block; */
-      flex: 0 0 auto;
-      padding-left: 0.5em;
-    }
-
-    #body section>details.section>summary>div.wrap h2.title {
-      color: #eee;
-      padding: 0;
-      margin: 0;
-    }
-
-    #body section>details.section>summary>div.wrap .summary {
+    #body section>.title-summary>.summary {
       font-size: small;
 
       color: #eee;
@@ -153,36 +103,44 @@
       margin: 0;
     }
 
-    #body section>details.section>summary>.carret {
-      flex: 0;
-      font-size: 1.5em;
-      text-align: center;
-
+    #body section>h2.title {
+      background-color: #25f;
       color: #eee;
-      padding: 0;
-      margin: 0;
+      /* width: 50%; */
+      padding-left: 20px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      margin-bottom: 0.5em;
     }
 
-    #body section>details.section>summary>.carret .icon {
-      transition: all .08s ease-out;
+    #body section>.body {
+      margin-left: 18px;
     }
 
-    #body section>details.section[open]>summary>.carret .icon {
-      transform: rotate(0.25turn);
+    @media screen and (min-width: 640px) {
+
+      #body section>h2.title,
+      #body section>.title-summary {
+        width: 400px;
+      }
+
     }
 
-    #body section>details.section>.body {
-      animation: fade-in 0.08s linear;
+    @media screen and (max-width: 639px) {
+      #body section>h2.title {
+        width: auto;
+      }
     }
+
 
     /* ------------------------------------------- */
 
-    .linklist2 {
+    #body .linklist2 {
       display: flex;
       flex-wrap: wrap;
     }
 
-    .linklist2>.item {
+    #body .linklist2>.item {
       flex: 0 0 220px;
       /* height: 60px; */
       /* border-color: #6666;
@@ -197,25 +155,25 @@
       padding: 0.8em;
     }
 
-    .linklist2>.item>.title {
+    #body .linklist2>.item>.title {
       font-weight: bolder;
       font-size: 1.2em;
       text-align: center;
       margin-bottom: 0.3em;
     }
 
-    .linklist2>.item>.summary {
+    #body .linklist2>.item>.summary {
       font-size: small;
     }
 
     /* ------------------------------------------- */
 
-    .linklist {
+    #body .linklist {
       display: flex;
       flex-wrap: wrap;
     }
 
-    .linklist .item {
+    #body .linklist .item {
       flex: 1 0 180px;
       height: 60px;
       border-color: #666;
@@ -228,6 +186,12 @@
       align-items: center;
       justify-content: center;
       margin: 6px;
+    }
+
+    /* ------------------------------------------- */
+
+    #footer {
+      margin-top: 0.5em;
     }
 
     /* ------------------------------------------- */
@@ -293,54 +257,52 @@
 
     <div id="body">
       <section>
-        <h2 class="title">kawaii!</h2>
+        <h2 class="title">代理</h2>
         <div class="body">
           <img class="imageframe" src="kosuzu.jpg" height="192" />
           <img class="imageframe" src="f.jpg" height="192" />
         </div>
       </section>
-      <section>
-        <details open class="section">
-          <summary>
-            <div class="carret">
-              <div class="icon">▶</div>
-            </div>
-            <div class="wrap">
-              <h2 class="title">blog / sns</h2>
-              <div class="summary">ソフトウェアに関連することなど</div>
-            </div>
-          </summary>
-          <div class="body">
-            <h3>blog</h3>
-            <div class="linklist2">
 
-              <div class="item">
-                <div class="title">
-                  <a target="_blank" href="http://qiita.com/buyoh">Qiita</a>
-                </div>
-                <div class="summary">
-                  比較的真面目な記事を投稿<br>
-                  特に、二番煎じ避けと役に立つかどうかは意識してます
-                </div>
+      <section>
+        <div class="title-summary">
+          <h2 class="title">blog</h2>
+          <div class="summary">不定期に記事を投稿</div>
+        </div>
+        <div class="body">
+          <div class="linklist2">
+
+            <div class="item">
+              <div class="title">
+                <a target="_blank" href="http://qiita.com/buyoh">Qiita</a>
               </div>
-              <div class="item">
-                <div class="title">
-                  <a target="_blank" href="https://zenn.dev/mai">Zenn</a>
-                </div>
-                <div class="summary">
-                  試験運用中<br>
-                  Qiita と同じ運用
-                </div>
+              <div class="summary">
+                ソフトウェアに関連することなど
               </div>
+            </div>
+
+            <div class="item">
+              <div class="title">
+                <a target="_blank" href="https://zenn.dev/mai">Zenn</a>
+              </div>
+              <div class="summary">
+                ソフトウェアに関連することなど
+              </div>
+            </div>
+          </div>
+
+          <details class="">
+            <summary><small>もっと</small></summary>
+            <div class="linklist2">
               <div class="item">
                 <div class="title">
                   <a target="_blank" href="http://shonen.hateblo.jp/">shonen.hateblo</a>
                 </div>
                 <div class="summary">
-                  雑な纏めを書く<br>
-                  markdown が好みじゃないので引っ越したい<br>
+                  雑な纏めを書く＠更新停止中
                 </div>
               </div>
+
               <div class="item">
                 <div class="title">
                   <a target="_blank" href="http://buyoh.hateblo.jp/">buyoh.hateblo</a>
@@ -350,161 +312,92 @@
                 </div>
               </div>
             </div>
-            <h3>social</h3>
-            <div class="linklist2">
-              <div class="item">
-                <div class="title">
-                  <a target="_blank" href="https://twitter.com/m_buyoh">m_buyoh@twitter</a>
-                </div>
-                <div class="summary">
-                  競技プログラミングや数学
-                </div>
-              </div>
-              <div class="item">
-                <div class="title">
-                  <a target="_blank" href="https://twitter.com/shonen9th">shonen9th@twitter</a>
-                </div>
-                <div class="summary">
-                  かわいいものをRTする
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="title">
-                  <a target="_blank" href="https://www.instagram.com/m_buyoh/">instagram</a>
-                </div>
-                <div class="summary">
-                  いんすた映え
-                </div>
-              </div>
-            </div>
-            
-            <h3>distributed</h3>
-            <details>
-              <summary>乱立気味のため様子見</summary>
-              <div class="linklist2">
-                <div class="item">
-                  <div class="title">
-                    <a target="_blank" href="https://www.threads.net/@m_buyoh">threads.net</a>
-                  </div>
-                  <div class="summary">
-                    PC から使えないので使わないかも
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="title">
-                    <a target="_blank" href="https://misskey.io/@_ai">misskey.io</a>
-                  </div>
-                  <div class="summary">
-                    様子見
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="title">
-                    <a target="_blank" href="https://misskey.kyoupro.com/">misskey.kyoupro.com</a>
-                  </div>
-                  <div class="summary">
-                    競プロ関係
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="title">
-                    <a target="_blank" href="https://pawoo.net/@mai">pawoo.net</a>
-                  </div>
-                  <div class="summary">
-                    未使用
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="title">
-                    <a target="_blank" href="https://mstdn.jp/@m_buyoh">mstdn.jp</a>
-                  </div>
-                  <div class="summary">
-                    未使用
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="title">
-                    <a target="_blank" href="https://blog.qiita.com/terminate-provision-of-qiitadon/">mai@qiitadon</a>
-                  </div>
-                  <div class="summary">
-                    一番よく書き込んでいた mstdn
-                  </div>
-                </div>
-              </div>
-            </details>
-          </div>
-        </details>
+          </details>
+        </div>
       </section>
 
       <section>
-        <details open class="section">
-          <summary>
-            <div class="carret">
-              <div class="icon">▶</div>
-            </div>
-            <div class="wrap">
-              <h2 class="title">repository</h2>
-              <div class="summary">コード置き場<br>書き捨てのようなコードも置いてます</div>
-            </div>
-          </summary>
+        <div class="title-summary">
+          <h2 class="title">repository</h2>
+          <div class="summary">コード置き場</div>
+        </div>
+        <div class="body">
+          <div class="linklist2">
 
-          <div class="body">
-            <h3></h3>
-            <div class="linklist2">
+            <div class="item">
+              <div class="title">
+                <a target="_blank" href="https://github.com/buyoh">github</a>
+              </div>
+              <div class="summary">
+                基本全部 github に置いてます
+              </div>
+            </div>
 
-              <div class="item">
-                <div class="title">
-                  <a target="_blank" href="https://github.com/buyoh">github</a>
-                </div>
-                <div class="summary">
-                  基本全部 github に置いてます
-                </div>
+            <div class="item">
+              <div class="title">
+                <a target="_blank" href="https://codepen.io/buyoh/">codepen.io</a>
               </div>
-              <div class="item">
-                <div class="title">
-                  <a target="_blank" href="https://codepen.io/buyoh/">codepen.io</a>
-                </div>
-                <div class="summary">
-                  jsfiddle との使い分けが分かってない
-                </div>
+              <div class="summary">
+                jsfiddle との使い分けが分かってない
               </div>
-              <div class="item">
-                <div class="title">
-                  <a target="_blank" href="https://jsfiddle.net/user/buyoh/fiddles/">jsfiddle</a>
-                </div>
-                <div class="summary">
-                  codepen との使い分けが分かってない
-                </div>
+            </div>
+
+            <div class="item">
+              <div class="title">
+                <a target="_blank" href="https://jsfiddle.net/user/buyoh/fiddles/">jsfiddle</a>
+              </div>
+              <div class="summary">
+                codepen との使い分けが分かってない
               </div>
             </div>
           </div>
-        </details>
+
+        </div>
       </section>
 
+
       <section>
-        <details open class="section">
-          <summary>
-            <div class="carret">
-              <div class="icon">▶</div>
-            </div>
-            <div class="wrap">
-              <h2 class="title">competitive programming</h2>
-              <div class="summary">ひえてます</div>
-            </div>
-          </summary>
-          <p>隠居気味</p>
-          <div class="body">
-            <h3></h3>
-            <div class="linklist2">
-              <div class="item">
-                <div class="title">
-                  <a target="_blank" href="https://atcoder.jp/user/m_buyoh">AtCoder</a>
-                </div>
-                <div class="summary">
-                  参加継続中
-                </div>
+        <div class="title-summary">
+          <h2 class="title">competitive programming</h2>
+          <div class="summary">ひえてます</div>
+        </div>
+        <div class="body">
+          <div class="linklist2">
+
+            <div class="item">
+              <div class="title">
+                <a target="_blank" href="https://atcoder.jp/user/m_buyoh">AtCoder</a>
               </div>
+              <div class="summary">
+                参加継続中
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="title">
+                <a target="_blank" href="https://yukicoder.me/users/13750">yukicoder</a>
+              </div>
+              <div class="summary">
+                ゆるふわ勢<br>
+                訳ありで<a target="_blank" href="https://yukicoder.me/users/1373">旧アカウント</a>はリダイレクト対象になりました
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="title">
+                <a target="_blank"
+                  href="https://www.codingame.com/profile/d1677dbd472278ab2aebdab16acc4b037273331">codingame</a>
+              </div>
+              <div class="summary">
+                おすすめ
+              </div>
+            </div>
+          </div>
+
+          <details class="">
+            <summary><small>もっと</small></summary>
+            <div class="linklist2">
+
               <div class="item">
                 <div class="title">
                   <a target="_blank" href="https://kenkoooo.com/atcoder/#/user/m_buyoh">AtCoderProblems</a>
@@ -513,43 +406,26 @@
                   Fastest Code めっちゃ奪われてて草
                 </div>
               </div>
-              <div class="item">
-                <div class="title">
-                  <a target="_blank" href="https://yukicoder.me/users/13750">yukicoder</a>
-                </div>
-                <div class="summary">
-                  ゆるふわ勢<br>
-                  訳ありで<a target="_blank" href="https://yukicoder.me/users/1373">旧アカウント</a>はリダイレクト対象になりました
-                </div>
-              </div>
-              <div class="item">
-                <div class="title">
-                  <a target="_blank"
-                    href="https://www.codingame.com/profile/d1677dbd472278ab2aebdab16acc4b037273331">codingame</a>
-                </div>
-                <div class="summary">
-                  おすすめ
-                </div>
-              </div>
-            </div>
-            <p>低浮上</p>
-            <div class="linklist2">
+
+
               <div class="item">
                 <div class="title">
                   <a target="_blank" href="https://codeforces.com/profile/mai">codeforces</a>
                 </div>
                 <div class="summary">
-                  すごいね
+                  停滞中
                 </div>
               </div>
+
               <div class="item">
                 <div class="title">
                   <a target="_blank" href="https://csacademy.com/user/mai">CSAcademy</a>
                 </div>
                 <div class="summary">
-                  問題は一番好みだったのですが
+                  停滞中
                 </div>
               </div>
+
               <div class="item">
                 <div class="title">
                   <a target="_blank"
@@ -561,101 +437,133 @@
                   ICPC の経験や関わりは全く無いです
                 </div>
               </div>
+
               <div class="item">
                 <div class="title">
                   <a target="_blank" href="https://leetcode.com/buyoh/">LeetCode</a>
                 </div>
                 <div class="summary">
-                  有名らしい
+                  停滞中
                 </div>
               </div>
             </div>
-          </div>
-        </details>
+          </details>
+        </div>
       </section>
 
       <section>
-        <details open class="section">
-          <summary>
-            <div class="carret">
-              <div class="icon">▶</div>
-            </div>
-            <div class="wrap">
-              <h2 class="title">content</h2>
-              <div class="summary">個人用・練習でつくったもの<br>役に立つものもあるかも</div>
-            </div>
-          </summary>
+        <div class="title-summary">
+          <h2 class="title">SNS</h2>
+          <div class="summary">雑多</div>
+        </div>
+        <div class="body">
+          <div class="linklist2">
 
-          <div class="body">
-            <h3></h3>
+            <div class="item">
+              <div class="title">
+                <a target="_blank" href="https://misskey.io/@_ai">_ai@misskey.io</a>
+              </div>
+              <div class="summary">
+                雑多。プロフィール破損中
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="title">
+                <a target="_blank" href="https://misskey.kyoupro.com/">mai@kyoupro</a>
+              </div>
+              <div class="summary">
+                競技プログラミングやアルゴリズム (misskey.kyoupro.com)
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="title">
+                <a target="_blank" href="https://www.instagram.com/m_buyoh/">instagram</a>
+              </div>
+              <div class="summary">
+                かわいいものをfavする
+              </div>
+            </div>
+
+          </div>
+
+          <details class="">
+            <summary><small>もっと</small></summary>
             <div class="linklist2">
+
               <div class="item">
                 <div class="title">
-                  <a target="_blank" href="https://buyoh.github.io/codeLib2/">codelib</a>
+                  <a target="_blank" href="https://twitter.com/shonen9th">shonen9th@twitter</a>
                 </div>
                 <div class="summary">
-                  個人用競プロコードスニペットツール
+                  かわいいものをRT/favする
                 </div>
               </div>
+
               <div class="item">
                 <div class="title">
-                  <a target="_blank" href="https://buyoh.github.io/pwapaint/">pwapaint</a>
+                  <a target="_blank" href="https://twitter.com/m_buyoh">m_buyoh@twitter</a>
                 </div>
                 <div class="summary">
-                  半日で作った簡素なホワイトボード。
-                  リロードのジェスチャー入力が引っかからない firefox 推奨。<br>
-                  タブレットを活用するために作ったんだけど、そもそもタブレットの操作性が悪く、結局使ってない。
+                  競技プログラミングやアルゴリズム
                 </div>
               </div>
+
+
               <div class="item">
                 <div class="title">
-                  <a target="_blank" href="https://buyoh.github.io/prac_flutter/">mindTree</a>
+                  <a target="_blank" href="https://www.threads.net/@m_buyoh">threads.net</a>
                 </div>
                 <div class="summary">
-                  マインドマップのようなものを階層構造で書ける<br>
-                  flutterの調査ついでに
+                  機能追加が無い限り使用予定なし
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="title">
+                  <a target="_blank" href="https://mstdn.jp/@m_buyoh">mstdn.jp</a>
+                </div>
+                <div class="summary">
+                  未使用 マストドンメイン
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="title">
+                  <a target="_blank" href="https://pawoo.net/@mai">pawoo.net</a>
+                </div>
+                <div class="summary">
+                  未使用
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="title">
+                  <a target="_blank" href="https://misskey.backspace.fm/@mai">mai@backspace</a>
+                </div>
+                <div class="summary">
+                  未使用 (misskey.backspace.fm)
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="title">
+                  <a target="_blank" href="https://misskey.systems/@mai">mai@systems</a>
+                </div>
+                <div class="summary">
+                  未使用 (misskey.systems)
                 </div>
               </div>
             </div>
-          </div>
-        </details>
+          </details>
+        </div>
       </section>
 
-      <section>
-        <details class="section">
-          <summary>
-            <div class="carret">
-              <div class="icon">▶</div>
-            </div>
-            <div class="wrap">
-              <h2 class="title">legacy</h2>
-              <div class="summary">非推奨</div>
-            </div>
-          </summary>
-          <div class="body">
-            <p>シンプル</p>
-            <dl class="dl-horizontal">
-              <dt><a href="webtool/escaper/escaper.html">escaper</a></dt>
-              <dd>&lt;を&amp;lt;みたいに特殊文字を変換するだけ</dd>
-              <dt><a href="webtool/codeeditor/codeeditor.html">penpen</a></dt>
-              <dd>揮発性 codepen のような何か</dd>
-            </dl>
-            <details>
-              <summary>遺跡</summary>
-              <dl class="dl-horizontal">
-                <dt><a href="f/hsp2018/index.html">HSP 2018投稿作品</a></dt>
-                <dd>6KB 制限の hsptv 部門が無くなってしまった…</dd>
-                <dt><a href="http://buyoh.s137.xrea.com/w/">buyoh.s137.xrea.com</a></dt>
-                <dd>CGI置き場。</dd>
-                <dt>
-                  <a target="_blank" href="http://shonen9th.blog.fc2.com/">blog.fc2(凍結)</a>
-                </dt>
-                <dd>旧ブログ</dd>
-              </dl>
-            </details>
-          </div>
-        </details>
-      </section>
+    </div>
+
+    <div id="footer">
+      <a href="./content.html">content</a>
     </div>
   </div>
 </body>
