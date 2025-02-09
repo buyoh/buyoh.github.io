@@ -1,0 +1,39 @@
+<div class="block">
+<h4 class="shadow">解説</h4>
+<div>
+<!--
+\( 1+1\)
+	div タグでも preタグでもお好きにどうぞ もちろんMathJaxが使えます。
+-->
+<p>
+    辺集合から2つ選ぶ組み合わせを全列挙して探索する方法が簡単です．時間計算量は $O(M^2)$ です．
+</p>
+<p>
+    ある2つの辺 $e_1$ と $e_2$ を選択したとします．<br>
+    <!-- 辺$e_1$は$u_{e_1}$と$v_{e_1}$に接続しています($e_2$も同様)．-->
+    
+    もし， $e_1$ と $e_2$ が繋がっているならば， $e_1$ と $e_2$ を使って長さ2のパスを作ることができるはずです．<br>
+    長さ2のパスを見つけたら，これが門松パスかどうか判定すれば良いです．
+</p>
+<br>
+</div>
+
+<h4 class="shadow">解説2</h4>
+<div>
+    <p>
+        $O(M)$解法が見つかってしまいました…．Ruby で 16ms で解けます．<br>testerさんありがとうございます．<br>
+        <a href="http://yukicoder.me/submissions/172695">#172695</a>, <a href="http://yukicoder.me/submissions/172780">#172780</a>
+    </p>
+</div>
+<br>
+
+<h4 class="shadow">解説3</h4>
+<div>
+    <p>2018/01/11 追記</p>
+    <p>
+        門松パスの個数を数える問題も時間 $O(M)$ で解けます…<br>cielさんありがとうございます．<br>
+        <a href="https://yukicoder.me/submissions/228617">#228617</a>, <a href="https://yukicoder.me/submissions/229069">#229069</a>
+    </p>
+</div>
+<br>
+</div>

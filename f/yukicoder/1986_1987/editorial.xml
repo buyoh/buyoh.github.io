@@ -1,0 +1,62 @@
+<div class="block">
+<h4 class="shadow">解説</h4>
+<div>
+<!--
+\( 1+1\)
+	div タグでも preタグでもお好きにどうぞ もちろんMathJaxが使えます。
+-->
+<br>
+<p>
+    sample1のグラフを観察すると，要らない辺が存在することが分かります．<br>
+    例えば，<code>P</code>と<code>A</code>を接続する辺などです．<br>
+    まずはこれを刈ります．
+</p>
+<p>
+    与えられるグラフは無向グラフですが，<code>P-&gt;D</code>，<code>D-&gt;C</code>，<code>C-&gt;A</code>と向きを付けることができます．
+</p>
+<p>
+    以上の処理を施すと，sample1のグラフは次の有向グラフになります．
+</p>
+<p>
+    <img src="https://buyoh.github.io/f/yukicoder/1986_1987/editorial1.png">
+</p>
+<br>
+<p>
+    問題は次のように言い換えられます．
+    <ul><li>Pに属する頂点を始点としAに属する頂点を終点とする経路は何通りあるか</li></ul>
+</p>
+<p>
+    <code>DP[i] = (あるPに属する頂点から頂点iまで移動する経路は何通りあるか)</code>とする配列DPを考えます．<br>
+    <code>i = Pの文字が書かれた頂点の番号</code>の時，$DP[i]=1$であることは明確です．<br>
+    さらに，<code>δ(i)=j→iの辺が存在する頂点jの集合</code>の時，$DP[i]=\sum_{j \in \delta(i)}DP[j]$です．<br>
+    最終的に求めたい答えはAの文字が書かれた頂点のDPの和です．
+</p>
+<p>
+    sample1の例を挙げると次のようになります．<br>
+    $DP[P_1] = 1$<br>
+    $DP[P_2] = 1$<br>
+    $DP[D_6] = \sum_{j \in \{P_1\}}DP[j] = DP[P_1] = 1$<br>
+    $DP[D_7] = \sum_{j \in \{P_2\}}DP[j] = DP[P_2] = 1$<br>
+    $DP[C_5] = \sum_{j \in \{D_6,D_7\}}DP[j] = DP[D_6] + DP[D_7] = 2$<br>
+    $DP[A_2] = \sum_{j \in \{C_5\}}DP[j] = DP[C_5] = 2$<br>
+    $DP[A_3] = \sum_{j \in \{C_5\}}DP[j] = DP[C_5] = 2$<br>
+    $ans = \sum_{j \in A}DP[j] = DP[A_2]+DP[A_3] = 4$
+</p>
+<p>
+    $ans$ は動的計画法により時間 $O(M)$ で求めることができます．
+</p>
+<br>
+<ul>
+    <li><a href="https://yukicoder.me/submissions/214691"><s>214691</s></a> : 想定解</li>
+    <li><a href="https://yukicoder.me/submissions/298314">298314</a></li>
+    <li>214694, 214695 : assert用</li>
+</ul>
+<br><br>
+<!--
+<h4 class="shadow">余談</h4>
+<p>"PDCAサイクル"についても考えてみましたが$O(|V||E|)$より改善できませんでした_(:3 」∠ )_</p>
+<p>いっその事単純化してこのような問題に落ち着きました．</p>
+<br><br>
+-->
+</div>
+</div>

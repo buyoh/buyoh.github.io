@@ -1,0 +1,126 @@
+<div class="block">
+    <h4 class="shadow">note</h4>
+    <p>
+        Advent Calender Contest Advent Calendar 2019 の 10 日目です。
+    </p>
+</div>
+<div class="block">
+    <h4 class="shadow">問題文</h4>
+    <p>
+        ユークリッド平面上に存在する $n$ 個の点 $P_1 \ldots P_n$ が与えられます。<br />
+        $n$ 個の点から 3 つ選ぶ組合せのうち、その 3 点から構成される三角形の内部(辺上を除く)に点 $(0, 0)$ が含まれるものは何通りありますか？
+    </p>
+</div>
+<div class="block">
+    <h4 class="shadow">入力</h4>
+    
+    <pre>$n$
+${P_x}_1\ {P_y}_1$
+$\ldots$
+${P_x}_n\ {P_y}_n$
+</pre>
+    <p>
+        
+        
+        $3 \le n \le 4\times 10^3$ <br />
+        $-10^9 \le {P_x}_i, {P_y}_i \le 10^9$ <br />
+        すべて整数。<br />
+        点座標は重複しない。<br>
+        (0, 0) は入力に含まれない。(01:40追記)
+
+    </p>
+</div>
+<div class="block">
+    <h4 class="shadow">出力</h4>
+    <p>
+        
+
+        最後に改行してください。
+
+    </p>
+</div>
+
+<div class="block">
+    <h4 class="shadow">サンプル</h4>
+    <div class="sample">
+        <h5 class="underline">サンプル1</h5>
+        <div class="paragraph">
+            <h6>入力</h6>
+            <pre>4
+-1 -1
+2 1
+1 2
+-1 2
+</pre>
+            <h6>出力</h6>
+            <pre>2</pre>
+            <div><img src="https://buyoh.github.io/f/yukicoder/3612/Geometry Widget-6 (1).svg.png" /></div>
+            <p>
+                上図は、入力と (0,0)の点をプロットしたものです。横軸が切れていますが…
+                </p><ul>
+                    <li><code>(-1, -1) (2, 1) (1, 2)</code> は O を含みます。</li>
+                    <li><code>(-1, -1) (2, 1) (-1, 2)</code> は O を含みます。</li>
+                    <li><code>(-1, -1) (1, 2) (-1, 2)</code> は O を含みません。</li>
+                    <li><code>(2, 1) (1, 2) (-1, 2)</code> は O を含みません。</li>
+                </ul>
+            <p></p>
+        </div>
+    </div>
+
+
+    
+    <div class="sample">
+        <h5 class="underline">サンプル2</h5>
+        <div class="paragraph">
+            <h6>入力</h6>
+            <pre>4
+-1 -1
+1 1
+-1 1
+1 -1
+</pre>
+            <h6>出力</h6>
+            <pre>0</pre>
+
+            <div><img src="https://buyoh.github.io/f/yukicoder/3612/Geometry Widget-6 (2).svg.png" /></div>
+            <p>
+                辺上は内部とみなしません
+            </p>
+        </div>
+    </div>
+    
+
+
+    
+    <div class="sample">
+        <h5 class="underline">サンプル3</h5>
+        <div class="paragraph">
+            <h6>入力</h6>
+            <pre>8
+1000000000 1000000000
+1000000000 999999999
+999999999 1000000000
+999999999 999999999
+-1000000000 -1000000000
+-1000000000 -999999999
+-999999999 -1000000000
+-999999999 -999999999
+</pre>
+            <h6>出力</h6>
+            <pre>4</pre>
+            <p>
+                △
+            </p>
+        </div>
+    </div>
+    
+
+</div>
+
+<div class="block">
+    <h4 class="shadow">お役立ち情報</h4>
+    <p>
+        手元に方眼用紙がありませんか？<br />
+        <a href="https://csacademy.com/app/geometry_widget/">csacademy geometry_widget</a> が便利です。
+    </p>
+</div>
